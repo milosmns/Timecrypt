@@ -1,5 +1,5 @@
 
-package com.timecrypt.servlet;
+package com.timecrypt.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
