@@ -1,341 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>TimeCrypt | Self-destructing messages</title>
+    <title>Timecrypt for Web</title>
 
-	<meta charset="utf-8">
-	<meta name="robots" content="all" />
-	<meta name="description" content="TimeCrypt is a free service which allows sending one-view crypted messages over the Internet." />
-	<meta name="keywords" content="timecrypt, crypted, message, secret, messaging, single, self, destruct, destoy, auto, delete, password" />
-	<meta name="author" content="vaptim.com" />
-	<meta name="copyright" content="2014-present VapTeam" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <meta name="robots" content="all" />
+    <meta name="description" content="Timecrypt is an open-source messaging API for exchanging self-destructing messages." />
+    <meta name="keywords" content="timecrypt, api, open-source, encrypted, message, secret, self-destruct, password" />
+    <meta name="author" content="angrybyte" />
+    <meta name="copyright" content="2016-Present, AngryByte.me" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-	<!--[if lte IE 8]>
-		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
-	<![endif]-->
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+    <![endif]-->
 
-	<!--[if lte IE 5]>
-		<script type="text/javascript"> function handleError() { return true; } window.onerror = handleError; </script>
-	<![endif]-->
+    <!--[if lte IE 5]>
+    <script type="text/javascript"> function handleError() {
+        return true;
+    }
+    window.onerror = handleError; </script>
+    <![endif]-->
 
-	<!-- <script type="text/javascript" src="assets/js/jquery-1.9.js"></script> fallback -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="assets/js/helpers.js"></script>
-	<script type="text/javascript" src="assets/js/modernizr.js"></script>
-	<script type="text/javascript" src="assets/js/soloslider.js"></script>
-	<script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
-	<script type="text/javascript" src="assets/js/cryptext.js"></script>
-	<script type="text/javascript" src="assets/js/moment.js"></script>
-	<script type="text/javascript" src="assets/js/operations.js"></script>
+    <!-- <script type="text/javascript" src="assets/js/jquery-1.9.js"></script> fallback -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="assets/js/timecrypt/helpers.js"></script>
+    <script type="text/javascript" src="assets/js/libs/modernizr.js"></script>
+    <script type="text/javascript" src="assets/js/libs/soloslider.js"></script>
+    <script type="text/javascript" src="assets/js/libs/jquery.placeholder.js"></script>
+    <script type="text/javascript" src="assets/js/timecrypt/timecrypt.js"></script>
+    <script type="text/javascript" src="assets/js/libs/moment.js"></script>
+    <script type="text/javascript" src="assets/js/timecrypt/operations.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css" />	
-	<link rel="stylesheet" type="text/css" href="assets/css/uni.css" />
-	<link rel="stylesheet" type="text/css" href="assets/css/mobile.css" media="only screen and (min-device-width: 300px) and (max-device-width: 480px)" />
-	<link rel="stylesheet" type="text/css" href="assets/css/tablet.css" media="only screen and (min-device-width: 481px) and (max-device-width: 1280px)" />
-	<link rel="stylesheet" type="text/css" href="assets/css/desktop-mini.css" media="only screen and (min-device-width: 1281px) and (max-width: 599px)" />
-	<link rel="stylesheet" type="text/css" href="assets/css/desktop.css" media="only screen and (min-device-width: 1281px) and (min-width: 600px) and (max-width: 1024px)" />
-	<link rel="stylesheet" type="text/css" href="assets/css/desktop-wide.css" media="only screen and (min-device-width: 1281px) and (min-width: 1025px)" />
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/uni.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/mobile.css" media="only screen and (min-device-width: 300px) and (max-device-width: 480px)" />
+    <link rel="stylesheet" type="text/css" href="assets/css/tablet.css" media="only screen and (min-device-width: 481px) and (max-device-width: 1280px)" />
+    <link rel="stylesheet" type="text/css" href="assets/css/desktop-mini.css" media="only screen and (min-device-width: 1281px) and (max-width: 599px)" />
+    <link rel="stylesheet" type="text/css" href="assets/css/desktop.css" media="only screen and (min-device-width: 1281px) and (min-width: 600px) and (max-width: 1024px)" />
+    <link rel="stylesheet" type="text/css" href="assets/css/desktop-wide.css" media="only screen and (min-device-width: 1281px) and (min-width: 1025px)" />
 
-	<link href="http://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" />
-	<link rel="icon" type="image/x-icon" href="favicon.ico" />
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-	
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
-		ga('create', 'UA-52807991-1', 'auto');
-		ga('send', 'pageview');
-	</script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            // Google code, don't touch
+            // noinspection PointlessArithmeticExpressionJS, CommaExpressionJS
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            // Google code, don't touch
+            // noinspection CommaExpressionJS
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        // Google code, don't touch
+        // noinspection JSUnresolvedFunction
+        ga('create', 'UA-52807991-1', 'auto');
+        // Google code, don't touch
+        // noinspection JSUnresolvedFunction
+        ga('send', 'pageview');
+    </script>
 </head>
 
 <body>
-	<section class="container">
-		<div class="logo-container centerAligned">
-			<img src="images/logo-path.png" class="logo-path" />
-			<input type="text" placeholder="SUBJECT HERE" id="screen-title" style="display: none;" /> <!-- message title change -->
-			<input type="hidden" val="Crypted Message" id="message-title" />
-			<input type="hidden" id="device-check" />
-		</div>
+<section class="container">
+    <div class="logo-container centerAligned">
+        <img src="images/logo-path.png" class="logo-path" />
+        <!-- message title change -->
+        <input type="text" placeholder="SUBJECT HERE" id="screen-title" style="display: none;" />
+        <!-- jQuery uses this, don't touch-->
+        <!--suppress HtmlUnknownAttribute -->
+        <input type="hidden" val="Encrypted Message" id="message-title" />
+        <input type="hidden" id="device-check" />
+    </div>
 
-		<nav style="display: none;">
-			<ul><li ord="1" class="selected"><img src="images/text.png" /></li><li class="special" ord="2"><img src="images/views.png" /></li><li ord="3"><img src="images/duration.png" /></li><li ord="4"><img src="images/email.png" /></li></ul>
-		</nav>
+    <nav style="display: none;">
+        <ul>
+            <!-- jQuery will know what to do, don't worry -->
+            <!--suppress HtmlUnknownAttribute -->
+            <li ord="1" class="selected"><img src="images/text.png" /></li>
+            <!--suppress HtmlUnknownAttribute -->
+            <li class="special" ord="2"><img src="images/views.png" /></li>
+            <!--suppress HtmlUnknownAttribute -->
+            <li ord="3"><img src="images/duration.png" /></li>
+            <!--suppress HtmlUnknownAttribute -->
+            <li ord="4"><img src="images/email.png" /></li>
+        </ul>
+    </nav>
 
-		<section class="page-container">
-			<div class="page" id="page1" style="display: block;"><textarea class="centerAligned" id="message-text" placeholder="START TYPING  
+    <section class="page-container">
+        <div class="page" id="page1" style="display: block;"><textarea class="centerAligned" id="message-text" placeholder="START TYPING
 OR CLICK THE LOGO FOR HELP"></textarea></div>
-			<div class="page" id="page2" style="display: none;">
-				<div class="sliderContainer" id="slider1">
-					<img id="thumb" src="images/slider-thumb.png" />
-				</div>
-				<div class="sliderInside">
-					<span id="views">01</span>
-				</div>
-			</div>
-			<div class="page" id="page3" style="display: none;">
-				<div class="sliderContainer" id="slider2">
-					<img id="thumb" src="images/slider-thumb.png" />
-				</div>
-				<div class="sliderInside">
-					<span id="duration">01</span><br>
-					<span id="description">DAYS</span>
-				</div>
-			</div>
-			<div class="page" id="page4" style="display: none;">
-				<img src="images/address.png" id="address-icon" /><br>
-				<input type="email" id="send-to" placeholder="SEND LINK TO EMAIL" /><br>
-				<hr>
-				<img src="images/lock.png" id="with-margin" />
-				<input type="password" id="password" placeholder="LOCK WITH PASSWORD" /><br>
-				<img src="images/read.png" id="no-margin" />
-				<input type="email" id="send-from" placeholder="EMAIL ME WHEN READ" /><br>
-			</div>
-		</section>
+        <div class="page" id="page2" style="display: none;">
+            <div class="sliderContainer" id="slider1">
+                <!-- Yeah, I'm lazy and this is just a demo, so... -->
+                <!--suppress XmlDuplicatedId -->
+                <img id="thumb" src="images/slider-thumb.png" />
+            </div>
+            <div class="sliderInside">
+                <span id="views">01</span>
+            </div>
+        </div>
+        <div class="page" id="page3" style="display: none;">
+            <div class="sliderContainer" id="slider2">
+                <!-- Again, lazy... -->
+                <!--suppress XmlDuplicatedId -->
+                <img id="thumb" src="images/slider-thumb.png" />
+            </div>
+            <div class="sliderInside">
+                <span id="duration">01</span><br>
+                <span id="description">DAYS</span>
+            </div>
+        </div>
+        <div class="page" id="page4" style="display: none;">
+            <img src="images/address.png" id="address-icon" /><br>
+            <input type="email" id="send-to" placeholder="SEND LINK TO EMAIL" /><br>
+            <hr>
+            <img src="images/lock.png" id="with-margin" />
+            <input type="password" id="password" placeholder="LOCK WITH PASSWORD" /><br>
+            <img src="images/read.png" id="no-margin" />
+            <input type="email" id="send-from" placeholder="EMAIL ME WHEN READ" /><br>
+        </div>
+    </section>
 
-		<button style="display: none;">
-			<img src="images/send.png" />
-		</button>
-	</section>
+    <button style="display: none;">
+        <img src="images/send.png" />
+    </button>
+</section>
 
+<!-- There is some code here, let me explain. I was lazy, so I reacted to everything in here. Feel free to organize yours better :) -->
+<script type="text/javascript">
+    var ACTIVE = true;
+    var CURRENT_THUMB = null;
+    var CURRENT_PAGE = 1;
+    var VIEWS_ARRAY = [1];
+    var DURATION_ARRAY = [1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4]; // 20 total
+    var DESCRIPT_ARRAY = [];
+    var LAST_POSITION_1 = null;
+    var LAST_POSITION_2 = null;
 
-	<!-- Logic here -->
-	<script type="text/javascript">
-		var ACTIVE = true;
-		var CURRENT_THUMB = null;
-		var CURRENT_PAGE = 1;
-		var VIEWS_ARRAY = [1];
-		var DURATION_ARRAY = [1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4]; // 20 total
-		var DESCRIPT_ARRAY = [];
-		var LAST_POSITION_1 = null;
-		var LAST_POSITION_2 = null;
+    // init views_array
+    for (var i = 1, multiplier = 1; i <= 100; i++) {
+        VIEWS_ARRAY[i] = parseInt(VIEWS_ARRAY[i - 1] + multiplier, 10);
+        if (i % 20 == 0)
+            multiplier += i / 10;
+    }
 
-		// init views_array
-		for (var i = 1, multiplier = 1; i <= 100; i++) {
-			VIEWS_ARRAY[i] = parseInt(VIEWS_ARRAY[i - 1] + multiplier, 10);
-			if (i % 20 == 0)
-				multiplier += i / 10;
-		}
+    // init duration_array
+    for (i = 0; i < DURATION_ARRAY.length; i++) {
+        if (i == 0) {
+            DESCRIPT_ARRAY[i] = "DAY";
+        } else if (i > 0 && i < 7) {
+            DESCRIPT_ARRAY[i] = "DAYS";
+        } else if (i > 6 && i < 10) {
+            DESCRIPT_ARRAY[i] = "WEEKS";
+        } else if (i == 10) {
+            DESCRIPT_ARRAY[i] = "MONTH";
+        } else if (i > 10 && i < 16) {
+            DESCRIPT_ARRAY[i] = "MONTHS";
+        } else if (i == 16) {
+            DESCRIPT_ARRAY[i] = "YEAR";
+        } else {
+            DESCRIPT_ARRAY[i] = "YEARS";
+        }
+    }
 
-		// init duration_array
-		for (var i = 0; i < DURATION_ARRAY.length; i++) {
-			if (i == 0) {
-				DESCRIPT_ARRAY[i] = "DAY";
-			} else if (i > 0 && i < 7) {
-				DESCRIPT_ARRAY[i] = "DAYS";
-			} else if (i > 6 && i < 10) {
-				DESCRIPT_ARRAY[i] = "WEEKS";
-			} else if (i == 10) {
-				DESCRIPT_ARRAY[i] = "MONTH";
-			} else if (i > 10 && i < 16) {
-				DESCRIPT_ARRAY[i] = "MONTHS";
-			} else if (i == 16) {
-				DESCRIPT_ARRAY[i] = "YEAR";
-			} else {
-				DESCRIPT_ARRAY[i] = "YEARS";
-			}
-		}
+    // functions
+    function isMobile() {
+        return $("#device-check").css("background-color") === "rgb(0, 0, 0)";
+    }
 
-		// functions
-		function isMobile() {
-			return $("#device-check").css("background-color") === "rgb(0, 0, 0)";
-		}
+    function positionTextInSlider() {
+        var insideContainer = $("#page" + CURRENT_PAGE + " .sliderInside");
+        insideContainer.css({
+            marginLeft: -insideContainer.width() / 2,
+            marginTop: insideContainer.parent().height() / 2 - insideContainer.height() / 2 - 5
+        });
+    }
 
-		function positionTextInSlider() {
-			var insideContainer = $("#page" + CURRENT_PAGE + " .sliderInside");
-			insideContainer.css({
-				marginLeft: -insideContainer.width() / 2,
-				marginTop: insideContainer.parent().height() / 2 - insideContainer.height() / 2 - 5
-			});
-		}
+    function onCircleSliderDrag(index, angle) {
+        var i = parseInt(Math.round(angle / 360 * 100), 10);
+        var newText;
+        var oldText;
+        var viewsText = $("#views");
+        if (index == 1) {
+            newText = (i < 9) ? "0" + VIEWS_ARRAY[i] : VIEWS_ARRAY[i];
+            oldText = viewsText.text();
+            viewsText.text(newText);
 
-		function onCircleSliderDrag(index, angle) {
-			var i = parseInt(Math.round(angle / 360 * 100), 10);
+            if (newText.length != oldText.length) {
+                positionTextInSlider();
+            }
+        } else if (index == 2) {
+            var order = parseInt(Math.round(i / (100 / DURATION_ARRAY.length)), 10);
+            if (order < 0) {
+                order = 0;
+            } else if (order > DURATION_ARRAY.length - 1) {
+                order = DURATION_ARRAY.length - 1;
+            }
 
-			if (index == 1) {
-				var newText = (i < 9) ? "0" + VIEWS_ARRAY[i] : VIEWS_ARRAY[i];
-				var oldText = $("#views").text();
-				$("#views").text(newText);
+            var durationField = $("#duration");
+            newText = DESCRIPT_ARRAY[order];
+            oldText = durationField.text();
 
-				if (newText.length != oldText.length) {
-					positionTextInSlider();
-				}
-			} else if (index == 2) {
-				var order = parseInt(Math.round(i / (100 / DURATION_ARRAY.length)), 10);
-				if (order < 0) {
-					order = 0;
-				} else if (order > DURATION_ARRAY.length - 1) {
-					order = DURATION_ARRAY.length - 1;
-				}
+            durationField.text("0" + DURATION_ARRAY[order]); // number only
+            $("#description").text(newText);
 
-				var newText = DESCRIPT_ARRAY[order];
-				var oldText = $("#duration").text();
+            if (newText.length != oldText.length) {
+                positionTextInSlider();
+            }
+        }
 
-				$("#duration").text("0" + DURATION_ARRAY[order]); // number only
-				$("#description").text(newText);
+        // save last positions
+        var thisThumb;
+        if (index == 1) {
+            thisThumb = $("#slider1 > #thumb");
+            LAST_POSITION_1 = {
+                top: thisThumb.css("top"),
+                left: thisThumb.css("left")
+            };
+        } else if (index == 2) {
+            thisThumb = $("#slider2 > #thumb");
+            LAST_POSITION_2 = {
+                top: thisThumb.css("top"),
+                left: thisThumb.css("left")
+            };
+        }
+    }
 
-				if (newText.length != oldText.length) {
-					positionTextInSlider();
-				}
-			}
+    function onTimecryptDecrypted(timecrypt) {
+        if (timecrypt == "-1") {
+            $("#message-text")
+                    .val("YOUR TIMECRYPT HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT")
+                    .attr("readonly", "readonly")
+                    .css("cursor", "pointer")
+                    .click(function () {
+                        window.location.href = "http://timecrypt.co/";
+                    });
+        } else if (timecrypt != null && $.trim(timecrypt).length > 0) {
+            ACTIVE = true;
+            console.log(timecrypt);
+            var ctx = jQuery.parseJSON(timecrypt);
+            console.log(ctx, "parsed");
+            var views = parseInt(ctx.views, 10);
+            var title = ctx.title;
+            var text = ctx.text;
+            var lifetime = ctx.lifetime;
 
-			// save last positions
-			if (index == 1) {
-				LAST_POSITION_1 = {
-					top: $("#slider1 > #thumb").css("top"),
-					left: $("#slider1 > #thumb").css("left")
-				};
-			} else if (index == 2) {
-				LAST_POSITION_2 = {
-					top: $("#slider2 > #thumb").css("top"),
-					left: $("#slider2 > #thumb").css("left")
-				};
-			}
-		}
+            // auto-redirect URLs
+            var redirecting = false;
+            if (isValidUrl($.trim(text))) {
+                redirecting = true;
+                window.location.href = $.trim(text);
+            }
 
-		function onCryptextDecrypted(cryptext) {
-			if (cryptext == "-1") {
-				$("#message-text")
-					.val("YOUR TIMECRYPT HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT")
-					.attr("readonly", "readonly")
-					.css("cursor", "pointer")
-					.click(function() {
-						window.location.href = "http://timecrypt.co/";
-					});
-			} else if (cryptext != null && $.trim(cryptext).length > 0) {
-				ACTIVE = true;
-				console.log(cryptext);
-				var ctx = jQuery.parseJSON(cryptext);
-				console.log(ctx, "parsed");
-				var views = parseInt(ctx.views, 10);
-				var title = ctx.title;
-				var text = ctx.text;
-				var lifetime = ctx.lifetime;
+            var displayText = "REDIRECTING YOU FROM DECRYPTED MESSAGE TO\n\n" + text;
+            if (views == 0 && !redirecting) {
+                displayText = text + "\n\nTIMECRYPT IS NOW DESTROYED";
+            } else if (!redirecting) {
+                displayText = text + "\n\nSELF-DESTRUCT ON: " + lifetime + "\nREMAINING VIEWS: " + views;
+            }
 
-				// autoredirect URLs
-				var redirecting = false;
-				if (isValidUrl($.trim(text))) {
-					redirecting = true;
-					window.location.href = $.trim(text);
-				}
+            $("#message-text")
+                    .val(displayText)
+                    .attr("readonly", "readonly")
+                    .attr("placeholder", "START TYPING\nOR CLICK THE LOGO FOR HELP")
+                    .css("cursor", "default");
 
-				var displayText = "REDIRECTING YOU FROM DECRYPTED MESSAGE TO\n\n" + text;
-				if (views == 0 && !redirecting) {
-					displayText = text + "\n\nTIMECRYPT IS NOW DESTROYED";
-				} else if (!redirecting) {
-					displayText = text + "\n\nSELF-DESTRUCT ON: " + ctx.lifetime + "\nREMAINING VIEWS: " + views;
-				}
+            $("#message-title").val(title);
 
-				$("#message-text")
-					.val(displayText)
-					.attr("readonly", "readonly")
-					.attr("placeholder", "START TYPING\nOR CLICK THE LOGO FOR HELP")
-					.css("cursor", "default");
+            // ignore warnings for now
+            // noinspection JSUnusedLocalSymbols
+            $("button")
+                    .slideDown(300)
+                    .html("CREATE NEW TIMECRYPT")
+                    .click(function (data) {
+                        window.location.href = "http://www.timecrypt.co/";
+                    });
+        }
+    }
 
-				$("#message-title").val(title);
+    function resizePage() {
+        if (isMobile()) {
+            var pageContainer = $(".page-container");
+            var padding = parseInt(pageContainer.css("padding-top").replace("px", ""), 10);
+            var h = $(window).height() - $("nav").height() - $(".logo-container").height() - $(".container > button").height() - padding;
+            var itemSpacing = parseInt($("nav ul li").css("padding-top").replace("px", ""), 10);
 
-				$("button")
-					.slideDown(300)
-					.html("CREATE NEW TIMECRYPT")
-					.click(function(data) {
-						window.location.href = "http://www.timecrypt.co/";
-					});
-			}
-		}
+            pageContainer.height(h - itemSpacing / 2 + 5); // 5 is a magic number
+            $(".page").height(pageContainer.height());
 
-		function resizePage() {
-			if (isMobile()) {
-				var padding = parseInt($(".page-container").css("padding-top").replace("px", ""), 10);
-				var h = $(window).height() - $("nav").height() - $(".logo-container").height() - $(".container > button").height() - padding;
-				var itemSpacing = parseInt($("nav ul li").css("padding-top").replace("px", ""), 10);
+            var textArea = $("#page1 textarea");
+            var textPadding = parseInt(textArea.css("padding").replace("px", ""), 10);
+            textArea.height(pageContainer.height() - 2 * textPadding);
+        }
+    }
 
-				$(".page-container").height(h - itemSpacing / 2 + 5); // 5 is a magic number
-				$(".page").height($(".page-container").height());
+    $(window).resize(function () {
+        if (!isMobile()) {
+            resizePage(); // don't resize on keyboard show
+        }
 
-				var textPadding = parseInt($("#page1 textarea").css("padding").replace("px", ""), 10);
-				$("#page1 textarea").height($(".page-container").height() - 2 * textPadding);
-			}
-		}
+        positionSlider(1);
+        positionSlider(2);
+        positionTextInSlider();
+    });
 
-		$(window).resize(function() {
-			if (!isMobile()) {
-				resizePage(); // don't resize on keyboard show
-			}
+    // before DOM is ready
+    var timecryptId = getUrlParameter("c");
+    var timecryptUrlText = getUrlParameter("t");
+    if (timecryptId == null || $.trim(decodeURIComponent(timecryptId)).length == 0) {
+        ACTIVE = true;
+        console.log("No ID, creating a new Timecrypt...");
+        if (timecryptUrlText != null && $.trim(decodeURIComponent(timecryptUrlText)).length > 0) {
+            // has predefined text
+            $("nav").slideDown(300);
+            $(".logo-container > input").css("display", "inline-block");
+            $(".logo-container").removeClass("centerAligned").addClass("leftAligned");
+            $(".logo-container > img").addClass("withLeftMargin");
+            $("button").slideDown(300);
+            $("textarea")
+                    .removeClass("centerAligned")
+                    .addClass("leftAligned")
+                    .val($.trim(decodeURIComponent(timecryptUrlText)));
+        }
+    } else {
+        ACTIVE = false;
+        $("#message-text").attr("placeholder", "READING YOUR TIMECRYPT, PLEASE WAIT..");
+        timecryptId = $.trim(decodeURIComponent(timecryptId));
+        console.log("Loading Timecrypt [" + timecryptId + "]...");
+        $.post("service/check_password.php", {"id": encodeURIComponent(timecryptId)})
+                .done(function (data) {
+                    if (data == "1") {
+                        // has password
+                        $("#message-text").attr("placeholder", "ENTER TIMECRYPT PASSWORD");
+                        $("button").text("UNLOCK");
+                    } else if (data == "0") {
+                        $("#message-text")
+                                .val("UNLOCKING YOUR TIMECRYPT, PLEASE WAIT..")
+                                .attr("readonly", "readonly")
+                                .css("cursor", "pointer");
+                        $.post("service/get_note.php", {"id": encodeURIComponent(timecryptId)})
+                                .done(onTimecryptDecrypted);
+                    } else {
+                        $("#message-text")
+                                .val("YOUR TIMECRYPT HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT")
+                                .attr("readonly", "readonly")
+                                .css("cursor", "pointer")
+                                .click(function () {
+                                    window.location.href = "http://timecrypt.co/";
+                                });
+                    }
+                });
+    }
 
-			positionSlider(1);
-			positionSlider(2);
-			positionTextInSlider();
-		});
+    $(document).ready(function () {
+        // placeholder back-port
+        $("input, textarea").placeholder();
 
-		// before DOM is ready
-		var cryptextId = getUrlParameter("c");
-		var cryptextUrlText = getUrlParameter("t");
-		if (cryptextId == null || $.trim(decodeURIComponent(cryptextId)).length == 0) {
-			ACTIVE = true;
-			console.log("No ID, creating a new cryptext...");
-			if (cryptextUrlText != null && $.trim(decodeURIComponent(cryptextUrlText)).length > 0) {
-				// has predefined text
-				$("nav").slideDown(300);
-				$(".logo-container > input").css("display", "inline-block");
-				$(".logo-container").removeClass("centerAligned").addClass("leftAligned");
-				$(".logo-container > img").addClass("withLeftMargin");
-				$("button").slideDown(300);
-				$("textarea")
-					.removeClass("centerAligned")
-					.addClass("leftAligned")
-					.val($.trim(decodeURIComponent(cryptextUrlText)));
-			}
-		} else {
-			ACTIVE = false;
-			$("#message-text").attr("placeholder", "READING YOUR TIMECRYPT, PLEASE WAIT..");
-			cryptextId = $.trim(decodeURIComponent(cryptextId));
-			console.log("Loading cryptext [" + cryptextId + "]...");
-			$.post("service/check_password.php", { "id" : encodeURIComponent(cryptextId) })
-				.done(function(data) {
-					if (data == "1") {
-						// has password
-						$("#message-text").attr("placeholder", "ENTER TIMECRYPT PASSWORD");
-						$("button").text("UNLOCK");
-					} else if (data == "0") {
-						$("#message-text")
-							.val("UNLOCKING YOUR TIMECRYPT, PLEASE WAIT..")
-							.attr("readonly", "readonly")
-							.css("cursor", "pointer");
-						$.post("service/get_note.php", { "id" : encodeURIComponent(cryptextId) })
-							.done(onCryptextDecrypted);
-					} else {
-						$("#message-text")
-							.val("YOUR TIMECRYPT HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT")
-							.attr("readonly", "readonly")
-							.css("cursor", "pointer")
-							.click(function() {
-								window.location.href = "http://timecrypt.co/";
-							});
-					}
-				});
-		}
+        resizePage();
 
-		$(document).ready(function() {
-			// placeholder backport
-			$("input, textarea").placeholder();
+        // focus non-mobile only
+        if (!isMobile())
+            $("#page1 textarea").focus();
 
-			resizePage();
+        // slider init
+        setupEvents(1);
+        setupEvents(2);
+        positionSlider(1);
+        positionSlider(2);
+        positionTextInSlider();
 
-			if (!isMobile()) // focus non-mobile only
-				$("#page1 textarea").focus();
-
-			// slider init
-			setupEvents(1);
-			setupEvents(2);
-			positionSlider(1);
-			positionSlider(2);
-			positionTextInSlider();
-
-			initializeCryptextUI();
-		});
-	</script>
+        initializeTimecryptUI();
+    });
+</script>
 </body>
+
 </html>
