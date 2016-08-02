@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>TimeCrypt | Self-destructing messages</title>
+
+	<meta charset="utf-8">
+	<meta name="robots" content="all" />
+	<meta name="description" content="TimeCrypt is a free service which allows sending one-view crypted messages over the Internet." />
+	<meta name="keywords" content="timecrypt, crypted, message, secret, messaging, single, self, destruct, destoy, auto, delete, password" />
+	<meta name="author" content="vaptim.com" />
+	<meta name="copyright" content="2014-present VapTeam" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<!--[if lte IE 8]>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+	<![endif]-->
+
+	<!--[if lte IE 5]>
+		<script type="text/javascript"> function handleError() { return true; } window.onerror = handleError; </script>
+	<![endif]-->
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="assets/js/helpers.js"></script>
+	<script type="text/javascript" src="assets/js/modernizr.js"></script>
+	<script type="text/javascript" src="assets/js/soloslider.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css" />	
+	<link rel="stylesheet" type="text/css" href="assets/css/uni.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/mobile.css" media="only screen and (min-device-width: 300px) and (max-device-width: 480px)" />
+	<link rel="stylesheet" type="text/css" href="assets/css/tablet.css" media="only screen and (min-device-width: 481px) and (max-device-width: 1280px)" />
+	<link rel="stylesheet" type="text/css" href="assets/css/desktop-mini.css" media="only screen and (min-device-width: 1281px) and (max-width: 599px)" />
+	<link rel="stylesheet" type="text/css" href="assets/css/desktop.css" media="only screen and (min-device-width: 1281px) and (min-width: 600px) and (max-width: 1024px)" />
+	<link rel="stylesheet" type="text/css" href="assets/css/desktop-wide.css" media="only screen and (min-device-width: 1281px) and (min-width: 1025px)" />
+
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-52807991-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+</head>
+
+<style type="text/css">
+	* {
+		-webkit-transition: all 0.3s ease-out;
+		-moz-transition: all 0.3s ease-out;
+		-o-transition: all 0.3s ease-out;
+		-ms-transition: all 0.3s ease-out;
+		transition: all 0.3s ease-out;
+	}
+
+	body {
+		background: url("images/landing-background.jpg") no-repeat center center fixed;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-ms-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/landing-background.jpg', sizingMethod='scale')";
+		filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/landing-background.jpg', sizingMethod='scale');
+	}
+
+	img.bg {
+		/* Set rules to fill background */
+		min-height: 100%;
+		min-width: 1024px;
+
+		/* Set up proportionate scaling */
+		width: 100%;
+		height: auto;
+
+		/* Set up positioning */
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: -1;
+	}
+
+	@media screen and (max-width: 1024px) { /* Specific to this particular image */
+		img.bg {
+			left: 50%;
+			margin-left: -512px; /* 50% */
+		}
+	}
+
+	input:-webkit-autofill {
+	    color: #00ABC5 !important;
+		background: rgba(0, 0, 0, 0.5) !important;
+	}
+</style>
+
+<body style="padding-top: 0;">
+	<input type="hidden" id="landing-device-check" />
+
+	<img src="images/landing-background.jpg" class="bg" />
+
+	<section class="landing-logo-container">
+		<img class="landing-logo" src="images/landing-logo.png" />
+	</section>
+
+	<section class="landing-social-container">
+		<!-- Begin MailChimp Signup Form -->
+		<div id="mc_embed_signup">
+			<!-- mail chimp signup -->
+			<form action="http://cryptext.us8.list-manage.com/subscribe/post?u=f0a2ad89d35a269f232993f61&amp;id=2f072b7907" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate style="display: none;">
+				<div class="mc-field-group">
+					<label for="mce-EMAIL">Email Address </label>
+					<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" />
+				</div>
+				<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+				<div id="mce-responses" class="clear">
+					<div class="response" id="mce-error-response" style="display:none"></div>
+					<div class="response" id="mce-success-response" style="display:none"></div>
+				</div>
+				<div style="position: absolute; left: -5000px;">
+					<input type="text" name="b_f0a2ad89d35a269f232993f61_2f072b7907" tabindex="-1" value="" />
+				</div>
+				<div class="clear">
+					<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" />
+				</div>
+			</form>
+		</div>
+		<!--End mc_embed_signup-->
+
+		<input type="email" placeholder="sign up for email updates" id="email" />
+		<img src="images/ok.png" id="ok-button" /><br>
+		
+		<a href="https://twitter.com/timecryptapp" target="_blank"><img src="images/twitter.png" class="social-icon" /></a>
+		<a href="https://www.facebook.com/pages/timecrypt" target="_blank"><img src="images/facebook.png" class="social-icon" /></a>
+		<a href="https://plus.google.com/105664500062213014541" rel="publisher" target="_blank"><img src="images/google-plus.png" class="social-icon" /></a>
+		<a href="https://www.behance.net/gallery/17741037/Cryptextme" target="_blank"><img src="images/behance.png" class="social-icon" /></a>
+	</section>
+
+	<script type="text/javascript">
+		function isMobile() {
+			return !!($.trim($("#landing-device-check").css("background-color")) == "rgb(0, 0, 0)");
+		}
+
+		function resizeLogo() {
+			var wh = $(document).height();
+			var dh = $(".landing-logo-container").height();
+			var pa = parseInt($(".landing-logo-container").css("padding-top").replace("px", ""), 10);
+			var marTop = wh / 2 - dh / 2 - pa;
+
+			$(".landing-logo-container").css({
+				marginTop: marTop + "px"
+			});
+		}
+
+		function resizeSocial() {
+			var ww = $(document).width();
+			var wh = $(document).height();
+			var dw = $(".landing-social-container").width();
+			var dh = $(".landing-social-container").height();
+
+			var leftPx = ww / 2 - dw / 2;
+			var bottomPx = 0;
+
+			$(".landing-social-container").css({
+				left: leftPx + "px",
+				bottom: bottomPx + "px"
+			});
+		}
+
+		$(window).resize(function() {
+			if (!isMobile()) {
+				resizeLogo();
+				resizeSocial();
+				resizeSocial();
+			}
+		});
+
+		// redirect if beta user
+		var ctxID = getUrlParameter("c");
+		var ctxText = getUrlParameter("t");
+		if (ctxID != null && $.trim(decodeURIComponent(ctxID)).length > 0) {
+			window.location.href = "app.html?c=" + ctxID;
+		} else if (ctxText != null && $.trim(decodeURIComponent(ctxText)).length > 0) {
+			window.location.href = "app.html?t=" + ctxText;
+		}
+
+		$(document).ready(function() {
+			if (!isMobile()) {
+				resizeLogo();
+				resizeSocial();
+				resizeSocial();
+			}
+
+			$('input').attr('autocomplete', 'off');
+			$("img#ok-button").click(function(data) {
+				$("#mce-EMAIL").val($("#email").val());
+				$("#mc-embedded-subscribe-form").submit();
+			});
+		});
+	</script>
+</body>
+
+</html>

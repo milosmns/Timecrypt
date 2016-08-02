@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>TimeCrypt | Self-destruct your message</title>
+
+	<meta charset="utf-8">
+	<meta name="robots" content="all" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="copyright" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<!--[if lte IE 8]>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+	<![endif]-->
+
+	<!--[if lte IE 5]>
+		<script type="text/javascript"> function handleError() { return true; } window.onerror = handleError; </script>
+	<![endif]-->
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="assets/js/helpers.js"></script>
+	<script type="text/javascript" src="assets/js/modernizr.js"></script>
+	<script type="text/javascript" src="assets/js/slider.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css" />	
+	<link rel="stylesheet" type="text/css" href="assets/css/app_styles.css" />	
+
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+
+<body>
+
+<div id="logoContainer" style="display: block; width: 100%; height: 110px; position: relative; text-align: center; background: #002828; z-index: 1000;">
+	<img id="logoPath" src="images/logo-path.png" width="70" height="70" style="display: inline-block; cursor: pointer;" /><br>
+	<img id="logoText" src="images/logo-text.png" width="110" height="15" style="display: none;" />
+</div>
+
+<div id="successContainer" style="width: 100%; display: none; text-align: center; padding-top: 150px;">
+	<p id="successText" style="display: block; margin-bottom: 50px;">Here's your link. Copy it somewhere safe.</p>
+	<span id="successUrl">URL</span>
+	<button id="newCryptext">New Cryptext?</button>
+</div>
+
+<div id="mainContainer" style="position: relative; text-align: center;"> <!--  border: 1px solid white; -->
+	<input type="hidden" id="defaultMessage" value="ENTER YOUR SELF-DESTRUCT MESSAGE HERE" />
+	<input type="hidden" id="defaultCrypting" value="CRYPTING..." />
+	<input type="hidden" id="defaultTryAgain" value="SOMETHING'S WRONG. TRY AGAIN?" />
+	<input type="hidden" id="language" value="en" />
+
+	<div id="pageText" class="page">
+		<textarea id="message" maxlength="500"></textarea>
+	</div>
+
+	<div id="pageMore" class="page" style="display: none;">
+		<div style="width: 100%; margin: 10px 0 10px 15px;">
+			<span>Total views</span>
+			<input id="views" type="text" value="1" style="width: 75px;" maxlength="4" />
+		</div>
+		<div style="width: 100%; margin-left: 15px; margin-bottom: 10px;">
+			<span style="margin-left: 63px;">Title</span>
+			<input id="title" type="text" value="" maxlength="30" />
+		</div>
+		<div style="width: 100%; margin-left: 15px; margin-bottom: 10px;">
+			<span style="margin-left: 15px;">Password</span>
+			<input id="password" type="password" value="" maxlength="30" />
+		</div>
+	</div>
+
+	<div id="pageTime" class="page" style="display: none; position: relative;">
+		<span id="pageTitle" style="display: none; margin-top: 5px; text-align: center;">Auto-Destruct</span>
+		<div class="sliderContainer" id="slider1">
+			<img id="thumb" src="images/slider-thumb.png" style="top: 0; left: 0; position: absolute;" />
+		</div>
+		<div class="sliderContainer" id="slider2">
+			<img id="thumb" src="images/slider-thumb.png" style="top: 0; left: 0; position: absolute;" />
+		</div>
+		<div class="sliderContainer" id="slider3">
+			<img id="thumb" src="images/slider-thumb.png" style="top: 0; left: 0; position: absolute;" />
+		</div>
+		<div id="lifetimeContainer" style="position: absolute; text-align: center; width: 100px; height: 70px;">
+			<span id="insideTitle" style="display: none; margin-bottom: 10px;">Auto-Destruct</span>
+			<input id="day" type="text" value="31" maxlength="2" />
+			<input id="month" type="text" value="12" maxlength="2" /><br>
+			<input id="year" type="text" value="2014" maxlength="4" style="width: 60px;" />
+		</div>
+	</div>
+
+	<div id="pageMail" class="page" style="display: none;">
+		<div style="width: 100%; margin: 10px 0 10px 15px;">
+			<span>Email message to someone</span><br>
+			<input id="emailTo" type="email" value="" maxlength="50" style="margin-left: 0; margin-top: 10px;" />
+		</div>
+		<div style="width: 100%; margin-left: 15px; margin-bottom: 10px;">
+			<span>Email when message is read</span><br>
+			<input id="emailFrom" type="email" value="" maxlength="50" style="margin-left: 0; margin-top: 10px;" />
+		</div>
+	</div>
+
+	<div id="menu" style="margin: 0 auto; height: 90px; width: 100%; position: absolute; left: 0; bottom: 0; display: none;">
+		<!-- must have no spaces -->
+		<div id="row1" style="display: block; height: 45px;"><div id="textTab" class="selectedTab"><img src="images/icon_text.png" width="30" height="30"
+			/></div><img src="images/icon_arrow.png" height="30" /><div id="moreTab" class="unselectedTab"><img src="images/icon_more.png" width="30" height="30" 
+			/></div><img src="images/icon_arrow.png" height="30" /><div id="timeTab" class="unselectedTab"><img src="images/icon_time.png" width="30" height="30"
+			/></div><img src="images/icon_arrow.png" height="30" /><div id="mailTab" class="unselectedTab"><img src="images/icon_mail.png" width="30" height="30"
+			/></div></div>
+		<div id="row2" style="display: block; height: 38px; padding-top: 7px;">
+			CREATE
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var currentPage = 0;
+	var mobileSize = 630;
+	var sizePercent = 60;
+	var isMobile = false;
+	var hasTouch = false;
+	var currentThumb = null;
+	var maxWidth = 700;
+	var maxHeight = 600;
+	var menuHeight = 90;
+
+	var days, months, years;
+
+	function loadDates() {
+		days = new Array();
+		months = new Array();
+		years = new Array();
+		for (var i = 1; i <= 31; i++) {
+			if (i <= 12)
+				months[i - 1] = i;
+			days[i - 1] = i;
+		}
+
+		for (var y = 2014; y <= 2020; y++) {
+			years[y - 2014] = y;
+		}
+	}
+
+	function checkMobile() {
+		var w = $(window).width();
+		var h = $(window).height();
+
+		// force mobile for small screens
+		isMobile = w <= mobileSize || h <= mobileSize;
+	}
+
+	function draw(resize) {
+		checkMobile();
+		placeMainContainer();
+		resizeAllPages();
+		positionLogoBox();
+		positionMenu();
+		setTab(currentPage, resize);
+		if (!resize) {
+			loadDates();
+			setGlobalEvents();
+			setupEvents(1);
+			setupEvents(2);
+			setupEvents(3);
+			handleCreateClick();
+		}
+	}
+
+	// MAIN CODE
+	$(document).ready(function() {
+		setTimeout(draw, 300);
+
+		$(window).resize(function(e) {
+			draw(true);
+		});
+	});
+
+	function setGlobalEvents() {
+		$("#textTab, #moreTab, #timeTab, #mailTab").click(function(e) {
+			var isIcon = event.target.nodeName == "img" || event.target.nodeName == "IMG";
+			if (isIcon)
+				var target = $(event.target).parent();
+			else
+				var target = $(event.target);
+			
+			var id = target.attr("id");
+
+			switch (id) {
+				case "textTab":
+					setTab(0);
+					break;
+				case "moreTab":
+					setTab(1);
+					break;
+				case "timeTab":
+					setTab(2);
+					break;
+				case "mailTab":
+					setTab(3);
+					break;
+				default:
+					setTab(0);
+					break;
+			}
+		});
+
+		// other important events
+		$("#logoPath").click(function(e) {
+			e.preventDefault();
+			$("#logoText").slideToggle(150);
+		});
+
+		$("#message")
+			.click(function(e) {
+				e.preventDefault();
+				if ($(this).val().trim() == $("#defaultMessage").val().trim()) {
+					$(this).val("");
+				}
+				$("#message").css("text-align", "left");
+			})
+			.blur(function(e) {
+				e.preventDefault();
+				if ($("#message").val().trim() == "") {
+					$("#message").val($("#defaultMessage").val());
+					$("#message").css("text-align", "center");
+					$("#menu").slideUp(150);
+				}
+			});
+
+			// because of mobile
+			$(document).bind('input propertychange', function(e) {
+				e.preventDefault();
+				if ($("#message").val().trim() != "") {
+					$("#message").css("text-align", "left");
+					$("#menu").slideDown(150);
+					$("#menu").css("display", "block");
+					positionMenu(); // because it was hidden
+				} else
+					$("#menu").slideUp(150);
+			});
+	}
+
+	function setTab(index, resize) {
+		var tabs = $("#menu #row1").children("div");
+		var selTab = $("#menu #row1").children("div:eq(" + index + ")");
+
+		tabs.removeClass("selectedTab");
+		tabs.removeClass("unselectedTab");
+		tabs.addClass("unselectedTab");
+
+		selTab.removeClass("unselectedTab");
+		selTab.addClass("selectedTab");
+
+		switch (index) {
+			case 0: {
+				resizeMessageBox();
+				if ($("#message").val().trim() == "" && !resize) {
+					$("#message").val($("#defaultMessage").val());
+					$("#message").css("text-align", "center");
+				}
+				$("#message").focus();
+				var len = $("#message").val().length;
+				$('#message').selectRange(len);
+				break;
+			}
+			case 1: {
+				break;
+			}
+			case 2: {
+				if ($("#pageTime").height() < 280 || $("#pageTime").width() < 280) {
+					// unable to show slider
+					$("#slider1, #slider2, #slider3").hide(0);
+					$("#lifetimeContainer").css("width", "180px");
+					$("#lifetimeContainer").css("height", "110px");
+					$("#lifetimeContainer input").css("font-size", "23px");
+					$("#lifetimeContainer input").css("width", "70px");
+					$("#lifetimeContainer input").css("background", "#001E17");
+					$("#pageTitle").css("display", "none");
+					$("#insideTitle").css("display", "block");
+				} else {
+					// slider will be shown
+					$("#slider1, #slider2, #slider3").show(0);
+					$("#lifetimeContainer").css("width", "100px");
+					$("#lifetimeContainer").css("height", "70px");
+					$("#lifetimeContainer input").css("font-size", "17px");
+					$("#lifetimeContainer input").css("width", "30px");
+					$("#lifetimeContainer input").css("background", "none");
+					$("#lifetimeContainer #year").css("width", "60px");
+					$("#pageTitle").css("display", "block");
+					$("#insideTitle").css("display", "none");
+					positionSlider(1);
+					positionSlider(2);
+					positionSlider(3);
+				}
+				positionLifetimeContainer();
+				break;
+			}
+			case 3: {
+				break;
+			}
+		}
+		
+		if (!resize) {
+			currentPage = index;
+			showPage(currentPage);
+		}
+	}
+
+	function showPage(index) {
+		var pages = [
+			$("#pageText"),
+			$("#pageMore"),
+			$("#pageTime"),
+			$("#pageMail")
+		];
+
+		var visible = pages[0];
+		for (var i = 0; i < pages.length; i++) {
+			if (pages[i].is(":visible")) {
+				visible = pages[i];
+				break;
+			}
+		}
+
+		if (visible.attr("id") != pages[index].attr("id")) {
+			visible.slideUp(150);
+			pages[index].slideDown(150);
+		}
+	}
+
+	function placeMainContainer() {
+		var w = $(window).width();
+		var h = $(window).height();
+		var logoH = $("#logoContainer").height() + parseInt($("#logoContainer").css("padding-top").replace("px", ""));
+
+		if (isMobile) {
+			var width = w;
+			var height = h;
+			height -= logoH; // new
+
+			var marTop = 0;
+			var marLeft = 0;
+		} else {
+			var ratio = w / h;
+
+			if (w > h) {
+				var height = Math.round(sizePercent / 100 * h);
+				var width = Math.round(height * ratio);
+			} else {
+				var width = Math.round(sizePercent / 100 * w);
+				var height = Math.round(width / ratio);
+			}
+
+			if (width > maxWidth)
+				width = maxWidth;
+			if (height > maxHeight)
+				height = maxHeight;
+
+			var marTop = h / 2 - height / 2;
+			marTop -= logoH; // new
+			var marLeft = w / 2 - width / 2;
+		}
+
+		$("#mainContainer").css("width", width + "px");
+		$("#mainContainer").css("height", height + "px");
+
+		$("#mainContainer").css("margin-top", marTop + "px");
+		$("#mainContainer").css("margin-left", marLeft + "px");
+	}
+
+	function resizeAllPages() {
+		var pages = $(".page");
+		var cont = pages.parent();
+		pages.height(cont.height() - menuHeight);
+
+		// if (isMobile)
+		// 	pages.css("margin-top", ($("#logoContainer").height() + 30) + "px");
+		// else
+		// 	pages.css("margin-top", "20px");
+
+		pages.css("margin-top", "0px");
+	}
+
+	function resizeMessageBox() {
+		var msg = $("#message");
+		var cont = msg.parent();
+
+		// msg.height(cont.height() - menuHeight);
+		msg.height(cont.height()); // new
+		msg.css("margin-top", 0);
+	}
+
+	function positionLogoBox() {
+		var box = $("#logoContainer");
+
+		var w = $(window).width();
+		var h = $(window).height();
+
+		var x = w / 2 - box.width() / 2;
+		var y = 20; // px
+
+		box.css("left", x + "px");
+		box.css("top", 0 + "px");
+		box.css("padding-top", y + "px");
+	}
+
+	function positionMenu() {
+		var cont = $("#menu #row1");
+		var tabs = $("#menu #row1").children();
+		var arrows = cont.children("img");
+
+		// how much smaller is the arrow
+		if (isMobile)
+			var ratio = 15;
+		else
+			var ratio = 10;
+
+		var tabCount = 4;
+		var arrCount = tabCount - 1;
+		var mar = 3;
+
+		var w = cont.parent().width() - arrCount * 2 * mar - 3;
+		var tabW = Math.round(ratio * w / (arrCount + tabCount * ratio));
+		var arrW = Math.round(tabW / ratio);
+
+		cont.css({
+			background: "#001E17"
+		});
+
+		tabs.css({
+			width: tabW + "px"
+		});
+
+		arrows.css({
+			background: "#001E17",
+			width: arrW + "px",
+			paddingLeft: mar + "px",
+			paddingRight: mar + "px"
+		});
+
+		var shiftAmount = 0;
+		if (currentPage == 0) {
+			shiftAmount = "-45px";
+		} else {
+			shiftAmount = "-90px";
+		}
+		
+		if (isMobile && $(window).height() < 450)
+			cont.parent().css("bottom", shiftAmount); // soft keyboard is up
+		else
+			cont.parent().css("bottom", "0");
+	}
+
+	function positionLifetimeContainer() {
+		var cont = $("#pageTime");
+		var elems = $("#lifetimeContainer");
+
+		var elemsW = elems.width();
+		var elemsH = elems.height();
+
+		elems.css({
+			left: cont.width() / 2 - elemsW / 2,
+			top: cont.height() / 2 - elemsH / 2 + 10
+		});
+	}
+
+	function onCircleSliderDrag(index, angle) {
+		switch (index) {
+			case 1:
+				var str = days[Math.round(angle / 11.6)];
+				if (!str)
+					str = "31";
+				$("#day").val(str);
+				break;
+			case 2:
+				var str = months[Math.round(angle / 30)];
+				if (!str)
+					str = "12";
+				$("#month").val(str);
+				break;
+			case 3:
+				var str = years[Math.round(angle / 51.4)];
+				if (!str)
+					str = "2020";
+				$("#year").val(str);
+				break;
+		}
+	}
+
+	function handleCreateClick() {
+		var button = $("#menu #row2");
+
+		button.click(function(event) {
+			// disable the button
+			button.attr("disabled", "disabled");
+			button.text($("#defaultCrypting").val());
+			button.css("opacity", "0.5");
+
+			var filled = {
+				text: $("#message").val(),
+				views: $("#views").val(),
+				password: $("#password").val(),
+				title: $("#title").val(),
+				lifetime: $("#year").val() + "-" + $("#month").val() + "-" + $("#day").val(),
+				language: $("#language").val(),
+				email_to: $("#emailTo").val(),
+				email_from: $("#emailFrom").val()
+			};
+
+			// send collected
+			var request = $.ajax({
+				url: "service/create_note.php",
+				type: "POST",
+				data: filled
+			});
+
+			request.done(function(msg) {
+				if (msg !== "-1") {
+					// ok
+					showUrl(msg);
+				} else {
+					// fail: enable the button, set error text
+					button.removeAttr("disabled");
+					button.text($("#defaultTryAgain").val());
+					$("#contact_send").css("opacity", "1");
+
+					console.log(filled, "Server denied.");
+				}
+			});
+
+			request.fail(function(jqXHR, textStatus) {
+				// fail: enable the button, set error text
+				console.log(jqXHR, textStatus);
+
+				button.removeAttr("disabled");
+				button.text($("#defaultTryAgain").val());
+				$("#contact_send").css("opacity", "1");
+			});
+		});
+		
+		function showUrl(url) {
+			var cont = $("#successContainer");
+			var logo = $("#logoContainer");
+			var main = $("#mainContainer");
+
+			logo.slideUp(150);
+			main.slideUp(150, function() {
+				cont.width(cont.parent().width());
+				cont.height(cont.parent().height());
+				cont.children("#successUrl").text(url);
+				if (isMobile)
+					cont.children("#successUrl").css("font-size", "15px");
+					cont.children("#successUrl").css("display", "inline");
+				cont.slideDown(150);
+			});
+
+			$("#newCryptext").click(function(e) {
+				location.reload();
+			});
+		}
+
+	}
+
+</script>
+
+</body>
+</html>
