@@ -1,0 +1,3 @@
+OPTIMIZE TABLE message;
+
+

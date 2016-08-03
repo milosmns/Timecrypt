@@ -1,3 +1,12 @@
-The OpenShift `jbossews` cartridge documentation can be found at:
+Connect PostgreSQL locally
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#tomcat
+http://stackoverflow.com/questions/20960407/openshift-how-to-connect-to-postgresql-from-my-pc
+```rhc port-forward timecrypt --service postgresql```
+
+change possible in several layers:
+
+* config info (local.properties in webapp/)
+* data store choice (nosql, sql, etc)
+* data store implementation (implement interface)
+* data store provider (override behavior)
+* post/get switch in servlets (override methods)

@@ -1,0 +1,34 @@
+
+package co.timecrypt.api.v2.database;
+
+import co.timecrypt.api.v2.servlets.TimecryptApiServlet;
+import com.sun.media.sound.InvalidDataException;
+
+/**
+ * The main Timecrypt data store interface, implement this if you need to change how the data communication works.
+ */
+public interface TimecryptDatastore {
+
+    /**
+     * Initialize the data store here. This will generally get called by each servlet instance only once.
+     *
+     * @param creator The servlet that created this data store, if you need it
+     * @throws InvalidDataException If something goes wrong
+     */
+    void init(TimecryptApiServlet creator) throws InvalidDataException;
+
+    /**
+     * Checks whether the Timecrypt message associated with this ID contains a password lock.
+     * 
+     * @param id A unique Timecrypt message ID
+     * @return {@code True} if the message exists, and it contains a password lock; {@code false} if it doesn't contain the lock
+     * @throws InvalidDataException if the message with that doesn't exist
+     */
+    boolean checkLock(String id) throws InvalidDataException;
+
+    /**
+     * Deallocate all resources here and drop any external connections. This will generally get called by each servlet instance only once.
+     */
+    void destroy();
+
+}
