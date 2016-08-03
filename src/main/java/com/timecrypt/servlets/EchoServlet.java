@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Prints anything you throw at it.
@@ -49,8 +50,14 @@ public class EchoServlet extends HttpServlet {
      * @throws IOException If something goes wrong
      */
     private void handleEcho(int type, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String uri = String.valueOf(request.getRequestURI());
+        String query = String.valueOf(request.getQueryString());
         String typeName = getTypeName(type);
-        response.getOutputStream().print(typeName + ": " + request.toString());
+        String time = new Date(System.currentTimeMillis()).toString();
+
+        String echo = String.format("%s\n'%s' request at '%s' with '%s' query", time, typeName, uri, query);
+        response.getOutputStream().print(echo);
+        response.getOutputStream().flush();
     }
 
     /**
