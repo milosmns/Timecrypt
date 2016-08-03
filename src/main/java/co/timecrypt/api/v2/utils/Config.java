@@ -6,6 +6,8 @@ package co.timecrypt.api.v2.utils;
  */
 public class Config {
 
-    public static final String DB_TABLE_NAME = "timecrypt";
+    public static final String DATABASE_NAME = "timecrypt";
+
+    public static final String PARAM_LOCK_CHECK_ID = "id";
 
 }

@@ -3,6 +3,7 @@ package co.timecrypt.api.v2.servlets;
 
 import co.timecrypt.api.v2.database.DataStoreProvider;
 import co.timecrypt.api.v2.database.TimecryptDataStore;
+import co.timecrypt.utils.TextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,18 +34,30 @@ public abstract class TimecryptApiServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
         if (isPostAllowed()) {
             handleRequest(req, resp);
+        } else {
+            super.doPost(req, resp);
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
         if (isGetAllowed()) {
             handleRequest(req, resp);
+        } else {
+            super.doGet(req, resp);
         }
+    }
+
+    /**
+     * Sanitizes the given request parameter.
+     * 
+     * @param param Which parameter to sanitize
+     * @return {@code Null} if the given parameter {@link TextUtils#isEmpty(String)}, or trimmed value if not empty
+     */
+    protected String sanitize(String param) {
+        return TextUtils.isEmpty(param) ? null : param.trim();
     }
 
     /**
@@ -62,7 +75,7 @@ public abstract class TimecryptApiServlet extends HttpServlet {
      * @param request Which request to handle
      * @param response Which response to use for the reaction
      */
-    abstract protected void handleRequest(HttpServletRequest request, HttpServletResponse response);
+    abstract protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     /**
      * @return {@code True} if {@link #doPost(HttpServletRequest, HttpServletResponse)} is allowed to be handled by

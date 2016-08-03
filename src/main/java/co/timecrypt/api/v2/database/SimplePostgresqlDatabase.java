@@ -6,9 +6,7 @@ import co.timecrypt.api.v2.utils.Config;
 import co.timecrypt.utils.TextUtils;
 import com.sun.media.sound.InvalidDataException;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -48,7 +46,7 @@ public class SimplePostgresqlDatabase implements TimecryptDataStore {
             creator.log("Cannot configure database. Did you put your 'local.properties' at 'webapp' root?", e);
         }
 
-        uri = String.format("jdbc:postgresql://%s:%s/%s", host, port, Config.DB_TABLE_NAME);
+        uri = String.format("jdbc:postgresql://%s:%s/%s", host, port, Config.DATABASE_NAME);
 
         // test for library dependency 
         try {
@@ -61,12 +59,33 @@ public class SimplePostgresqlDatabase implements TimecryptDataStore {
     @Override
     public boolean checkLock(String id) throws InvalidDataException {
         Connection connection = open();
+        PreparedStatement statement = null;
+        ResultSet results = null;
 
+        try {
+            long dataId = Long.parseLong(id);
 
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement("SELECT message.locked FROM message WHERE message.id = ?");
+            statement.setLong(1, dataId);
+            results = statement.executeQuery();
 
-        close(connection);
-
-        return false;
+            if (results.next()) {
+                return results.getBoolean(0); // 0 because it will be the only column at index [0]
+            } else {
+                throw new InvalidDataException("No results for " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InvalidDataException("SQL exception: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            throw new InvalidDataException("Number exception: " + e.getMessage());
+        } finally {
+            close(results);
+            close(statement);
+            close(connection);
+        }
     }
 
     private Connection open() {
@@ -78,11 +97,11 @@ public class SimplePostgresqlDatabase implements TimecryptDataStore {
         }
     }
 
-    private void close(Connection connection) {
-        if (connection != null) {
+    private void close(AutoCloseable autoCloseable) {
+        if (autoCloseable != null) {
             try {
-                connection.close();
-            } catch (SQLException ignored) {
+                autoCloseable.close();
+            } catch (Exception ignored) {
                 // I don't really care
             }
         }
