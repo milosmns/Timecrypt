@@ -16,7 +16,7 @@ import java.util.Scanner;
 /**
  * This class does all of the database work. You should put your implementation here if you want to change something.
  */
-public class SimplePostgresqlDatabase implements TimecryptDatabase {
+public class SimplePostgresqlDatabase implements TimecryptDataStore {
 
     private String uri;
     private String host;

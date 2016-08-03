@@ -2,7 +2,7 @@
 package co.timecrypt.api.v2.servlets;
 
 import co.timecrypt.api.v2.database.DataStoreProvider;
-import co.timecrypt.api.v2.database.TimecryptDatabase;
+import co.timecrypt.api.v2.database.TimecryptDataStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public abstract class TimecryptApiServlet extends HttpServlet {
 
-    private TimecryptDatabase dataStore;
+    private TimecryptDataStore dataStore;
 
     @Override
     public void init() throws ServletException {
@@ -50,7 +50,7 @@ public abstract class TimecryptApiServlet extends HttpServlet {
     /**
      * @return This servlet's data store
      */
-    protected TimecryptDatabase getDataStore() {
+    protected TimecryptDataStore getDataStore() {
         return dataStore;
     }
 
