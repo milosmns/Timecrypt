@@ -7,7 +7,7 @@ import com.sun.media.sound.InvalidDataException;
 /**
  * The main Timecrypt data store interface, implement this if you need to change how the data communication works.
  */
-public interface TimecryptDatastore {
+public interface TimecryptDatabase {
 
     /**
      * Initialize the data store here. This will generally get called by each servlet instance only once.
