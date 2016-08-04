@@ -1,8 +1,8 @@
 
-package co.timecrypt.api.v2.database;
+package co.timecrypt.api.v2.database.postgresql;
 
+import co.timecrypt.api.v2.database.TimecryptDataStore;
 import co.timecrypt.api.v2.servlets.TimecryptApiServlet;
-import co.timecrypt.api.v2.utils.Config;
 import co.timecrypt.utils.TextUtils;
 import com.sun.media.sound.InvalidDataException;
 
@@ -46,7 +46,7 @@ public class SimplePostgresqlDatabase implements TimecryptDataStore {
             creator.log("Cannot configure database. Did you put your 'local.properties' at 'webapp' root?", e);
         }
 
-        uri = String.format("jdbc:postgresql://%s:%s/%s", host, port, Config.DATABASE_NAME);
+        uri = String.format("jdbc:postgresql://%s:%s/%s", host, port, PostgreSQLConfig.DATABASE_NAME);
 
         // test for library dependency 
         try {
@@ -71,7 +71,7 @@ public class SimplePostgresqlDatabase implements TimecryptDataStore {
             results = statement.executeQuery();
 
             if (results.next()) {
-                return results.getBoolean(0); // 0 because it will be the only column at index [0]
+                return results.getBoolean("locked"); // 0 because it will be the only column at index [0]
             } else {
                 throw new InvalidDataException("No results for " + id);
             }

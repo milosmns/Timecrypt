@@ -1,7 +1,7 @@
 
 package co.timecrypt.api.v2.servlets;
 
-import co.timecrypt.api.v2.database.DataStoreProvider;
+import co.timecrypt.api.v2.database.postgresql.DataStoreProvider;
 import co.timecrypt.api.v2.database.TimecryptDataStore;
 import co.timecrypt.utils.TextUtils;
 

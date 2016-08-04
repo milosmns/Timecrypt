@@ -1,6 +1,7 @@
 
-package co.timecrypt.api.v2.database;
+package co.timecrypt.api.v2.database.postgresql;
 
+import co.timecrypt.api.v2.database.TimecryptDataStore;
 import co.timecrypt.api.v2.servlets.TimecryptApiServlet;
 
 import java.util.HashMap;
