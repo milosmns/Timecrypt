@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * This class should handle creation of {@link TimecryptDataStore}(s). If you need a more complex implementation, override that here.
  */
-public class DataStoreProvider {
+public class PostgresProvider {
 
     private static Map<String, TimecryptDataStore> storeCache = new HashMap<>();
 
@@ -20,7 +20,7 @@ public class DataStoreProvider {
      * @param servlet Which servlet was just initialized
      */
     public static void onServletInitialized(TimecryptApiServlet servlet) {
-        TimecryptDataStore dataStore = new SimplePostgresqlDatabase();
+        TimecryptDataStore dataStore = new SimplePostgresDatabase();
         try {
             dataStore.init(servlet);
         } catch (com.sun.media.sound.InvalidDataException e) {

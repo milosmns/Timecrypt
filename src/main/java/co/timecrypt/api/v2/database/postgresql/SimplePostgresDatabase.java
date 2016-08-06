@@ -14,16 +14,17 @@ import java.util.Scanner;
 /**
  * This class does all of the database work. You should put your implementation here if you want to change something.
  */
-public class SimplePostgresqlDatabase implements TimecryptDataStore {
+public class SimplePostgresDatabase implements TimecryptDataStore {
 
     private String uri;
-    private String host;
-    private String port;
     private String user;
     private String pass;
 
     @Override
     public void init(TimecryptApiServlet creator) throws InvalidDataException {
+        String host;
+        String port;
+
         try (Scanner scanner = new Scanner(creator.getServletContext().getResourceAsStream("/local.properties"))) {
             Map<String, String> config = new HashMap<>();
 
@@ -34,19 +35,26 @@ public class SimplePostgresqlDatabase implements TimecryptDataStore {
                 config.put(splitRow[0], splitRow[1]);
             }
 
-            host = config.get("database_host");
-            port = config.get("database_port");
-            user = config.get("database_user");
-            pass = config.get("database_pass");
-
-            if (TextUtils.isAnyEmpty(host, port, user, pass)) {
-                throw new InvalidDataException("Host, port, username and password must be defined in configuration");
-            }
+            host = config.get(PostgresConfig.PROP_HOST);
+            port = config.get(PostgresConfig.PROP_PORT);
+            user = config.get(PostgresConfig.PROP_USER);
+            pass = config.get(PostgresConfig.PROP_PASS);
         } catch (Exception e) {
-            creator.log("Cannot configure database. Did you put your 'local.properties' at 'webapp' root?", e);
+            creator.log("Did you put your 'local.properties' at 'webapp' root?", e);
+
+            // now try the environment variable configuration (server build)
+            Map<String, String> variables = System.getenv();
+            host = variables.get(PostgresConfig.ENV_HOST);
+            port = variables.get(PostgresConfig.ENV_PORT);
+            user = variables.get(PostgresConfig.ENV_USER);
+            pass = variables.get(PostgresConfig.ENV_PASS);
         }
 
-        uri = String.format("jdbc:postgresql://%s:%s/%s", host, port, PostgreSQLConfig.DATABASE_NAME);
+        if (TextUtils.isAnyEmpty(host, port, user, pass)) {
+            throw new InvalidDataException("Host, port, username and password must be defined in configuration");
+        }
+
+        uri = String.format("jdbc:postgresql://%s:%s/%s", host, port, PostgresConfig.DATABASE);
 
         // test for library dependency 
         try {

@@ -1,7 +1,7 @@
 
 package co.timecrypt.api.v2.servlets;
 
-import co.timecrypt.api.v2.database.postgresql.PostgreSQLConfig;
+import co.timecrypt.api.v2.definitions.Parameter;
 import com.sun.media.sound.InvalidDataException;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ public class LockCheckServlet extends TimecryptApiServlet {
 
     @Override
     protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = sanitize(request.getParameter(PostgreSQLConfig.PARAM_LOCK_CHECK_ID));
+        String id = sanitize(request.getParameter(Parameter.LOCK_CHECK_ID));
 
         // FIXME use proper JSON and mime type
         if (id == null) {

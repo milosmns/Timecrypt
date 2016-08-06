@@ -1,7 +1,7 @@
 
 package co.timecrypt.api.v2.servlets;
 
-import co.timecrypt.api.v2.database.postgresql.DataStoreProvider;
+import co.timecrypt.api.v2.database.postgresql.PostgresProvider;
 import co.timecrypt.api.v2.database.TimecryptDataStore;
 import co.timecrypt.utils.TextUtils;
 
@@ -21,14 +21,14 @@ public abstract class TimecryptApiServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        DataStoreProvider.onServletInitialized(this);
-        dataStore = DataStoreProvider.getDataStore(this);
+        PostgresProvider.onServletInitialized(this);
+        dataStore = PostgresProvider.getDataStore(this);
     }
 
     @Override
     public void destroy() {
         super.destroy();
-        DataStoreProvider.onServletDestroyed(this);
+        PostgresProvider.onServletDestroyed(this);
         dataStore = null;
     }
 
