@@ -1,9 +1,11 @@
 
 package co.timecrypt.api.v2.servlets;
 
-import co.timecrypt.api.v2.database.postgresql.PostgresProvider;
 import co.timecrypt.api.v2.database.TimecryptDataStore;
+import co.timecrypt.api.v2.database.postgresql.PostgresProvider;
+import co.timecrypt.api.v2.definitions.JsonResponses;
 import co.timecrypt.utils.TextUtils;
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,12 +54,28 @@ public abstract class TimecryptApiServlet extends HttpServlet {
 
     /**
      * Sanitizes the given request parameter.
-     * 
+     *
      * @param param Which parameter to sanitize
      * @return {@code Null} if the given parameter {@link TextUtils#isEmpty(String)}, or trimmed value if not empty
      */
-    protected String sanitize(String param) {
+    protected final String sanitize(String param) {
         return TextUtils.isEmpty(param) ? null : param.trim();
+    }
+
+    /**
+     * Writes the given {@link co.timecrypt.api.v2.definitions.JsonResponses.TimecryptResponse} raw message to the given
+     * {@link HttpServletResponse} output, using JSON message format.
+     *
+     * @param raw      The raw message, in Java format
+     * @param response Where to write the JSON to
+     * @throws IOException If something goes wrong with the response output stream
+     */
+    protected final void writeToOutput(JsonResponses.TimecryptResponse raw, HttpServletResponse response) throws IOException {
+        String json = new Gson().toJson(raw);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
+        response.getWriter().flush();
     }
 
     /**
@@ -71,15 +89,15 @@ public abstract class TimecryptApiServlet extends HttpServlet {
      * This handles the request for both {@link #doPost(HttpServletRequest, HttpServletResponse)} and
      * {@link #doGet(HttpServletRequest, HttpServletResponse)}. If you don't want to handle any of these, override {@link #isPostAllowed()}
      * or {@link #isGetAllowed()}, respectively.
-     * 
-     * @param request Which request to handle
+     *
+     * @param request  Which request to handle
      * @param response Which response to use for the reaction
      */
     abstract protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     /**
      * @return {@code True} if {@link #doPost(HttpServletRequest, HttpServletResponse)} is allowed to be handled by
-     *         {@link #handleRequest(HttpServletRequest, HttpServletResponse)}, {@code false} if not
+     * {@link #handleRequest(HttpServletRequest, HttpServletResponse)}, {@code false} if not
      */
     protected boolean isPostAllowed() {
         return true;
@@ -87,7 +105,7 @@ public abstract class TimecryptApiServlet extends HttpServlet {
 
     /**
      * @return {@code True} if {@link #doGet(HttpServletRequest, HttpServletResponse)} is allowed to be handled by
-     *         {@link #handleRequest(HttpServletRequest, HttpServletResponse)}, {@code false} if not
+     * {@link #handleRequest(HttpServletRequest, HttpServletResponse)}, {@code false} if not
      */
     protected boolean isGetAllowed() {
         return true;

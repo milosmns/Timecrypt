@@ -6,6 +6,11 @@ package co.timecrypt.api.v2.definitions;
 public final class ErrorCode {
 
     /**
+     * No error.
+     */
+    public static final int NONE = 0;
+
+    /**
      * Message ID was not supplied.
      */
     public static final int MISSING_ID = -1;

@@ -6,15 +6,34 @@ package co.timecrypt.api.v2.definitions;
 public final class JsonResponses {
 
     /**
+     * A superclass for all Json responses with {@code code} and {@code status}.
+     */
+    public static class TimecryptResponse {
+        public int status_code;
+
+        public TimecryptResponse(int code) {
+            status_code = code;
+        }
+    }
+
+    /**
      * A generic error containing the error code.
      */
-    static final class Error {
-        public final int code;
-        public final boolean success;
-
+    public static final class Error extends TimecryptResponse {
         public Error(int code) {
-            success = false;
-            this.code = code;
+            super(code);
+        }
+    }
+
+    /**
+     * A normal response from {@link co.timecrypt.api.v2.servlets.LockCheckServlet} API call.
+     */
+    public static final class LockCheckResponse extends TimecryptResponse {
+        public final boolean locked;
+
+        public LockCheckResponse(boolean locked) {
+            super(ErrorCode.NONE);
+            this.locked = locked;
         }
     }
 
