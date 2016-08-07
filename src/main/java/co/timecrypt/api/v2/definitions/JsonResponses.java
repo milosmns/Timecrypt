@@ -37,4 +37,12 @@ public final class JsonResponses {
         }
     }
 
+    public static final class CreateResponse extends TimecryptResponse {
+
+
+        public CreateResponse() {
+            super(ErrorCode.NONE);
+        }
+    }
+
 }
