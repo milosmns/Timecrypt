@@ -130,7 +130,7 @@ public class PostgresController implements TimecryptDataStore {
         }
         }
         * */
-        return new EmailSender(mailKey).send("milosmns@gmail.com", "whatever") ? "SENT!" : "NOT SENT...";
+        return new EmailSender(mailKey).send("milosmns@gmail.com", "whatever @ " + new Date(System.currentTimeMillis()).toString()) ? "SENT!" : "NOT SENT...";
     }
 
     private Connection open() {

@@ -7,7 +7,6 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 import javax.ws.rs.core.MediaType;
-import java.util.Date;
 
 /**
  * A basic utility class for sending email messages using the MailGun API.
@@ -23,18 +22,17 @@ public class EmailSender {
     /**
      * Sends an email to the given address.
      *
-     * @param to        Who to send the email to. Must be a valid email address
-     * @param messageId Which Timecrypt message ID to append to the base app URL
+     * @param to   Who to send the email to. Must be a valid email address
+     * @param text What text to send over to the destination email
      * @return {@code True} if all goes well, {@code false} if the email fails to send
      */
-    public boolean send(String to, String messageId) {
+    public boolean send(String to, String text) {
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter(EmailConfig.PROP_API, key));
         WebResource webResource = client.resource(EmailConfig.API_URL);
         MultivaluedMapImpl formData = new MultivaluedMapImpl();
 
-        // TODO replace with fancy HTML
-        formData.add(EmailConfig.PROP_TEXT, "Testing some Mailgun awesomeness! @ " + new Date().toString());
+        formData.add(EmailConfig.PROP_TEXT, text);
         formData.add(EmailConfig.PROP_FROM, EmailConfig.EMAIL_FROM_NAME + " " + EmailConfig.EMAIL_FROM_ADDR);
         formData.add(EmailConfig.PROP_TO, to);
         formData.add(EmailConfig.PROP_SUBJECT, EmailConfig.EMAIL_SUBJECT);
