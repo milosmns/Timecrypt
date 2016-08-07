@@ -23,8 +23,8 @@ public class PostgresProvider {
         TimecryptDataStore dataStore = new SimplePostgresDatabase();
         try {
             dataStore.init(servlet);
-        } catch (com.sun.media.sound.InvalidDataException e) {
-            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            servlet.log("Failed to initialize " + String.valueOf(dataStore), e);
         }
         storeCache.put(servlet.getClass().getSimpleName(), dataStore);
     }

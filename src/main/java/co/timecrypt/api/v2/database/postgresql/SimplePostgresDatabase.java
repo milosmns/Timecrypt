@@ -2,9 +2,9 @@
 package co.timecrypt.api.v2.database.postgresql;
 
 import co.timecrypt.api.v2.database.TimecryptDataStore;
+import co.timecrypt.api.v2.exceptions.InvalidIdentifierException;
 import co.timecrypt.api.v2.servlets.TimecryptApiServlet;
 import co.timecrypt.utils.TextUtils;
-import com.sun.media.sound.InvalidDataException;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
     private String pass;
 
     @Override
-    public void init(TimecryptApiServlet creator) throws InvalidDataException {
+    public void init(TimecryptApiServlet creator) throws IllegalStateException {
         String host;
         String port;
 
@@ -51,7 +51,7 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
         }
 
         if (TextUtils.isAnyEmpty(host, port, user, pass)) {
-            throw new InvalidDataException("Host, port, username and password must be defined in configuration");
+            throw new IllegalStateException("Host, port, username and password must be defined in configuration");
         }
 
         uri = String.format("jdbc:postgresql://%s:%s/%s", host, port, PostgresConfig.DATABASE);
@@ -65,13 +65,13 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
     }
 
     @Override
-    public boolean checkLock(String id) throws InvalidDataException {
+    public boolean checkLock(String id) throws InvalidIdentifierException {
         Connection connection = open();
         PreparedStatement statement = null;
         ResultSet results = null;
 
         try {
-            long dataId = Long.parseLong(id);
+            long dataId = Integer.parseInt(id, 36);
 
             connection.setAutoCommit(false);
             statement = connection.prepareStatement("SELECT message.locked FROM message WHERE message.id = ?");
@@ -81,14 +81,14 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
             if (results.next()) {
                 return results.getBoolean("locked"); // 0 because it will be the only column at index [0]
             } else {
-                throw new InvalidDataException("No results for " + id);
+                throw new InvalidIdentifierException("No results for " + id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InvalidDataException("SQL exception: " + e.getMessage());
+            throw new InvalidIdentifierException("SQL exception: " + e.getMessage());
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            throw new InvalidDataException("Number exception: " + e.getMessage());
+            throw new InvalidIdentifierException("Number exception: " + e.getMessage());
         } finally {
             close(results);
             close(statement);
@@ -117,7 +117,7 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
 
     @Override
     public void destroy() {
-        // TODO do nothing here?
+        // do nothing here?
     }
 
 }

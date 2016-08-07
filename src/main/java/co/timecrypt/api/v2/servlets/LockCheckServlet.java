@@ -4,7 +4,7 @@ package co.timecrypt.api.v2.servlets;
 import co.timecrypt.api.v2.definitions.ErrorCode;
 import co.timecrypt.api.v2.definitions.JsonResponses;
 import co.timecrypt.api.v2.definitions.Parameter;
-import com.sun.media.sound.InvalidDataException;
+import co.timecrypt.api.v2.exceptions.InvalidIdentifierException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,8 +34,7 @@ public class LockCheckServlet extends TimecryptApiServlet {
             boolean hasLock = getDataStore().checkLock(id);
             JsonResponses.TimecryptResponse message = new JsonResponses.LockCheckResponse(hasLock);
             writeToOutput(message, response);
-        } catch (InvalidDataException ignored) {
-            // this means no such ID
+        } catch (InvalidIdentifierException e) {
             JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.INVALID_ID);
             writeToOutput(message, response);
         }
