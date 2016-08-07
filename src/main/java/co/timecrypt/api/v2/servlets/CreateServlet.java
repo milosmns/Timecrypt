@@ -1,9 +1,7 @@
-
 package co.timecrypt.api.v2.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,6 +16,7 @@ public class CreateServlet extends TimecryptApiServlet {
 
     @Override
     protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        getDataStore().create(1, null, null, "lala", "title", "pass");
         //        String id = sanitize(request.getParameter(Parameter.LOCK_CHECK_ID));
         //
         //        if (id == null) {

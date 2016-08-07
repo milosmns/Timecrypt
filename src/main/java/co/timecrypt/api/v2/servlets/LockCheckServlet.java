@@ -1,4 +1,3 @@
-
 package co.timecrypt.api.v2.servlets;
 
 import co.timecrypt.api.v2.definitions.ErrorCode;

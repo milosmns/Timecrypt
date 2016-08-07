@@ -37,11 +37,15 @@ public final class JsonResponses {
         }
     }
 
+    /**
+     * A normal response from {@link co.timecrypt.api.v2.servlets.CreateServlet} API call.
+     */
     public static final class CreateResponse extends TimecryptResponse {
+        public final String id;
 
-
-        public CreateResponse() {
+        public CreateResponse(String id) {
             super(ErrorCode.NONE);
+            this.id = id;
         }
     }
 

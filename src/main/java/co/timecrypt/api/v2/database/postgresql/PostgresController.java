@@ -1,7 +1,8 @@
-
 package co.timecrypt.api.v2.database.postgresql;
 
 import co.timecrypt.api.v2.database.TimecryptDataStore;
+import co.timecrypt.api.v2.email.EmailConfig;
+import co.timecrypt.api.v2.email.EmailSender;
 import co.timecrypt.api.v2.exceptions.InvalidIdentifierException;
 import co.timecrypt.api.v2.servlets.TimecryptApiServlet;
 import co.timecrypt.utils.TextUtils;
@@ -14,11 +15,12 @@ import java.util.Scanner;
 /**
  * This class does all of the database work. You should put your implementation here if you want to change something.
  */
-public class SimplePostgresDatabase implements TimecryptDataStore {
+public class PostgresController implements TimecryptDataStore {
 
     private String uri;
     private String user;
     private String pass;
+    private String mailKey;
 
     @Override
     public void init(TimecryptApiServlet creator) throws IllegalStateException {
@@ -39,6 +41,7 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
             port = config.get(PostgresConfig.PROP_PORT);
             user = config.get(PostgresConfig.PROP_USER);
             pass = config.get(PostgresConfig.PROP_PASS);
+            mailKey = config.get(EmailConfig.PROP_MAIL);
         } catch (Exception e) {
             creator.log("Did you put your 'local.properties' at 'webapp' root?", e);
 
@@ -48,8 +51,10 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
             port = variables.get(PostgresConfig.ENV_PORT);
             user = variables.get(PostgresConfig.ENV_USER);
             pass = variables.get(PostgresConfig.ENV_PASS);
+            mailKey = variables.get(EmailConfig.ENV_HOST);
         }
 
+        // mailKey can be null, we won't have mail then
         if (TextUtils.isAnyEmpty(host, port, user, pass)) {
             throw new IllegalStateException("Host, port, username and password must be defined in configuration");
         }
@@ -125,7 +130,7 @@ public class SimplePostgresDatabase implements TimecryptDataStore {
         }
         }
         * */
-        return "";
+        return new EmailSender(mailKey).send("milosmns@gmail.com", "whatever") ? "SENT!" : "NOT SENT...";
     }
 
     private Connection open() {

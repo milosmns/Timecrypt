@@ -1,4 +1,3 @@
-
 package co.timecrypt.utils;
 
 /**
@@ -8,7 +7,7 @@ public class TextUtils {
 
     /**
      * Checks whether the given String is empty. Spaces prefixing and suffixing the text will be removed prior to check.
-     * 
+     *
      * @param text String to test
      * @return {@code True} if text is empty or {@code null}, {@code false} otherwise
      */
@@ -18,7 +17,7 @@ public class TextUtils {
 
     /**
      * Tests if <b>all</b> of the given Strings are empty using {@link #isEmpty(String)}.
-     * 
+     *
      * @param texts Strings to test
      * @return {@code True} if <b>all</b> texts are empty or {@code null}, {@code false} if any is non-empty
      */

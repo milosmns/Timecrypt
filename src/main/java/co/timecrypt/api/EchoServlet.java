@@ -1,4 +1,3 @@
-
 package co.timecrypt.api;
 
 import javax.servlet.ServletException;
@@ -42,12 +41,12 @@ public class EchoServlet extends HttpServlet {
 
     /**
      * Does the echo request handling.
-     * 
-     * @param type Which type is this request
-     * @param request Handling this request
+     *
+     * @param type     Which type is this request
+     * @param request  Handling this request
      * @param response Using this response
      * @throws ServletException If something goes wrong
-     * @throws IOException If something goes wrong
+     * @throws IOException      If something goes wrong
      */
     private void handleEcho(int type, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = String.valueOf(request.getRequestURI());
@@ -62,7 +61,7 @@ public class EchoServlet extends HttpServlet {
 
     /**
      * Converts integer type to String.
-     * 
+     *
      * @param type Which type to convert
      * @return A String, display name
      */
