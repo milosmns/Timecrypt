@@ -16,7 +16,8 @@ public class CreateServlet extends TimecryptApiServlet {
 
     @Override
     protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getDataStore().create(1, null, null, "lala", "title", "pass");
+        String result = getDataStore().create(1, null, null, "lala", "title", "pass");
+        response.getWriter().write(result);
         //        String id = sanitize(request.getParameter(Parameter.LOCK_CHECK_ID));
         //
         //        if (id == null) {
