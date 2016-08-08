@@ -25,6 +25,7 @@ public class CreateServlet extends TimecryptApiServlet {
         if (text == null) {
             JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.MISSING_TEXT);
             writeToOutput(message, response);
+            return;
         }
 
         String viewCount = sanitize(request.getParameter(Parameter.CREATE_VIEW_COUNT));
