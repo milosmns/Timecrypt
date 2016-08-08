@@ -20,4 +20,9 @@ public final class ErrorCode {
      */
     public static final int INVALID_ID = -2;
 
+    /**
+     * Message text is not provided.
+     */
+    public static final int MISSING_TEXT = -3;
+
 }

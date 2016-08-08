@@ -1,5 +1,9 @@
 package co.timecrypt.api.v2.servlets;
 
+import co.timecrypt.api.v2.definitions.ErrorCode;
+import co.timecrypt.api.v2.definitions.JsonResponses;
+import co.timecrypt.api.v2.definitions.Parameter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,24 +20,23 @@ public class CreateServlet extends TimecryptApiServlet {
 
     @Override
     protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String result = getDataStore().create(1, null, null, "lala", "title", "pass");
-        response.getWriter().write(result);
-        //        String id = sanitize(request.getParameter(Parameter.LOCK_CHECK_ID));
-        //
-        //        if (id == null) {
-        //            JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.MISSING_ID);
-        //            writeToOutput(message, response);
-        //            return;
-        //        }
-        //
-        //        try {
-        //            boolean hasLock = getDataStore().checkLock(id);
-        //            JsonResponses.TimecryptResponse message = new JsonResponses.LockCheckResponse(hasLock);
-        //            writeToOutput(message, response);
-        //        } catch (InvalidIdentifierException e) {
-        //            JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.INVALID_ID);
-        //            writeToOutput(message, response);
-        //        }
+        String text = sanitize(request.getParameter(Parameter.CREATE_TEXT));
+
+        if (text == null) {
+            JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.MISSING_TEXT);
+            writeToOutput(message, response);
+        }
+
+        String viewCount = sanitize(request.getParameter(Parameter.CREATE_VIEW_COUNT));
+        String destructDate = sanitize(request.getParameter(Parameter.CREATE_DESTRUCT_DATE));
+        String emailTo = sanitize(request.getParameter(Parameter.CREATE_EMAIL_TO));
+        String emailFrom = sanitize(request.getParameter(Parameter.CREATE_EMAIL_FROM));
+        String title = sanitize(request.getParameter(Parameter.CREATE_TITLE));
+        String password = sanitize(request.getParameter(Parameter.CREATE_PASSWORD));
+
+        String messageId = getDataStore().create(viewCount, destructDate, emailTo, emailFrom, text, title, password);
+        JsonResponses.TimecryptResponse message = new JsonResponses.CreateResponse(messageId);
+        writeToOutput(message, response);
     }
 
 }

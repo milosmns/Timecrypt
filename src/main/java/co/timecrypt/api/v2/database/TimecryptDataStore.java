@@ -28,16 +28,17 @@ public interface TimecryptDataStore {
     /**
      * Creates a new Timecrypt message.
      *
-     * @param viewCount    How many times is this message allowed to be shown. Must be a positive number starting with 1
+     * @param viewCount    How many times is this message allowed to be shown. Can be {@code null}, defaults to 1
      * @param destructDate When to self-destruct the message. Format depends on the data store. Can be {@code null}, defaults to
      *                     <b>tomorrow</b> date
-     * @param email        Where to send the invitation to this message. Can be {@code null}, no default
+     * @param emailTo      Where to send the invitation to this message. Can be {@code null}, no default
+     * @param emailFrom    Where to send the "message read" notification. Can be {@code null}, no default
      * @param text         Contents of the message. Must not be {@code null}
      * @param title        Title of the message. Can be {@code null}
      * @param password     Which passphrase to use to encrypt the message. Can be {@code null}, defaults to data store's passphrase
      * @return Message ID of the just-created Timecrypt message, never {@code null}
      */
-    String create(int viewCount, String destructDate, String email, String text, String title, String password);
+    String create(String viewCount, String destructDate, String emailTo, String emailFrom, String text, String title, String password);
 
     /**
      * Deallocate all resources here and drop any external connections. This will generally get called by each servlet instance only once.

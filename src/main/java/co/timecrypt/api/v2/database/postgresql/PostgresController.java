@@ -2,7 +2,6 @@ package co.timecrypt.api.v2.database.postgresql;
 
 import co.timecrypt.api.v2.database.TimecryptDataStore;
 import co.timecrypt.api.v2.email.EmailConfig;
-import co.timecrypt.api.v2.email.EmailSender;
 import co.timecrypt.api.v2.exceptions.InvalidIdentifierException;
 import co.timecrypt.api.v2.servlets.TimecryptApiServlet;
 import co.timecrypt.utils.TextUtils;
@@ -20,42 +19,59 @@ public class PostgresController implements TimecryptDataStore {
     private String uri;
     private String user;
     private String pass;
-    private String mailKey;
+    private String emailKey;
+    private String inviteTemplate;
+    private String notifyTemplate;
 
     @Override
     public void init(TimecryptApiServlet creator) throws IllegalStateException {
         String host;
         String port;
 
-        try (Scanner scanner = new Scanner(creator.getServletContext().getResourceAsStream("/local.properties"))) {
+        try (Scanner propertiesScanner = new Scanner(creator.getServletContext().getResourceAsStream("/local.properties"));
+             Scanner inviteScanner = new Scanner(creator.getServletContext().getResourceAsStream("/email-invitation-template.html"));
+             Scanner notifyScanner = new Scanner(creator.getServletContext().getResourceAsStream("/email-notification-template.html"))) {
+
             Map<String, String> config = new HashMap<>();
 
             // loop through all rows to find the values
             String[] splitRow;
-            while (scanner.hasNext()) {
-                splitRow = scanner.nextLine().split("=");
+            while (propertiesScanner.hasNextLine()) {
+                splitRow = propertiesScanner.nextLine().split("=");
                 config.put(splitRow[0], splitRow[1]);
             }
+
+            StringBuilder templateBuilder = new StringBuilder();
+            while (inviteScanner.hasNextLine()) {
+                templateBuilder.append(inviteScanner.nextLine());
+            }
+            inviteTemplate = templateBuilder.toString();
+
+            templateBuilder = new StringBuilder();
+            while (notifyScanner.hasNextLine()) {
+                templateBuilder.append(notifyScanner.nextLine());
+            }
+            notifyTemplate = templateBuilder.toString();
 
             host = config.get(PostgresConfig.PROP_HOST);
             port = config.get(PostgresConfig.PROP_PORT);
             user = config.get(PostgresConfig.PROP_USER);
             pass = config.get(PostgresConfig.PROP_PASS);
-            mailKey = config.get(EmailConfig.PROP_MAIL);
+            emailKey = config.get(EmailConfig.PROP_MAIL);
         } catch (Exception e) {
             creator.log("Did you put your 'local.properties' at 'webapp' root?", e);
 
-            // now try the environment variable configuration (server build)
+            // no local.properties, try the environment variable configuration (server build)
             Map<String, String> variables = System.getenv();
             host = variables.get(PostgresConfig.ENV_HOST);
             port = variables.get(PostgresConfig.ENV_PORT);
             user = variables.get(PostgresConfig.ENV_USER);
             pass = variables.get(PostgresConfig.ENV_PASS);
-            mailKey = variables.get(EmailConfig.ENV_HOST);
+            emailKey = variables.get(EmailConfig.ENV_HOST);
         }
 
-        // mailKey can be null, we won't have mail then
-        if (TextUtils.isAnyEmpty(host, port, user, pass)) {
+        // emailKey can be null, we won't have mail then
+        if (TextUtils.isAnyEmpty(host, port, user, pass, inviteTemplate, notifyTemplate)) {
             throw new IllegalStateException("Host, port, username and password must be defined in configuration");
         }
 
@@ -102,7 +118,8 @@ public class PostgresController implements TimecryptDataStore {
     }
 
     @Override
-    public String create(int viewCount, String destructDate, String email, String text, String title, String password) {
+    public String create(String viewCount, String destructDate, String emailTo, String emailFrom, String text, String title, String password) {
+        return "-1";
         /*
         try (
         Connection connection = dataSource.getConnection();
@@ -130,7 +147,6 @@ public class PostgresController implements TimecryptDataStore {
         }
         }
         * */
-        return new EmailSender(mailKey).send("milosmns@gmail.com", "whatever @ " + new Date(System.currentTimeMillis()).toString()) ? "SENT!" : "NOT SENT...";
     }
 
     private Connection open() {
