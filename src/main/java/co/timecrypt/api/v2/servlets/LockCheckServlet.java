@@ -3,6 +3,7 @@ package co.timecrypt.api.v2.servlets;
 import co.timecrypt.api.v2.definitions.ErrorCode;
 import co.timecrypt.api.v2.definitions.JsonResponses;
 import co.timecrypt.api.v2.definitions.Parameter;
+import co.timecrypt.api.v2.exceptions.InternalException;
 import co.timecrypt.api.v2.exceptions.InvalidIdentifierException;
 
 import javax.servlet.ServletException;
@@ -29,14 +30,17 @@ public class LockCheckServlet extends TimecryptApiServlet {
             return;
         }
 
+        JsonResponses.TimecryptResponse message;
         try {
             boolean hasLock = getDataStore().checkLock(id);
-            JsonResponses.TimecryptResponse message = new JsonResponses.LockCheckResponse(hasLock);
-            writeToOutput(message, response);
+            message = new JsonResponses.LockCheckResponse(hasLock);
         } catch (InvalidIdentifierException e) {
-            JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.INVALID_ID);
-            writeToOutput(message, response);
+            message = new JsonResponses.Error(ErrorCode.INVALID_ID);
+        } catch (InternalException e) {
+            message = new JsonResponses.Error(ErrorCode.INTERNAL);
         }
+
+        writeToOutput(message, response);
     }
 
 }

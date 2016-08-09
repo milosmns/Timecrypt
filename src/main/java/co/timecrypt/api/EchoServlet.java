@@ -42,7 +42,7 @@ public class EchoServlet extends HttpServlet {
     /**
      * Does the echo request handling.
      *
-     * @param type     Which type is this request
+     * @param type     What type is this request
      * @param request  Handling this request
      * @param response Using this response
      * @throws ServletException If something goes wrong
