@@ -155,6 +155,7 @@ public class PostgresController implements TimecryptDataStore {
         tomorrowCal.set(Calendar.HOUR_OF_DAY, 0);
         tomorrowCal.set(Calendar.MINUTE, 0);
         tomorrowCal.set(Calendar.SECOND, 0);
+        tomorrowCal.set(Calendar.MILLISECOND, 0);
         tomorrowCal.add(Calendar.DATE, 1);
         java.sql.Date endOfLife = new java.sql.Date(tomorrowCal.getTime().getTime()); // such a strange API...
         if (destructDate != null) {
