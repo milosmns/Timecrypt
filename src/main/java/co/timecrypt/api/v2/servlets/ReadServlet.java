@@ -1,5 +1,6 @@
 package co.timecrypt.api.v2.servlets;
 
+import co.timecrypt.api.v2.database.TimecryptMessage;
 import co.timecrypt.api.v2.definitions.ErrorCode;
 import co.timecrypt.api.v2.definitions.JsonResponses;
 import co.timecrypt.api.v2.definitions.Parameter;
@@ -13,16 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This servlet checks whether a Timecrypt message is locked with a password or not.
+ * This servlet reads a Timecrypt message associated with the provided message ID. Note that reading a message through
+ * this decreases view count.
  */
-@WebServlet(name = "LockCheckServlet", description = "Checks if message is locked", urlPatterns = {
-        "/v2/is-locked"
+@WebServlet(name = "CreateServlet", description = "Loads info about a Timecrypt message", urlPatterns = {
+        "/v2/read"
 })
-public class LockCheckServlet extends TimecryptApiServlet {
+public class ReadServlet extends TimecryptApiServlet {
 
     @Override
     protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = sanitize(request.getParameter(Parameter.ID));
+        String password = sanitize(request.getParameter(Parameter.PASSWORD));
 
         if (id == null) {
             JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.MISSING_ID);
@@ -32,12 +35,13 @@ public class LockCheckServlet extends TimecryptApiServlet {
 
         JsonResponses.TimecryptResponse message;
         try {
-            boolean hasLock = getDataStore().checkLock(id);
-            message = new JsonResponses.LockCheckResponse(hasLock);
-        } catch (InvalidIdentifierException e) {
-            message = new JsonResponses.Error(ErrorCode.INVALID_ID);
+            TimecryptMessage messageData = getDataStore().read(id, password);
+            message = new JsonResponses.ReadResponse(messageData.getText(), messageData.getTitle(),
+                    messageData.getViewCount(), messageData.getDestructDate());
         } catch (InternalException e) {
             message = new JsonResponses.Error(ErrorCode.INTERNAL);
+        } catch (InvalidIdentifierException e) {
+            message = new JsonResponses.Error(ErrorCode.MISSING_ID);
         }
 
         writeToOutput(message, response);

@@ -21,7 +21,7 @@ public class CreateServlet extends TimecryptApiServlet {
 
     @Override
     protected void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String text = sanitize(request.getParameter(Parameter.CREATE_TEXT));
+        String text = sanitize(request.getParameter(Parameter.TEXT));
 
         if (text == null) {
             JsonResponses.TimecryptResponse message = new JsonResponses.Error(ErrorCode.MISSING_TEXT);
@@ -29,12 +29,12 @@ public class CreateServlet extends TimecryptApiServlet {
             return;
         }
 
-        String viewCount = sanitize(request.getParameter(Parameter.CREATE_VIEW_COUNT));
-        String destructDate = sanitize(request.getParameter(Parameter.CREATE_DESTRUCT_DATE));
-        String emailTo = sanitize(request.getParameter(Parameter.CREATE_EMAIL_TO));
-        String emailFrom = sanitize(request.getParameter(Parameter.CREATE_EMAIL_FROM));
-        String title = sanitize(request.getParameter(Parameter.CREATE_TITLE));
-        String password = sanitize(request.getParameter(Parameter.CREATE_PASSWORD));
+        String viewCount = sanitize(request.getParameter(Parameter.VIEW_COUNT));
+        String destructDate = sanitize(request.getParameter(Parameter.DESTRUCT_DATE));
+        String emailTo = sanitize(request.getParameter(Parameter.EMAIL_TO));
+        String emailFrom = sanitize(request.getParameter(Parameter.EMAIL_FROM));
+        String title = sanitize(request.getParameter(Parameter.TITLE));
+        String password = sanitize(request.getParameter(Parameter.PASSWORD));
 
         JsonResponses.TimecryptResponse message;
         try {
@@ -61,7 +61,6 @@ public class CreateServlet extends TimecryptApiServlet {
         }
 
         writeToOutput(message, response);
-
     }
 
 }
