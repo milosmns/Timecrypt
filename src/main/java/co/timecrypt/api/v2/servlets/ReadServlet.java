@@ -17,7 +17,7 @@ import java.io.IOException;
  * This servlet reads a Timecrypt message associated with the provided message ID. Note that reading a message through
  * this decreases view count.
  */
-@WebServlet(name = "CreateServlet", description = "Loads info about a Timecrypt message", urlPatterns = {
+@WebServlet(name = "ReadServlet", description = "Loads info about a Timecrypt message", urlPatterns = {
         "/v2/read"
 })
 public class ReadServlet extends TimecryptApiServlet {
