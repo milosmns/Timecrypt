@@ -299,7 +299,7 @@ public class PostgresController implements TimecryptDataStore {
             }
 
             // read the DB row info for this message
-            String passphrase = TextUtils.isEmpty(password) ? password : defaultPassword;
+            String passphrase = !TextUtils.isEmpty(password) ? password : defaultPassword;
             String text = SimpleAES.decrypt(results.getString("text"), passphrase);
             String title = SimpleAES.decrypt(results.getString("title"), passphrase);
             String email = SimpleAES.decrypt(results.getString("email"), passphrase);
