@@ -313,7 +313,7 @@ public class PostgresController implements TimecryptDataStore {
             }
 
             // construct the return data
-            message = new TimecryptMessage(text, title, viewCount, destructDate);
+            message = new TimecryptMessage(text, title, viewCount--, destructDate);
 
             // finish the "read" operation
             connection.commit();
