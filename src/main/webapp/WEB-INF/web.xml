@@ -5,5 +5,14 @@
         version="3.0"
         xmlns="http://java.sun.com/xml/ns/javaee"
         metadata-complete="false">
+
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
 
