@@ -298,6 +298,7 @@ public class PostgresController implements TimecryptDataStore {
                 throw new InvalidIdentifierException("No results for " + id);
             }
 
+            // read the DB row info for this message
             String passphrase = TextUtils.isEmpty(password) ? password : defaultPassword;
             String text = SimpleAES.decrypt(results.getString("text"), passphrase);
             String title = SimpleAES.decrypt(results.getString("title"), passphrase);
