@@ -321,8 +321,9 @@ public class PostgresController implements TimecryptDataStore {
             close(statement);
 
             // now update the data set to reduce the view count
-            statement = connection.prepareStatement("UPDATE message SET view_times = view_times - 1 WHERE id = ?");
-            statement.setLong(1, dataId);
+            statement = connection.prepareStatement("UPDATE message SET view_times = ? WHERE id = ?");
+            statement.setInt(1, viewCount - 1);
+            statement.setLong(2, dataId);
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
                 connection.rollback();
