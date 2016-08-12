@@ -365,12 +365,12 @@ public class PostgresController implements TimecryptDataStore {
     @Override
     public void deleteExpired() throws InternalException {
         Connection connection = open();
-        PreparedStatement statement = null;
+        Statement statement = null;
 
         try {
             connection.setAutoCommit(false);
-            statement = connection.prepareStatement("DELETE FROM message WHERE lifetime <= now() OR view_times < 1");
-            int affectedRows = statement.executeUpdate();
+            statement = connection.createStatement();
+            int affectedRows = statement.executeUpdate("DELETE FROM message WHERE lifetime <= now() OR view_times < 1");
             connection.commit();
             System.out.println("Deleting expired messages, affected rows: " + affectedRows);
         } catch (SQLException e) {
