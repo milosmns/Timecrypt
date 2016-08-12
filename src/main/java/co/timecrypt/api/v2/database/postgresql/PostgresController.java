@@ -329,6 +329,7 @@ public class PostgresController implements TimecryptDataStore {
                 connection.rollback();
                 throw new InternalException("Reducing view count failed, no rows affected");
             }
+            connection.commit();
             close(statement);
 
             // try to send the email notification

@@ -60,7 +60,7 @@ public class SimpleAES {
         } catch (NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IOException |
                 NoSuchPaddingException | IllegalBlockSizeException e) {
             e.printStackTrace();
-            return content.replace("==", "").replace("/", "0");
+            return content.replaceAll("=", "").replaceAll("/", "0"); // hide that it's base64
         }
     }
 
