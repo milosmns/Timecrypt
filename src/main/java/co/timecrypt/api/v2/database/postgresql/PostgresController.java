@@ -313,7 +313,7 @@ public class PostgresController implements TimecryptDataStore {
             }
 
             // construct the return data
-            message = new TimecryptMessage(text, title, viewCount--, destructDate);
+            message = new TimecryptMessage(text, title, --viewCount, destructDate);
 
             // finish the "read" operation
             connection.commit();
@@ -322,7 +322,7 @@ public class PostgresController implements TimecryptDataStore {
 
             // now update the data set to reduce the view count
             statement = connection.prepareStatement("UPDATE message SET view_times = ? WHERE id = ?");
-            statement.setInt(1, viewCount - 1);
+            statement.setInt(1, viewCount);
             statement.setLong(2, dataId);
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
