@@ -62,15 +62,15 @@ public final class JsonResponses {
 
         String text;
         String title;
-        int view_count;
-        Date destruct_date;
+        int views;
+        String lifetime;
 
         public ReadResponse(String text, String title, int viewCount, Date destructDate) {
             super(ErrorCode.NONE);
             this.text = text;
             this.title = title;
-            this.view_count = viewCount;
-            this.destruct_date = destructDate;
+            this.views = viewCount;
+            this.lifetime = destructDate.toString();
         }
     }
 
