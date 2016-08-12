@@ -368,9 +368,10 @@ public class PostgresController implements TimecryptDataStore {
         PreparedStatement statement = null;
 
         try {
-            connection.setAutoCommit(true);
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement("DELETE FROM message WHERE lifetime <= now() OR view_times < 1");
             int affectedRows = statement.executeUpdate();
+            connection.commit();
             System.out.println("Deleting expired messages, affected rows: " + affectedRows);
         } catch (SQLException e) {
             e.printStackTrace();
