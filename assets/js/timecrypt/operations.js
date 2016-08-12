@@ -7,7 +7,7 @@ function collectAndPrepareData() {
 
     var text = $("#message-text").val();
     if ($.trim(text).length == 0)
-        text = "Check out TimeCrypt @ http://www.timecrypt.co/";
+        text = "Check out TimeCrypt @ " + APP_URL;
 
     var views = parseInt($("#views").text(), 10);
     if (views < 1)
@@ -37,9 +37,7 @@ function collectAndPrepareData() {
      * moment().add('days', 10);
      */
     // also included elsewhere...
-    // noinspection JSUnresolvedFunction
     var date = moment().add(desc, dur).format("YYYY-MM-DD");
-    // noinspection JSUnresolvedFunction
     var friendlyDate = moment().add(desc, dur).fromNow();
 
     var sendTo = $.trim($("#send-to").val());
@@ -79,16 +77,16 @@ function createTimecrypt(log) {
             "password": timecrypt.password,
             "title": timecrypt.title,
             "lifetime": timecrypt.date,
-            "language": "en", // change later
             "email_to": timecrypt.sendTo,
             "email_from": timecrypt.sendFrom
         };
 
-        $.post("service/create_note.php", cloned)
+        $.post(API_URL + "v2/create", cloned)
             .done(function (data) {
-                if (data != "-1") {
+                var jsonData = $.parseJSON(data);
+                if (jsonData != null && jsonData.status_code == 0) {
                     $(".container button").removeAttr("disabled");
-                    $("#message-text").val("TIMECRYPT CREATED. YOUR LINK IS:\n\n"
+                    $("#message-text").val("TIMECRYPT CREATED. SEND THIS LINK:\n\n"
                     + data + "\n\nREMEMBER, YOU HAVE ONLY "
                     + timecrypt.views + " ALLOWED VIEW(S).");
                     $("#message-title").val("");

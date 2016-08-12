@@ -11,6 +11,12 @@
     <meta name="copyright" content="2016-Present, AngryByte.me" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+    <script type="text/javascript">
+        const API_URL = "http://timecrypt-angrybyte.rhcloud.com/";
+        const APP_URL = "http://www.timecrypt.co/";
+        const SRC_URL = "https://www.github.com/milosmns/";
+    </script>
+
     <!--[if lte IE 8]>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
     <![endif]-->
@@ -50,8 +56,8 @@
             // Google code, don't touch
             // noinspection PointlessArithmeticExpressionJS, CommaExpressionJS
             i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
             // Google code, don't touch
             // noinspection CommaExpressionJS
             a = s.createElement(o),
@@ -82,23 +88,15 @@
         <input type="hidden" id="device-check" />
     </div>
 
-    <nav style="display: none;">
-        <ul>
-            <!-- jQuery will know what to do, don't worry -->
-            <!--suppress HtmlUnknownAttribute -->
-            <li ord="1" class="selected"><img src="images/text.png" /></li>
-            <!--suppress HtmlUnknownAttribute -->
-            <li class="special" ord="2"><img src="images/views.png" /></li>
-            <!--suppress HtmlUnknownAttribute -->
-            <li ord="3"><img src="images/duration.png" /></li>
-            <!--suppress HtmlUnknownAttribute -->
-            <li ord="4"><img src="images/email.png" /></li>
-        </ul>
-    </nav>
+    <nav style="display: none;"><ul><li
+            ord="1" class="selected"><img src="images/text.png" /></li><li
+            class="special" ord="2"><img src="images/views.png" /></li><li
+            ord="3"><img src="images/duration.png" /></li><li
+            ord="4"><img src="images/email.png" /></li></ul></nav>
 
     <section class="page-container">
         <div class="page" id="page1" style="display: block;"><textarea class="centerAligned" id="message-text" placeholder="START TYPING
-OR CLICK THE LOGO FOR HELP"></textarea></div>
+OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
         <div class="page" id="page2" style="display: none;">
             <div class="sliderContainer" id="slider1">
                 <!-- Yeah, I'm lazy and this is just a demo, so... -->
@@ -136,7 +134,7 @@ OR CLICK THE LOGO FOR HELP"></textarea></div>
     </button>
 </section>
 
-<!-- There is some code here, let me explain. I was lazy, so I reacted to everything in here. Feel free to organize yours better :) -->
+<!-- There is some bad code here, let me explain. I was lazy, so I reacted to everything in here. Feel free to organize yours better :) -->
 <script type="text/javascript">
     var ACTIVE = true;
     var CURRENT_THUMB = null;
@@ -237,23 +235,22 @@ OR CLICK THE LOGO FOR HELP"></textarea></div>
     }
 
     function onTimecryptDecrypted(timecrypt) {
-        if (timecrypt == "-1") {
+        var jsonData = $.parseJSON(timecrypt);
+        if (jsonData != null && jsonData.status_code != 0) {
             $("#message-text")
-                    .val("YOUR TIMECRYPT HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT")
+                    .val("YOUR MESSAGE HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT MESSAGE")
                     .attr("readonly", "readonly")
                     .css("cursor", "pointer")
                     .click(function () {
-                        window.location.href = "http://timecrypt.co/";
+                        window.location.href = APP_URL;
                     });
-        } else if (timecrypt != null && $.trim(timecrypt).length > 0) {
+        } else if (jsonData != null && jsonData.status_code == 0) {
             ACTIVE = true;
-            console.log(timecrypt);
-            var ctx = jQuery.parseJSON(timecrypt);
-            console.log(ctx, "parsed");
-            var views = parseInt(ctx.views, 10);
-            var title = ctx.title;
-            var text = ctx.text;
-            var lifetime = ctx.lifetime;
+            console.log(jsonData);
+            var views = parseInt(jsonData.views, 10);
+            var title = jsonData.title;
+            var text = jsonData.text;
+            var lifetime = jsonData.lifetime;
 
             // auto-redirect URLs
             var redirecting = false;
@@ -262,17 +259,17 @@ OR CLICK THE LOGO FOR HELP"></textarea></div>
                 window.location.href = $.trim(text);
             }
 
-            var displayText = "REDIRECTING YOU FROM DECRYPTED MESSAGE TO\n\n" + text;
+            var displayText = "REDIRECTING YOU TO\n\n" + text;
             if (views == 0 && !redirecting) {
-                displayText = text + "\n\nTIMECRYPT IS NOW DESTROYED";
+                displayText = text + "\n\nMESSAGE IS NOW DESTROYED";
             } else if (!redirecting) {
-                displayText = text + "\n\nSELF-DESTRUCT ON: " + lifetime + "\nREMAINING VIEWS: " + views;
+                displayText = text + "\n\nSELF-DESTRUCT SET TO: " + lifetime + "\nREMAINING VIEWS: " + views;
             }
 
             $("#message-text")
                     .val(displayText)
                     .attr("readonly", "readonly")
-                    .attr("placeholder", "START TYPING\nOR CLICK THE LOGO FOR HELP")
+                    .attr("placeholder", "START TYPING\nOR CLICK THE LOGO FOR MORE INFO")
                     .css("cursor", "default");
 
             $("#message-title").val(title);
@@ -281,9 +278,9 @@ OR CLICK THE LOGO FOR HELP"></textarea></div>
             // noinspection JSUnusedLocalSymbols
             $("button")
                     .slideDown(300)
-                    .html("CREATE NEW TIMECRYPT")
+                    .html("CREATE NEW MESSAGE")
                     .click(function (data) {
-                        window.location.href = "http://www.timecrypt.co/";
+                        window.location.href = APP_URL;
                     });
         }
     }
@@ -337,26 +334,28 @@ OR CLICK THE LOGO FOR HELP"></textarea></div>
         $("#message-text").attr("placeholder", "READING YOUR TIMECRYPT, PLEASE WAIT..");
         timecryptId = $.trim(decodeURIComponent(timecryptId));
         console.log("Loading Timecrypt [" + timecryptId + "]...");
-        $.post("service/check_password.php", {"id": encodeURIComponent(timecryptId)})
+        $.post(API_URL + "v2/is-locked", {"id": encodeURIComponent(timecryptId)})
                 .done(function (data) {
-                    if (data == "1") {
+                    var jsonData = $.parseJSON(data);
+                    if (jsonData != null && jsonData.status_code == 0 && jsonData.locked == true) {
                         // has password
-                        $("#message-text").attr("placeholder", "ENTER TIMECRYPT PASSWORD");
+                        $("#message-text").attr("placeholder", "ENTER PASSWORD");
                         $("button").text("UNLOCK");
-                    } else if (data == "0") {
+                    } else if (jsonData != null && jsonData.status_code == 0 && jsonData.locked == false) {
                         $("#message-text")
-                                .val("UNLOCKING YOUR TIMECRYPT, PLEASE WAIT..")
+                                .val("UNLOCKING YOUR MESSAGE, PLEASE WAIT..")
                                 .attr("readonly", "readonly")
                                 .css("cursor", "pointer");
-                        $.post("service/get_note.php", {"id": encodeURIComponent(timecryptId)})
+
+                        $.post(API_URL + "v2/read", {"id": encodeURIComponent(timecryptId)})
                                 .done(onTimecryptDecrypted);
                     } else {
                         $("#message-text")
-                                .val("YOUR TIMECRYPT HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT")
+                                .val("YOUR MESSAGE HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT MESSAGE")
                                 .attr("readonly", "readonly")
                                 .css("cursor", "pointer")
                                 .click(function () {
-                                    window.location.href = "http://timecrypt.co/";
+                                    window.location.href = APP_URL;
                                 });
                     }
                 });

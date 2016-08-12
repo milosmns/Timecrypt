@@ -57,10 +57,9 @@ function initializeTimecryptUI() {
     // noinspection JSUnusedLocalSymbols
     $(".logo-path")
         .click(function (data) {
-            window.location.href = "http://timecrypt.co/hq/help/";
+            window.location.href = SRC_URL;
         });
 
-    // ignore warning, just create message
     // noinspection JSUnusedLocalSymbols
     $(".container > button").click(function (data) {
         if (ACTIVE)
@@ -68,7 +67,7 @@ function initializeTimecryptUI() {
         else {
             // this is imported elsewhere
             // noinspection JSUnresolvedVariable
-            $.post("service/get_note.php", {
+            $.post(API_URL + "v2/read", {
                 "id": encodeURIComponent(timecryptId),
                 "password": $("#message-text").val()
             })
@@ -80,30 +79,26 @@ function initializeTimecryptUI() {
 function onPageChanged(oldPage, newPage) {
     CURRENT_PAGE = parseInt(newPage, 10);
     switch (CURRENT_PAGE) {
-        case 1:
-        {
+        case 1: {
             var def = "Encrypted Message";
             var val = $("#message-title").val();
             if (val == def) val = ""; // or the other way around?
             $("#screen-title").removeAttr("disabled").val(val);
             break;
         }
-        case 2:
-        {
+        case 2: {
             positionSlider(1);
             positionTextInSlider();
             $("#screen-title").attr("disabled", "disabled").val("ALLOWED VIEWS");
             break;
         }
-        case 3:
-        {
+        case 3: {
             positionSlider(2);
             positionTextInSlider();
             $("#screen-title").attr("disabled", "disabled").val("SELF-DESTRUCT DATE");
             break;
         }
-        case 4:
-        {
+        case 4: {
             $("#screen-title").attr("disabled", "disabled").val("DELIVERY");
             break;
         }
