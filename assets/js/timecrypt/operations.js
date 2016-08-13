@@ -84,9 +84,10 @@ function createTimecrypt(log) {
         $.post(API_URL + "v2/create", cloned)
             .done(function (jsonData) {
                 if (jsonData != null && jsonData.status_code == 0) {
+                    var url = APP_URL + "?c=" + jsonData.id;
                     $(".container button").removeAttr("disabled");
                     $("#message-text").val("TIMECRYPT CREATED. SEND THIS LINK:\n\n"
-                    + data + "\n\nREMEMBER, YOU HAVE ONLY "
+                    + url + "\n\nREMEMBER, YOU HAVE ONLY "
                     + timecrypt.views + " ALLOWED VIEW(S).");
                     $("#message-title").val("");
                     $("nav ul li").first().trigger("click");
