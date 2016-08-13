@@ -203,22 +203,24 @@ public class PostgresController implements TimecryptDataStore {
                 throw new InvalidEmailException(InvalidEmailException.Type.FROM, "Invalid email from " + emailFrom);
             }
             notificationEmail = SimpleAES.encrypt(emailFrom, passphrase);
+            if (notificationEmail.length() > PostgresConfig.EMAIL_MAX_LENGTH) {
+                throw new InvalidEmailException(InvalidEmailException.Type.FROM, "Too long email from " + emailFrom);
+            }
         }
 
         // simple text validation
-        String message;
-        if (text.length() > PostgresConfig.MESSAGE_MAX_LENGTH) {
+        String message = SimpleAES.encrypt(text, passphrase);
+        if (message.length() > PostgresConfig.MESSAGE_MAX_LENGTH) {
             throw new InvalidTextException("Message is more than " + PostgresConfig.MESSAGE_MAX_LENGTH + " chars long");
         }
-        message = SimpleAES.encrypt(text, passphrase);
 
         // length title validation (must be at least MAX_LENGTH chars long)
         String secretTitle = title;
         if (title != null) {
-            if (title.length() > PostgresConfig.TITLE_MAX_LENGTH) {
+            secretTitle = SimpleAES.encrypt(title, passphrase);
+            if (secretTitle.length() > PostgresConfig.TITLE_MAX_LENGTH) {
                 throw new InvalidTitleException("Title is more than " + PostgresConfig.TITLE_MAX_LENGTH + " chars long");
             }
-            secretTitle = SimpleAES.encrypt(title, passphrase);
         }
 
         // finally add the data to the DB

@@ -65,9 +65,9 @@ CREATE TABLE message (
   id         INT DEFAULT random_id_int() NOT NULL,
   view_times INT                         NOT NULL,
   lifetime   DATE        DEFAULT NULL,
-  email      VARCHAR(80) DEFAULT NULL,
+  email      VARCHAR(100) DEFAULT NULL,
   text       VARCHAR(2500)               NOT NULL,
-  title      VARCHAR(50) DEFAULT NULL,
+  title      VARCHAR(100) DEFAULT NULL,
   locked     BOOL        DEFAULT FALSE,
   PRIMARY KEY (id)
 );

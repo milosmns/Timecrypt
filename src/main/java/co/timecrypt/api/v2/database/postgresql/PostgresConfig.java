@@ -19,7 +19,8 @@ public class PostgresConfig {
     public static final String ENV_PASS = "OPENSHIFT_POSTGRESQL_DB_PASSWORD";
     public static final String ENV_DEFAULT_PASS = "TIMECRYPT_PASS";
 
+    public static final int EMAIL_MAX_LENGTH = 100;
     public static final int TITLE_MAX_LENGTH = 100;
-    public static final int MESSAGE_MAX_LENGTH = 2000;
+    public static final int MESSAGE_MAX_LENGTH = 2500;
 
 }
