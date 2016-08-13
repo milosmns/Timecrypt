@@ -41,7 +41,7 @@ public class ReadServlet extends TimecryptApiServlet {
         } catch (InternalException e) {
             message = new JsonResponses.Error(ErrorCode.INTERNAL);
         } catch (InvalidIdentifierException e) {
-            message = new JsonResponses.Error(ErrorCode.MISSING_ID);
+            message = new JsonResponses.Error(ErrorCode.INVALID_ID);
         }
 
         writeToOutput(message, response);
