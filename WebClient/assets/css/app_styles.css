@@ -1,0 +1,136 @@
+body {
+	background: #002828;
+	color: #00B4D2;
+}
+
+.sliderContainer {
+	background: url("../../images/slider-back.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute;
+	pointer-events: none; /* new */
+}
+
+textarea {
+	font-family: inherit;
+	text-align: center;
+	color: inherit;
+	border: none;
+	resize: none;
+	overflow: auto;
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 100%;
+	padding: 10px;
+}
+
+input {
+	font-family: inherit;
+	text-align: left;
+	color: inherit;
+	border: none;
+	background: #001E17;
+	resize: none;
+	overflow: hidden;
+	margin-left: 15px;
+	margin-right: 5px;
+	width: 200px;
+	padding: 5px 10px 5px 10px;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#lifetimeContainer input {
+	font-size: 17px;
+	text-align: center;
+	padding: 1px;
+	margin: 1px;
+	width: 30px;
+	background: #001E17;
+}
+
+#menu img {
+	margin: 8px auto 0 auto;
+}
+
+#menu #row2 {
+	background: #001E17;
+	cursor: pointer;
+}
+#menu #row2:hover {
+	background: #203535;
+}
+#menu #row2:active {
+	background: #002828;
+	color: #00DADA;
+	font-size: 20px;
+}
+
+.selectedTab {
+	background: #203535;
+	cursor: pointer;
+}
+
+.unselectedTab {
+	background: #001E17;
+	cursor: pointer;
+}
+
+.selectedTab:hover, .unselectedTab:hover {
+	background: #002828;
+}
+
+.page {
+	display: inline-block;
+	text-align: left;
+	width: 100%;
+	height: 100%;
+}
+
+#successContainer span {
+	font-family: inherit;
+	font-size: 21px;
+	text-align: center;
+	color: inherit;
+	border: none;
+	background: #001E17;
+	margin: 30px auto 30px auto;
+	padding: 12px 22px;
+
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+button {
+	font-family: inherit;
+	display: block;
+	cursor: pointer;
+	font-size: 20px;
+	text-align: center;
+	color: inherit;
+	border: 1px solid #102525;
+	background: #203535;
+	margin: 100px auto 0 auto;
+	padding: 7px 10px;
+
+	outline: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+}
+
+button:hover {
+	background: #002828;
+}
+
+button:active {
+	border: none;
+	font-size: 18px;
+	background: #001E17;
+}
