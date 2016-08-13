@@ -67,7 +67,7 @@ CREATE TABLE message (
   lifetime   DATE        DEFAULT NULL,
   email      VARCHAR(80) DEFAULT NULL,
   text       VARCHAR(2500)               NOT NULL,
-  title      VARCHAR(30) DEFAULT NULL,
+  title      VARCHAR(50) DEFAULT NULL,
   locked     BOOL        DEFAULT FALSE,
   PRIMARY KEY (id)
 );
