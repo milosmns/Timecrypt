@@ -82,8 +82,7 @@ function createTimecrypt(log) {
         };
 
         $.post(API_URL + "v2/create", cloned)
-            .done(function (data) {
-                var jsonData = $.parseJSON(data);
+            .done(function (jsonData) {
                 if (jsonData != null && jsonData.status_code == 0) {
                     $(".container button").removeAttr("disabled");
                     $("#message-text").val("TIMECRYPT CREATED. SEND THIS LINK:\n\n"
@@ -93,6 +92,7 @@ function createTimecrypt(log) {
                     $("nav ul li").first().trigger("click");
                 } else {
                     alert("Something went wrong. Please check your data and try again.");
+                    console.log(jsonData);
                 }
             });
     } else {

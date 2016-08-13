@@ -234,8 +234,7 @@ OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
         }
     }
 
-    function onTimecryptDecrypted(timecrypt) {
-        var jsonData = $.parseJSON(timecrypt);
+    function onTimecryptDecrypted(jsonData) {
         if (jsonData != null && jsonData.status_code != 0) {
             $("#message-text")
                     .val("YOUR MESSAGE HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT MESSAGE")
@@ -335,8 +334,7 @@ OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
         timecryptId = $.trim(decodeURIComponent(timecryptId));
         console.log("Loading Timecrypt [" + timecryptId + "]...");
         $.post(API_URL + "v2/is-locked", {"id": encodeURIComponent(timecryptId)})
-                .done(function (data) {
-                    var jsonData = $.parseJSON(data);
+                .done(function (jsonData) {
                     if (jsonData != null && jsonData.status_code == 0 && jsonData.locked == true) {
                         // has password
                         $("#message-text").attr("placeholder", "ENTER PASSWORD");
