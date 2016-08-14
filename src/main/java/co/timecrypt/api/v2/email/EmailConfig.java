@@ -38,7 +38,7 @@ public class EmailConfig {
     public static final String TEMPLATE_SOCIAL_GP = "\\{\\{image_google_plus\\}\\}";
     public static final String TEMPLATE_SOCIAL_LINK = "\\{\\{image_link\\}\\}";
 
-    public static final String APP_URL = "https://timecrypt.co";
+    public static final String APP_URL = "http://timecrypt.co";
     public static final String APP_FACEBOOK = "https://www.facebook.com/timecrypt";
     public static final String APP_TWITTER = "https://twitter.com/timecryptapp";
     public static final String APP_GOOGLE_PLUS = "https://plus.google.com/105664500062213014541";
