@@ -313,6 +313,9 @@ OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
 
     // before DOM is ready
     var timecryptId = getUrlParameter("c");
+    if (timecryptId == null || timecryptId == "") {
+        timecryptId = getUrlParameter("id");
+    }
     var timecryptUrlText = getUrlParameter("t");
     if (timecryptId == null || $.trim(decodeURIComponent(timecryptId)).length == 0) {
         ACTIVE = true;
