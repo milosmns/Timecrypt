@@ -10,7 +10,7 @@ to set up your private Timecrypt server using the same configuration we used for
 
 This configuration consists of:
 
-1. Linux OS, Santiago 6.7
+* Linux OS, Santiago 6.7
 ```bash
 $ uname -a
 Linux ex-std-node789.prod.rhcloud.com 2.6.32-573.12.1.el6.x86_64 #1 SMP Mon Nov 23 12:55:32 EST 2015 x86_64 x86_64 x86_64 GNU/Linux
@@ -32,11 +32,11 @@ Kernel \r on an \m
 $ cat /etc/debian_version
 cat: /etc/debian_version: No such file or directory
 ```
-2. Java Beans Open Source Server, Enterprise Application Platform, Version 6
+* Java Beans Open Source Server, Enterprise Application Platform, Version 6
 ([JBOSS EAP 6](http://developers.redhat.com/products/eap/download/ "Download"))
-3. Tomcat 7.0.70 Servlet/JSP Container
+* Tomcat 7.0.70 Servlet/JSP Container
 ([Tomcat 7](https://tomcat.apache.org/tomcat-7.0-doc/index.html "Information"))
-4. PostgreSQL 9.2 Database Engine
+* PostgreSQL 9.2 Database Engine
 ([PostgreSQL](https://www.postgresql.org/about/ "About"))
 
 To get all of this to work together, we used a pre-defined OpenShift configuration with two
