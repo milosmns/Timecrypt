@@ -25,6 +25,7 @@
     <![endif]-->
 
     <script type="text/javascript" src="assets/js/modernizr.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
@@ -38,8 +39,8 @@
             i['GoogleAnalyticsObject'] = r;
             // noinspection CommaExpressionJS
             i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
             // noinspection CommaExpressionJS
             a = s.createElement(o),
                     m = s.getElementsByTagName(o)[0];
@@ -58,17 +59,17 @@
 <img class="intro-logo" src="images/logo.png"/>
 
 <p class="intro-text">
-    Timecrypt API is not publicly available yet.<br>
-    Please check again later.
+    Timecrypt is now open-source!<br>
+    Click on the logo to go there.
 </p>
 
-<h3>Test links</h3>
-<ol>
-    <li><a href="/echo">Echo</a></li>
-    <li><a href="/v2/is-locked">Lock Check</a></li>
-    <li><a href="/v2/create">Create</a></li>
-    <li><a href="/v2/read">Read</a></li>
-</ol>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("img.intro-logo").click(function (event) {
+            window.location.href = "https://www.github.com/milosmns/Timecrypt";
+        });
+    });
+</script>
 
 </body>
 

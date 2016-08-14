@@ -44,6 +44,7 @@ img.intro-logo {
     margin: 4em auto 0 auto;
     width: 4em;
     height: 4em;
+    cursor: pointer;
 }
 
 p.intro-text {
