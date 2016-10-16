@@ -1,5 +1,5 @@
 
-package timecrypt.angrybyte.me.timecryptforandroid;
+package co.timecrypt.android;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
