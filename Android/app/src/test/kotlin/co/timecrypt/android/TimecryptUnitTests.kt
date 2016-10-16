@@ -15,7 +15,7 @@ import java.util.*
  */
 class TimecryptUnitTests() {
 
-    val TAG = TimecryptUnitTests::class.java.simpleName
+    val TAG: String = TimecryptUnitTests::class.java.simpleName
 
     // <editor-fold desc="JVM Tests">
     @Test
@@ -68,7 +68,7 @@ class TimecryptUnitTests() {
     @Test
     fun constructQueryMap() {
         // test constructor #0
-        val tomorrow = ApiObjectHelper.getTomorrow(true);
+        val tomorrow = ApiObjectHelper.getTomorrow(true)
         var message = TimecryptMessage("Full message", 3, tomorrow, "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", "pass1234")
         var map = ApiObjectHelper.convertToQueryMap(message)
         val dateText = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(tomorrow)
