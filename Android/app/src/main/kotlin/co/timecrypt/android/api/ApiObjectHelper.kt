@@ -1,6 +1,6 @@
 package co.timecrypt.android.api
 
-import android.text.format.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -17,7 +17,7 @@ object ApiObjectHelper {
         map.put("text", message.text)
         map.put("views", message.views.toString())
         message.destructDate?.let {
-            map.put("lifetime", DateFormat.format("yyyy-MM-dd", it).toString())
+            map.put("lifetime", SimpleDateFormat("yyyy-MM-dd", Locale.US).format(it))
         }
         message.emailTo?.let {
             map.put("email_to", it)

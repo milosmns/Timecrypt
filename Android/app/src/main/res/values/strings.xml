@@ -3,4 +3,15 @@
     <string name="app_name">Timecrypt for Android</string>
     <string name="app_name_short">Timecrypt</string>
 
+    <string name="error_template">Error occurred: "%s".\nCheck your data and try again.</string>
+    <string name="error_internal">Internal error</string> <!-- -1 -->
+    <string name="error_missing_text">Missing text</string> <!-- -4 -->
+    <string name="error_title_bounds">Title length is out of bounds</string> <!-- -5 -->
+    <string name="error_text_bounds">Text length is out of bounds</string> <!-- -6 -->
+    <string name="error_views_bounds">Allowed views are out of bounds</string> <!-- -7 -->
+    <string name="error_password_unusable">Cannot use that password</string> <!-- -8 -->
+    <string name="error_destruct_date_bounds">Cannot use that destruct date</string> <!-- -9 -->
+    <string name="error_email_to_invalid">Invitation email is not valid</string> <!-- -10 -->
+    <string name="error_email_from_invalid">Notification email is not valid</string> <!-- -11 -->
+
 </resources>
