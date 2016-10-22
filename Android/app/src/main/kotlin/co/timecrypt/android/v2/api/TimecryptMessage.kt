@@ -1,4 +1,4 @@
-package co.timecrypt.android.api
+package co.timecrypt.android.v2.api
 
 import com.squareup.moshi.Json
 import java.util.*

@@ -1,4 +1,4 @@
-package co.timecrypt.android.api
+package co.timecrypt.android.v2.api
 
 import java.text.SimpleDateFormat
 import java.util.*

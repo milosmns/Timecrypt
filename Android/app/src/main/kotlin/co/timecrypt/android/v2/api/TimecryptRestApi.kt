@@ -1,4 +1,4 @@
-package co.timecrypt.android.api
+package co.timecrypt.android.v2.api
 
 import retrofit2.Call
 import retrofit2.http.POST

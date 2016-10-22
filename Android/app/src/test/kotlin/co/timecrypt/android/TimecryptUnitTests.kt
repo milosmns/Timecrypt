@@ -1,8 +1,8 @@
 package co.timecrypt.android
 
-import co.timecrypt.android.api.ApiObjectHelper
-import co.timecrypt.android.api.TimecryptMessage
-import co.timecrypt.android.api.TimecryptRestApi
+import co.timecrypt.android.v2.api.ApiObjectHelper
+import co.timecrypt.android.v2.api.TimecryptMessage
+import co.timecrypt.android.v2.api.TimecryptRestApi
 import org.junit.Assert.*
 import org.junit.Test
 import retrofit2.Retrofit
