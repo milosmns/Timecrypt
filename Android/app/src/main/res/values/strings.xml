@@ -5,7 +5,9 @@
 
     <string name="error_template">Error occurred: "%s".\nCheck your data and try again.</string>
     <string name="error_internal">Internal error</string> <!-- -1 -->
-    <string name="error_missing_text">Missing text</string> <!-- -4 -->
+    <string name="error_missing_id">Missing message identifier</string> <!-- -2 -->
+    <string name="error_invalid_id">Invalid message identifier</string> <!-- -3 -->
+    <string name="error_missing_text">Missing message text</string> <!-- -4 -->
     <string name="error_title_bounds">Title length is out of bounds</string> <!-- -5 -->
     <string name="error_text_bounds">Text length is out of bounds</string> <!-- -6 -->
     <string name="error_views_bounds">Allowed views are out of bounds</string> <!-- -7 -->

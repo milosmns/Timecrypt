@@ -1,5 +1,7 @@
 package co.timecrypt.android.v2.api
 
+import android.content.Context
+import co.timecrypt.android.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -9,8 +11,26 @@ import java.util.*
 object ApiObjectHelper {
 
     /**
+     * A compiled list of all possible server errors.
+     */
+    val SERVER_ERRORS = hashMapOf(
+            Pair(-1, R.string.error_internal),
+            Pair(-2, R.string.error_missing_id),
+            Pair(-3, R.string.error_invalid_id),
+            Pair(-4, R.string.error_missing_text),
+            Pair(-5, R.string.error_title_bounds),
+            Pair(-6, R.string.error_text_bounds),
+            Pair(-7, R.string.error_views_bounds),
+            Pair(-8, R.string.error_password_unusable),
+            Pair(-9, R.string.error_destruct_date_bounds),
+            Pair(-10, R.string.error_email_to_invalid),
+            Pair(-11, R.string.error_email_from_invalid)
+    )
+
+    /**
      * Converts a Timecrypt message to a simple mapped structure for URL queries.
      * @param message Which message to convert
+     * @return A compiled map of key-value pairs that corresponds to the given messages
      */
     fun convertToQueryMap(message: TimecryptMessage): Map<String, String> {
         val map = HashMap<String, String>()
@@ -37,6 +57,7 @@ object ApiObjectHelper {
     /**
      * Returns the tomorrow's date object.
      * @param resetTimeToMidnight Set this to `true` to reset the clock to midnight for today
+     * @return The date instance representing Tomorrow
      */
     fun getTomorrow(resetTimeToMidnight: Boolean): Date {
         val tomorrowCalendar = Calendar.getInstance()
@@ -56,7 +77,9 @@ object ApiObjectHelper {
      * @param date Original date
      * @param howMany How many days to add to the original date
      * @param resetTimeToMidnight Set this to `true` to reset the clock to midnight on the original date
+     * @return The modified date
      */
+    @Suppress("unused")
     fun addDays(date: Date, howMany: Int, resetTimeToMidnight: Boolean): Date {
         val resultCalendar = Calendar.getInstance()
         resultCalendar.timeInMillis = date.time
@@ -66,8 +89,22 @@ object ApiObjectHelper {
             resultCalendar.set(Calendar.SECOND, 0)
             resultCalendar.set(Calendar.MILLISECOND, 0)
         }
-        resultCalendar.add(Calendar.DATE, 1)
+        resultCalendar.add(Calendar.DATE, howMany)
         return Date(resultCalendar.time.time)
+    }
+
+    /**
+     * Gets the text message associated to the given status code, or `null` if status is `0` or invalid.
+     * @param context Which [Context] to use to fetch the text
+     * @param code Status code to parse
+     * @return A string value for display, or `null` for invalid codes
+     * @see [SERVER_ERRORS]
+     */
+    fun parseStatusCode(context: Context, code: Int): String? {
+        SERVER_ERRORS[code]?.let {
+            return context.getString(R.string.error_template, it)
+        }
+        return null;
     }
 
 }

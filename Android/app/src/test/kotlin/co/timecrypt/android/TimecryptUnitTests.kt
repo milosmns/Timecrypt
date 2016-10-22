@@ -104,14 +104,18 @@ class TimecryptUnitTests() {
         val call = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
         assertNotNull(call)
 
+        // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
         assertEquals(200, result.code())
 
+        // check response body
         val response = result.body()
         assertNotNull(response)
+        assertEquals(0, response.statusCode)
         assertNotNull(response.id)
-        assertEquals(0, response.statusCode.toInt())
+        val length = response.id?.length as Int
+        assertTrue(length > 0)
     }
 
     @Test
@@ -120,14 +124,18 @@ class TimecryptUnitTests() {
         val call = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
         assertNotNull(call)
 
+        // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
         assertEquals(200, result.code())
 
+        // check response body
         val response = result.body()
         assertNotNull(response)
+        assertEquals(0, response.statusCode)
         assertNotNull(response.id)
-        assertEquals(0, response.statusCode.toInt())
+        val length = response.id?.length as Int
+        assertTrue(length > 0)
     }
 
     @Test
@@ -137,14 +145,113 @@ class TimecryptUnitTests() {
         val call = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
         assertNotNull(call)
 
+        // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
         assertEquals(200, result.code())
 
+        // check response body
         val response = result.body()
         assertNotNull(response)
+        assertEquals(0, response.statusCode)
         assertNotNull(response.id)
-        assertEquals(0, response.statusCode.toInt())
+        val length = response.id?.length as Int
+        assertTrue(length > 0)
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Lock check API Tests">
+    @Test
+    fun testLockCheckApi_invalidMessage() {
+        val call = makeTimecryptApi().isLocked("invalid-ID")
+        assertNotNull(call)
+
+        // check HTTP
+        val result = call.execute()
+        assertTrue(result.isSuccessful)
+        assertEquals(200, result.code())
+
+        // check response body
+        val response = result.body()
+        assertNotNull(response)
+        assertEquals(-3, response.statusCode)
+        assertNull(response.isLocked)
+    }
+
+    @Test
+    fun testLockCheckApi_lockedMessage() {
+        // create a locked message first...
+        val message = TimecryptMessage("Testing from $TAG, all fields", 3, ApiObjectHelper.getTomorrow(true),
+                "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", "pass1234")
+        val createCall = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
+        assertNotNull(createCall)
+
+        // check create HTTP
+        val createResult = createCall.execute()
+        assertTrue(createResult.isSuccessful)
+        assertEquals(200, createResult.code())
+
+        // check create response body
+        val createResponse = createResult.body()
+        assertNotNull(createResponse)
+        assertEquals(0, createResponse.statusCode)
+        assertNotNull(createResponse.id)
+        val length = createResponse.id?.length as Int
+        assertTrue(length > 0)
+
+        // now to check if created message is locked...
+        val lockCheckCall = makeTimecryptApi().isLocked(createResponse.id!!)
+        assertNotNull(lockCheckCall)
+
+        // check is-locked HTTP
+        val lockCheckResult = lockCheckCall.execute()
+        assertTrue(lockCheckResult.isSuccessful)
+        assertEquals(200, lockCheckResult.code())
+
+        // check is-locked response body
+        val lockCheckResponse = lockCheckResult.body()
+        assertNotNull(lockCheckResponse)
+        assertEquals(0, lockCheckResponse.statusCode)
+        assertNotNull(lockCheckResponse.isLocked)
+        assertTrue(lockCheckResponse.isLocked!!)
+    }
+
+    @Test
+    fun testLockCheckApi_unlockedMessage() {
+        // create a locked message first...
+        val message = TimecryptMessage("Testing from $TAG, all fields", 3, ApiObjectHelper.getTomorrow(true),
+                "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", null)
+        val createCall = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
+        assertNotNull(createCall)
+
+        // check create HTTP
+        val createResult = createCall.execute()
+        assertTrue(createResult.isSuccessful)
+        assertEquals(200, createResult.code())
+
+        // check create response body
+        val createResponse = createResult.body()
+        assertNotNull(createResponse)
+        assertEquals(0, createResponse.statusCode)
+        assertNotNull(createResponse.id)
+        val length = createResponse.id?.length as Int
+        assertTrue(length > 0)
+
+        // now to check if created message is locked...
+        val lockCheckCall = makeTimecryptApi().isLocked(createResponse.id!!)
+        assertNotNull(lockCheckCall)
+
+        // check is-locked HTTP
+        val lockCheckResult = lockCheckCall.execute()
+        assertTrue(lockCheckResult.isSuccessful)
+        assertEquals(200, lockCheckResult.code())
+
+        // check is-locked response body
+        val lockCheckResponse = lockCheckResult.body()
+        assertNotNull(lockCheckResponse)
+        assertEquals(0, lockCheckResponse.statusCode)
+        assertNotNull(lockCheckResponse.isLocked)
+        assertFalse(lockCheckResponse.isLocked!!)
     }
     // </editor-fold>
 

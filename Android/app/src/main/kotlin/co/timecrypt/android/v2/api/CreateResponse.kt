@@ -13,5 +13,5 @@ import com.squareup.moshi.Json
  */
 class CreateResponse(
         val id: String?,
-        @Json(name = "status_code") val statusCode: String
+        @Json(name = "status_code") val statusCode: Int
 )
