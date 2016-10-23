@@ -8,7 +8,7 @@ import java.util.*
 /**
  * Helps convert object types to easily use the API.
  */
-object ApiObjectHelper {
+object Utils {
 
     /**
      * A compiled list of all possible server errors.
@@ -91,6 +91,19 @@ object ApiObjectHelper {
         }
         resultCalendar.add(Calendar.DATE, howMany)
         return Date(resultCalendar.time.time)
+    }
+
+    /**
+     * Tries to parse the given String into a [Date] object.
+     * @param date String representation of a date
+     * @return A parsed Date object
+     */
+    fun parseDate(date: String?): Date? {
+        return try {
+            return SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(date)
+        } catch (ex: Exception) {
+            null
+        }
     }
 
     /**

@@ -1,8 +1,8 @@
 package co.timecrypt.android
 
-import co.timecrypt.android.v2.api.ApiObjectHelper
 import co.timecrypt.android.v2.api.TimecryptMessage
 import co.timecrypt.android.v2.api.TimecryptRestApi
+import co.timecrypt.android.v2.api.Utils
 import org.junit.Assert.*
 import org.junit.Test
 import retrofit2.Retrofit
@@ -68,9 +68,9 @@ class TimecryptUnitTests() {
     @Test
     fun constructQueryMap() {
         // test constructor #0
-        val tomorrow = ApiObjectHelper.getTomorrow(true)
+        val tomorrow = Utils.getTomorrow(true)
         var message = TimecryptMessage("Full message", 3, tomorrow, "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", "pass1234")
-        var map = ApiObjectHelper.convertToQueryMap(message)
+        var map = Utils.convertToQueryMap(message)
         val dateText = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(tomorrow)
         assertEquals("Full message", map["text"])
         assertEquals("3", map["views"])
@@ -83,14 +83,14 @@ class TimecryptUnitTests() {
 
         // test constructor #1
         message = TimecryptMessage("Text only")
-        map = ApiObjectHelper.convertToQueryMap(message)
+        map = Utils.convertToQueryMap(message)
         assertEquals("Text only", map["text"])
         assertEquals("1", map["views"])
         assertEquals(2, map.size)
 
         // test constructor #2
         message = TimecryptMessage("Text with views", 2)
-        map = ApiObjectHelper.convertToQueryMap(message)
+        map = Utils.convertToQueryMap(message)
         assertEquals("Text with views", map["text"])
         assertEquals("2", map["views"])
         assertEquals(2, map.size)
@@ -101,7 +101,7 @@ class TimecryptUnitTests() {
     @Test
     fun testCreateApi_textOnly() {
         val message = TimecryptMessage("Testing from $TAG, text only")
-        val call = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
+        val call = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(call)
 
         // check HTTP
@@ -121,7 +121,7 @@ class TimecryptUnitTests() {
     @Test
     fun testCreateApi_textAndViews() {
         val message = TimecryptMessage("Testing from $TAG, text and views", 2)
-        val call = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
+        val call = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(call)
 
         // check HTTP
@@ -140,9 +140,9 @@ class TimecryptUnitTests() {
 
     @Test
     fun testCreateApi_allFields() {
-        val message = TimecryptMessage("Testing from $TAG, all fields", 3, ApiObjectHelper.getTomorrow(true),
+        val message = TimecryptMessage("Testing from $TAG, all fields", 3, Utils.getTomorrow(true),
                 "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", "pass1234")
-        val call = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
+        val call = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(call)
 
         // check HTTP
@@ -181,9 +181,9 @@ class TimecryptUnitTests() {
     @Test
     fun testLockCheckApi_lockedMessage() {
         // create a locked message first...
-        val message = TimecryptMessage("Testing from $TAG, all fields", 3, ApiObjectHelper.getTomorrow(true),
+        val message = TimecryptMessage("Testing from $TAG, all fields", 3, Utils.getTomorrow(true),
                 "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", "pass1234")
-        val createCall = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
+        val createCall = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(createCall)
 
         // check create HTTP
@@ -219,9 +219,9 @@ class TimecryptUnitTests() {
     @Test
     fun testLockCheckApi_unlockedMessage() {
         // create a locked message first...
-        val message = TimecryptMessage("Testing from $TAG, all fields", 3, ApiObjectHelper.getTomorrow(true),
+        val message = TimecryptMessage("Testing from $TAG, all fields", 3, Utils.getTomorrow(true),
                 "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", null)
-        val createCall = makeTimecryptApi().create(ApiObjectHelper.convertToQueryMap(message))
+        val createCall = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(createCall)
 
         // check create HTTP
@@ -252,6 +252,68 @@ class TimecryptUnitTests() {
         assertEquals(0, lockCheckResponse.statusCode)
         assertNotNull(lockCheckResponse.isLocked)
         assertFalse(lockCheckResponse.isLocked!!)
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Read API Tests">
+    @Test
+    fun testReadApi_invalidMessage() {
+        val call = makeTimecryptApi().read("invalid-ID")
+        assertNotNull(call)
+
+        // check HTTP
+        val result = call.execute()
+        assertTrue(result.isSuccessful)
+        assertEquals(200, result.code())
+
+        // check response body
+        val response = result.body()
+        assertNotNull(response)
+        assertEquals(-3, response.statusCode)
+        assertNull(response.text)
+        assertNull(response.title)
+        assertNull(response.views)
+        assertNull(Utils.parseDate(response.destructDate))
+    }
+
+    @Test
+    fun testReadApi_textOnly() {
+        // create a simple message first...
+        val message = TimecryptMessage("$TAG#${(Math.random() * 1000 + 30).toInt()}")
+        val createCall = makeTimecryptApi().create(Utils.convertToQueryMap(message))
+        assertNotNull(createCall)
+
+        // check create HTTP
+        val createResult = createCall.execute()
+        assertTrue(createResult.isSuccessful)
+        assertEquals(200, createResult.code())
+
+        // check create response body
+        val createResponse = createResult.body()
+        assertNotNull(createResponse)
+        assertEquals(0, createResponse.statusCode)
+        assertNotNull(createResponse.id)
+        val length = createResponse.id?.length as Int
+        assertTrue(length > 0)
+
+        // now to check if created message is properly saved...
+        val readCall = makeTimecryptApi().read(createResponse.id!!)
+        assertNotNull(readCall)
+
+        // check read HTTP
+        val readResult = readCall.execute()
+        assertTrue(readResult.isSuccessful)
+        assertEquals(200, readResult.code())
+
+        // check read response body
+        val readResponse = readResult.body()
+        assertNotNull(readResponse)
+        assertEquals(0, readResponse.statusCode)
+
+        assertEquals(0, readResponse.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
+        assertEquals(message.text, readResponse.text)
+        assertNull(readResponse.title)
     }
     // </editor-fold>
 
