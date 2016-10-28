@@ -50,6 +50,28 @@ class TimecryptUnitTests() {
     private fun makeTimecryptApi(): TimecryptRestApi {
         return makeRetrofit().create(TimecryptRestApi::class.java)
     }
+
+    private fun createTextOnlyMessage(): Pair<TimecryptMessage, String> {
+        val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
+        val message = TimecryptMessage(text)
+        val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
+        assertEquals(200, result.code())
+        return Pair(message, result.body().id as String)
+    }
+
+    private fun createTextAndViewsMessage(views: Int): Pair<TimecryptMessage, String> {
+        val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
+        val message = TimecryptMessage(text, views)
+        val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
+        assertEquals(200, result.code())
+        return Pair(message, result.body().id as String)
+    }
+
+    private fun createAllFieldsMessage(message: TimecryptMessage): String {
+        val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
+        assertEquals(200, result.code())
+        return result.body().id as String
+    }
     // </editor-fold>
 
     // <editor-fold desc="Component construction tests">
@@ -100,7 +122,8 @@ class TimecryptUnitTests() {
     // <editor-fold desc="Create API Tests">
     @Test
     fun testCreateApi_textOnly() {
-        val message = TimecryptMessage("Testing from $TAG, text only")
+        val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
+        val message = TimecryptMessage(text)
         val call = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(call)
 
@@ -120,7 +143,8 @@ class TimecryptUnitTests() {
 
     @Test
     fun testCreateApi_textAndViews() {
-        val message = TimecryptMessage("Testing from $TAG, text and views", 2)
+        val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
+        val message = TimecryptMessage(text, 3)
         val call = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(call)
 
@@ -140,7 +164,8 @@ class TimecryptUnitTests() {
 
     @Test
     fun testCreateApi_allFields() {
-        val message = TimecryptMessage("Testing from $TAG, all fields", 3, Utils.getTomorrow(true),
+        val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
+        val message = TimecryptMessage(text, 3, Utils.getTomorrow(true),
                 "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", "pass1234")
         val call = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(call)
@@ -181,7 +206,8 @@ class TimecryptUnitTests() {
     @Test
     fun testLockCheckApi_lockedMessage() {
         // create a locked message first...
-        val message = TimecryptMessage("Testing from $TAG, all fields", 3, Utils.getTomorrow(true),
+        val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
+        val message = TimecryptMessage(text, 3, Utils.getTomorrow(true),
                 "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", "pass1234")
         val createCall = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(createCall)
@@ -219,7 +245,8 @@ class TimecryptUnitTests() {
     @Test
     fun testLockCheckApi_unlockedMessage() {
         // create a locked message first...
-        val message = TimecryptMessage("Testing from $TAG, all fields", 3, Utils.getTomorrow(true),
+        val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
+        val message = TimecryptMessage(text, 3, Utils.getTomorrow(true),
                 "dyk24648@xzsok.com", "dyk24644@xzsok.com", "This thing", null)
         val createCall = makeTimecryptApi().create(Utils.convertToQueryMap(message))
         assertNotNull(createCall)
@@ -278,26 +305,11 @@ class TimecryptUnitTests() {
 
     @Test
     fun testReadApi_textOnly() {
-        // create a simple message first...
-        val message = TimecryptMessage("$TAG#${(Math.random() * 1000 + 30).toInt()}")
-        val createCall = makeTimecryptApi().create(Utils.convertToQueryMap(message))
-        assertNotNull(createCall)
-
-        // check create HTTP
-        val createResult = createCall.execute()
-        assertTrue(createResult.isSuccessful)
-        assertEquals(200, createResult.code())
-
-        // check create response body
-        val createResponse = createResult.body()
-        assertNotNull(createResponse)
-        assertEquals(0, createResponse.statusCode)
-        assertNotNull(createResponse.id)
-        val length = createResponse.id?.length as Int
-        assertTrue(length > 0)
+        // create a message first...
+        val created = createTextOnlyMessage()
 
         // now to check if created message is properly saved...
-        val readCall = makeTimecryptApi().read(createResponse.id!!)
+        val readCall = makeTimecryptApi().read(created.second)
         assertNotNull(readCall)
 
         // check read HTTP
@@ -312,7 +324,33 @@ class TimecryptUnitTests() {
 
         assertEquals(0, readResponse.views)
         assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
-        assertEquals(message.text, readResponse.text)
+        assertEquals(created.first.text, readResponse.text)
+        assertNull(readResponse.title)
+    }
+
+    @Test
+    fun testReadApi_textAndViews() {
+        // create a message first...
+        val views = Random().nextInt(20)
+        val created = createTextAndViewsMessage(views)
+
+        // now to check if created message is properly saved...
+        val readCall = makeTimecryptApi().read(created.second)
+        assertNotNull(readCall)
+
+        // check read HTTP
+        val readResult = readCall.execute()
+        assertTrue(readResult.isSuccessful)
+        assertEquals(200, readResult.code())
+
+        // check read response body
+        val readResponse = readResult.body()
+        assertNotNull(readResponse)
+        assertEquals(0, readResponse.statusCode)
+
+        assertEquals(views - 1, readResponse.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
+        assertEquals(created.first.text, readResponse.text)
         assertNull(readResponse.title)
     }
     // </editor-fold>
