@@ -353,6 +353,62 @@ class TimecryptUnitTests() {
         assertEquals(created.first.text, readResponse.text)
         assertNull(readResponse.title)
     }
+
+    @Test
+    fun testReadApi_allFieldsUnlocked() {
+        // create a message first...
+        val views = Random().nextInt(20)
+        val message = TimecryptMessage("$TAG: Testing all fields with $views views", views, Utils.getTomorrow(true),
+                "dyk24644@xzsok.com", "dyk24644@xzsok.com", "All fields title", null)
+        val createId = createAllFieldsMessage(message)
+
+        // now to check if created message is properly saved...
+        val readCall = makeTimecryptApi().read(createId)
+        assertNotNull(readCall)
+
+        // check read HTTP
+        val readResult = readCall.execute()
+        assertTrue(readResult.isSuccessful)
+        assertEquals(200, readResult.code())
+
+        // check read response body
+        val readResponse = readResult.body()
+        assertNotNull(readResponse)
+        assertEquals(0, readResponse.statusCode)
+
+        assertEquals(views - 1, readResponse.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
+        assertEquals(message.text, readResponse.text)
+        assertEquals(message.title, readResponse.title)
+    }
+
+    @Test
+    fun testReadApi_allFieldsLocked() {
+        // create a message first...
+        val views = Random().nextInt(20)
+        val message = TimecryptMessage("$TAG: Testing all fields with $views views", views, Utils.getTomorrow(true),
+                "dyk24644@xzsok.com", "dyk24644@xzsok.com", "All fields title", "myPass1234")
+        val createId = createAllFieldsMessage(message)
+
+        // now to check if created message is properly saved...
+        val readCall = makeTimecryptApi().read(createId, message.password)
+        assertNotNull(readCall)
+
+        // check read HTTP
+        val readResult = readCall.execute()
+        assertTrue(readResult.isSuccessful)
+        assertEquals(200, readResult.code())
+
+        // check read response body
+        val readResponse = readResult.body()
+        assertNotNull(readResponse)
+        assertEquals(0, readResponse.statusCode)
+
+        assertEquals(views - 1, readResponse.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
+        assertEquals(message.text, readResponse.text)
+        assertEquals(message.title, readResponse.title)
+    }
     // </editor-fold>
 
 }
