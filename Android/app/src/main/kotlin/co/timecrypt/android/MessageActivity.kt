@@ -3,7 +3,7 @@ package co.timecrypt.android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MessageActivity : AppCompatActivity() {
 
     // val TAG: String = MainActivity::class.java.simpleName
     //
