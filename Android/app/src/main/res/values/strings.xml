@@ -18,10 +18,15 @@
     <string name="error_email_from_invalid">Notification email is not valid</string> <!-- -11 -->
 
     <string name="message_create">Create message</string>
+    <string name="text_hint">Type secret message here\nor click the logo for help…</string>
     <string name="title_edit_hint">MESSAGE TITLE</string>
     <string name="title_views">Allowed views</string>
     <string name="title_destruct_date">Self-destruct date</string>
     <string name="title_delivery">Delivery</string>
+
+    <string name="delivery_email">DESTINATION EMAIL</string>
+    <string name="delivery_password">PASSWORD</string>
+    <string name="delivery_notification">NOTIFICATION EMAIL</string>
 
     <string name="desc_logo_title">Timecrypt logo</string>
     <string name="desc_tab_text">Message tab</string>

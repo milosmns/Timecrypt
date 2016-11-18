@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText android:id="@+id/messageInputField"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center_horizontal|top"
+    android:hint="@string/text_hint"
+    android:inputType="text"
+    android:maxLength="1000"
+    android:orientation="vertical"
+    android:padding="@dimen/text_padding"
+    android:textColor="@color/mainLightShade"
+    android:textColorHint="@color/mainLightShade"
+    android:textSize="@dimen/text_size" />

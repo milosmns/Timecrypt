@@ -28,15 +28,8 @@ class TimecryptMessage(
      * Interpretation of a Timecrypt message. Available values are:
      *
      * @param text Contents of the message, *must not be empty*
-     */
-    constructor(text: String) : this(text, 1, null, null, null, null, null)
-
-    /**
-     * Interpretation of a Timecrypt message. Available values are:
-     *
-     * @param text Contents of the message, *must not be empty*
      * @param views How many times is this message allowed to be shown, can be empty, defaults to 1
      */
-    constructor(text: String, views: Int) : this(text, views, null, null, null, null, null)
+    constructor(text: String, views: Int = 1) : this(text, views, null, null, null, null, null)
 
 }

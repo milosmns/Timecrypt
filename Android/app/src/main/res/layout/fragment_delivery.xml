@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal|top"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/delivery_icon_size"
+        android:layout_height="@dimen/delivery_icon_size"
+        android:contentDescription="@string/delivery_email"
+        android:src="@drawable/ic_email_to" />
+
+    <EditText
+        android:id="@+id/deliveryEmailTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:hint="@string/delivery_email"
+        android:inputType="textEmailAddress"
+        android:paddingBottom="@dimen/delivery_box_padding"
+        android:paddingTop="@dimen/delivery_box_padding"
+        android:textAllCaps="true"
+        android:textColorHint="@color/mainLightShade"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/delivery_box_padding"
+        android:drawableStart="@drawable/ic_password"
+        android:gravity="start|center_vertical"
+        android:hint="@string/delivery_password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/mainLightShade"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/delivery_box_padding"
+        android:drawableStart="@drawable/ic_email_from"
+        android:gravity="start|center_vertical"
+        android:hint="@string/delivery_email"
+        android:inputType="textCapCharacters"
+        android:textAllCaps="true"
+        android:textColorHint="@color/mainLightShade"
+        android:textSize="@dimen/text_size" />
+
+</LinearLayout>
