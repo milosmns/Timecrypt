@@ -17,7 +17,7 @@
             android:name=".MessageActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name_short"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

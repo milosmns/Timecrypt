@@ -9,19 +9,26 @@ import co.timecrypt.android.v2.api.TimecryptMessage
 open class TimecryptFragment() : Fragment() {
 
     /**
-     * Converts the angle radian range (0Pi - 2Pi) to human friendly range (0% - 100%).
+     * Formats the current double value to a `digits`-length decimal format.
+     * @param digits How many digits
+     * @return The formatted value
      */
-    protected fun convertAngleToPercent(angle: Double): Double {
-        // reverse angle direction (radians go CCW) and calculate the PI/4 offset
-        return (5 / 4 - angle / (2 * Math.PI)) % 1
+    fun Double.format(digits: Int) = String.format("%.${digits}f", this)
+
+    /**
+     * Converts the input from the slider to the `[0, 1)` range.
+     * @param input The input from the slider
+     * @return The calculated ranged output value
+     */
+    protected fun convertAngleToPercent(input: Double): Double {
+        return (3f / 4f - input) % 1
     }
 
     /**
-     * This is a direct inverse of [convertAngleToPercent].
+     * This is a direct inverse of the [convertAngleToPercent] method.
      */
     protected fun convertPercentToAngle(percent: Double): Double {
-        // just an inverted function from above
-        return -(Math.PI * (4 * percent - 5) / 2) % (2 * Math.PI)
+        return (7f / 4f - percent) % 1 - 1f
     }
 
     var message: TimecryptMessage? = null

@@ -11,9 +11,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:padding="20dp"
-        app:angle="3.14"
         app:border_color="@color/mainLightShade"
         app:border_thickness="8dp"
+        app:start_angle="3.14"
         app:thumb_color="@color/mainLighterShade"
         app:thumb_size="20dp" />
 

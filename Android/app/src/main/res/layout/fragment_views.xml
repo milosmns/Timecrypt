@@ -13,6 +13,7 @@
         android:padding="20dp"
         app:border_color="@color/mainLightShade"
         app:border_thickness="8dp"
+        app:start_angle="3.14"
         app:thumb_color="@color/mainLighterShade"
         app:thumb_size="20dp" />
 

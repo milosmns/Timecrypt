@@ -15,13 +15,13 @@ import java.util.*
  * @param password Which passphrase to use to encrypt the message, can be empty, defaults to datastore's passphrase
  */
 class TimecryptMessage(
-        val text: String,
-        val views: Int = 1,
-        @Json(name = "lifetime") val destructDate: Date?,
-        @Json(name = "email_to") val emailTo: String?,
-        @Json(name = "email_from") val emailFrom: String?,
-        val title: String?,
-        val password: String?
+        var text: String,
+        var views: Int = 1,
+        @Json(name = "lifetime") var destructDate: Date?,
+        @Json(name = "email_to") var emailTo: String?,
+        @Json(name = "email_from") var emailFrom: String?,
+        var title: String?,
+        var password: String?
 ) {
 
     /**
