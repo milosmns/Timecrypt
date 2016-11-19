@@ -9,6 +9,18 @@ import co.timecrypt.android.v2.api.TimecryptMessage
 open class TimecryptFragment() : Fragment() {
 
     /**
+     * Rounds the double number
+     * @return The rounded [Long] value
+     */
+    fun Double.round() = Math.round(this)
+
+    /**
+     * Rounds the float number
+     * @return The rounded [Int] value
+     */
+    fun Float.round() = Math.round(this)
+
+    /**
      * Formats the current double value to a `digits`-length decimal format.
      * @param digits How many digits
      * @return The formatted value
@@ -27,8 +39,8 @@ open class TimecryptFragment() : Fragment() {
     /**
      * This is a direct inverse of the [convertAngleToPercent] method.
      */
-    protected fun convertPercentToAngle(percent: Double): Double {
-        return (7f / 4f - percent) % 1 - 1f
+    protected fun convertPercentToPosition(percent: Double): Double {
+        return 1f - ((1f / 4f + percent) % 1)
     }
 
     var message: TimecryptMessage? = null

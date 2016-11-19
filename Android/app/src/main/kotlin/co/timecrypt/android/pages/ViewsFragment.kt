@@ -1,6 +1,7 @@
 package co.timecrypt.android.pages
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,17 +24,39 @@ class ViewsFragment : TimecryptFragment(), CircularSlider.OnSliderMovedListener 
         return inflater.inflate(R.layout.fragment_views, container, false)
     }
 
+    val h = Handler()
+    fun getRunnable(): Runnable {
+        return Runnable() {
+            val position = convertPercentToPosition(i)
+            val angle = Math.PI /*start_angle*/ + position * 2.0 * Math.PI
+            Log.d("DEBUG", "Input $i, position $position, angle $angle")
+
+            sliderViews.setPosition(position)
+            sliderViews.invalidate()
+            sliderCountViews.text = (i * MAX_VIEWS).round().toString()
+
+            i += 0.125
+
+            if (i <= 1.0) {
+                h.postDelayed(getRunnable(), 1000)
+            }
+        }
+    }
+
+    var i = 0.0
+    fun startDemoTimer() {
+        h.postDelayed(getRunnable(), 1000)
+    }
+
     override fun onStart() {
         super.onStart()
         sliderViews.setOnSliderMovedListener(this)
         message?.let {
-            // val forcedAngle = convertPercentToAngle((message!!.views / MAX_VIEWS).toDouble())
-            val forcedInput = 0.25
-            val forcedAngle = convertPercentToAngle(forcedInput)
-            Log.d("DEBUG", "Input $forcedInput, angle $forcedAngle")
-            sliderViews.setAngle(forcedAngle)
+            // val forcedAngle = convertPercentToPosition((message!!.views / MAX_VIEWS).toDouble())
+            startDemoTimer()
+            sliderViews.setPosition(convertPercentToPosition(0.0))
             sliderViews.invalidate()
-            onSliderMoved(forcedAngle)
+            onSliderMoved(convertPercentToPosition(0.0))
         }
     }
 
