@@ -3,12 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal|top"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/delivery_box_padding_sides"
+    android:paddingRight="@dimen/delivery_box_padding_sides"
+    android:paddingTop="@dimen/content_vertical_spacing">
 
     <ImageView
         android:layout_width="@dimen/delivery_icon_size"
         android:layout_height="@dimen/delivery_icon_size"
-        android:contentDescription="@string/delivery_email"
+        android:contentDescription="@string/delivery_email_hint"
         android:src="@drawable/ic_email_to" />
 
     <EditText
@@ -17,36 +20,45 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:gravity="center"
-        android:hint="@string/delivery_email"
+        android:hint="@string/delivery_email_hint"
         android:inputType="textEmailAddress"
-        android:paddingBottom="@dimen/delivery_box_padding"
-        android:paddingTop="@dimen/delivery_box_padding"
+        android:paddingBottom="@dimen/delivery_box_padding_big"
+        android:paddingTop="@dimen/delivery_box_padding_small"
         android:textAllCaps="true"
+        android:textColor="@color/mainLightShade"
+        android:textColorHighlight="@color/mainLightShadeAlpha"
         android:textColorHint="@color/mainLightShade"
         android:textSize="@dimen/text_size" />
 
     <EditText
+        android:id="@+id/deliveryPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/delivery_edit_box_size"
+        android:layout_marginBottom="@dimen/content_vertical_spacing"
         android:background="@android:color/transparent"
-        android:drawablePadding="@dimen/delivery_box_padding"
+        android:drawablePadding="@dimen/delivery_box_icon_padding"
         android:drawableStart="@drawable/ic_password"
         android:gravity="start|center_vertical"
-        android:hint="@string/delivery_password"
+        android:hint="@string/delivery_password_hint"
         android:inputType="textPassword"
+        android:textColor="@color/mainLightShade"
+        android:textColorHighlight="@color/mainLightShadeAlpha"
         android:textColorHint="@color/mainLightShade"
         android:textSize="@dimen/text_size" />
 
     <EditText
+        android:id="@+id/deliveryEmailFrom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/delivery_edit_box_size"
         android:background="@android:color/transparent"
-        android:drawablePadding="@dimen/delivery_box_padding"
+        android:drawablePadding="@dimen/delivery_box_icon_padding"
         android:drawableStart="@drawable/ic_email_from"
         android:gravity="start|center_vertical"
-        android:hint="@string/delivery_email"
-        android:inputType="textCapCharacters"
+        android:hint="@string/delivery_email_hint"
+        android:inputType="textEmailAddress"
         android:textAllCaps="true"
+        android:textColor="@color/mainLightShade"
+        android:textColorHighlight="@color/mainLightShadeAlpha"
         android:textColorHint="@color/mainLightShade"
         android:textSize="@dimen/text_size" />
 
