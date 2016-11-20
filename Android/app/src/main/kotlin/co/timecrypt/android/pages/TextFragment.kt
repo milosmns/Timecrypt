@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_text.*
 /**
  * The fragment containing the message input.
  */
-class TextFragment : TimecryptFragment(), TextWatcher {
+class TextFragment : TimecryptFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_text, container, false)
@@ -23,13 +23,13 @@ class TextFragment : TimecryptFragment(), TextWatcher {
 
     override fun onStart() {
         super.onStart()
-        messageInputField.addTextChangedListener(this)
+        messageInputField.addTextChangedListener(messageTextWatcher)
         messageInputField.setText(message?.text)
     }
 
     override fun onStop() {
         super.onStop()
-        messageInputField.removeTextChangedListener(this)
+        messageInputField.removeTextChangedListener(messageTextWatcher)
     }
 
     /* Text Watcher API */
@@ -42,14 +42,18 @@ class TextFragment : TimecryptFragment(), TextWatcher {
         }
     }
 
-    override fun afterTextChanged(text: Editable) {
-        messageInputField.shiftGravity(text)
-    }
+    private val messageTextWatcher = object : TextWatcher {
 
-    override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {
-    }
+        override fun afterTextChanged(text: Editable) {
+            messageInputField.shiftGravity(text)
+        }
 
-    override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+        override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+        }
+
     }
 
 }

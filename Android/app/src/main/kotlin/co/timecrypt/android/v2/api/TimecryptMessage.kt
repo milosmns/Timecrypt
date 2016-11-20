@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import java.util.*
 
 /**
- * Interpretation of a Timecrypt message. Available values are:
+ * Interpretation of a Timecrypt message.
  *
  * @param text Contents of the message, *must not be empty*
  * @param views How many times is this message allowed to be shown, can be empty, defaults to 1
@@ -24,8 +24,10 @@ class TimecryptMessage(
         var password: String?
 ) {
 
+    var extra_DestructOptionPicked = 0
+
     /**
-     * Interpretation of a Timecrypt message. Available values are:
+     * Interpretation of a Timecrypt message.
      *
      * @param text Contents of the message, *must not be empty*
      * @param views How many times is this message allowed to be shown, can be empty, defaults to 1

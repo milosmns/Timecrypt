@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import co.timecrypt.android.pages.ViewsFragment
+import co.timecrypt.android.pages.DeliveryFragment
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlinx.android.synthetic.main.activity_message.*
 import java.util.*
 
+/**
+ * The activity responsible for creating Timecrypt messages.
+ */
 class MessageActivity : AppCompatActivity(), View.OnClickListener {
 
     // val TAG: String = MainActivity::class.java.simpleName
@@ -28,7 +31,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // MM to remove
-    val frag = ViewsFragment()
+    val frag = DeliveryFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +41,11 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
 
         // MM to be removed, testing only
         val transaction = supportFragmentManager.beginTransaction()
-        frag.message = TimecryptMessage("Testing")
-        transaction.add(demoHolder.id, frag, "ViewsFragment")
+        frag.message = TimecryptMessage("Testing", 200)
+        frag.message!!.emailTo = "myMail22222@text.com"
+        frag.message!!.emailFrom = "myMail@text.com"
+        frag.message!!.password = "12345"
+        transaction.add(demoHolder.id, frag)
         transaction.commit()
     }
 
@@ -50,7 +56,8 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.remove(frag)
             transaction.commit()
-        } catch (e: Throwable) {}
+        } catch (e: Throwable) {
+        }
     }
 
     override fun onClick(view: View) {

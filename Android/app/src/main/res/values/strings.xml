@@ -4,7 +4,7 @@
     <string name="app_name">Timecrypt for Android</string>
     <string name="app_name_short" translatable="false">Timecrypt</string>
 
-    <string name="error_template">Error occurred: "%s".\nCheck your data and try again.</string>
+    <string name="error_template">An error occurred: "%s".\nCheck your connection and try again.</string>
     <string name="error_internal">Internal error</string> <!-- -1 -->
     <string name="error_missing_id">Missing message identifier</string> <!-- -2 -->
     <string name="error_invalid_id">Invalid message identifier</string> <!-- -3 -->
@@ -17,16 +17,52 @@
     <string name="error_email_to_invalid">Invitation email is not valid</string> <!-- -10 -->
     <string name="error_email_from_invalid">Notification email is not valid</string> <!-- -11 -->
 
+    <plurals name="plural_day">
+        <item quantity="one">Day</item>
+        <item quantity="two">Days</item>
+        <item quantity="few">Days</item>
+        <item quantity="many">Days</item>
+        <item quantity="other">Days</item>
+        <item quantity="zero">Days</item>
+    </plurals>
+
+    <plurals name="plural_week">
+        <item quantity="one">Week</item>
+        <item quantity="two">Weeks</item>
+        <item quantity="few">Weeks</item>
+        <item quantity="many">Weeks</item>
+        <item quantity="other">Weeks</item>
+        <item quantity="zero">Weeks</item>
+    </plurals>
+
+    <plurals name="plural_month">
+        <item quantity="one">Month</item>
+        <item quantity="two">Months</item>
+        <item quantity="few">Months</item>
+        <item quantity="many">Months</item>
+        <item quantity="other">Months</item>
+        <item quantity="zero">Months</item>
+    </plurals>
+
+    <plurals name="plural_year">
+        <item quantity="one">Year</item>
+        <item quantity="two">Years</item>
+        <item quantity="few">Years</item>
+        <item quantity="many">Years</item>
+        <item quantity="other">Years</item>
+        <item quantity="zero">Years</item>
+    </plurals>
+
     <string name="message_create">Create message</string>
     <string name="text_hint">Type secret message here\nor click the logo for help…</string>
-    <string name="title_edit_hint">MESSAGE TITLE</string>
     <string name="title_views">Allowed views</string>
     <string name="title_destruct_date">Self-destruct date</string>
     <string name="title_delivery">Delivery</string>
 
-    <string name="delivery_email">DESTINATION EMAIL</string>
-    <string name="delivery_password">PASSWORD</string>
-    <string name="delivery_notification">NOTIFICATION EMAIL</string>
+    <string name="title_edit_hint">MESSAGE TITLE</string>
+    <string name="delivery_email_hint">DESTINATION EMAIL</string>
+    <string name="delivery_password_hint">PASSWORD</string>
+    <string name="delivery_notification_hint">NOTIFICATION EMAIL</string>
 
     <string name="desc_logo_title">Timecrypt logo</string>
     <string name="desc_tab_text">Message tab</string>
