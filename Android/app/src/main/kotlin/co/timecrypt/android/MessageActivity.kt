@@ -30,7 +30,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         message = TimecryptMessage("")
         swipeAdapter = SwipeAdapter(supportFragmentManager, message!!)
         viewPager.adapter = swipeAdapter
-        viewPager.setPageTransformer(false, FadePageTransformer())
+        viewPager.setPageTransformer(true, FadePageTransformer())
 
         buttonCreate.setOnClickListener(this)
         listOf(tabText, tabViews, tabDestructDate, tabDelivery).forEachIndexed {
