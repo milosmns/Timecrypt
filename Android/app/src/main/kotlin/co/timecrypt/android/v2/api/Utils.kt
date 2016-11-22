@@ -2,6 +2,8 @@ package co.timecrypt.android.v2.api
 
 import android.content.Context
 import co.timecrypt.android.R
+import org.threeten.bp.DateTimeUtils
+import org.threeten.bp.LocalDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,7 +15,7 @@ object Utils {
     /**
      * A compiled list of all possible server errors.
      */
-    val SERVER_ERRORS = hashMapOf(
+    private val SERVER_ERRORS = hashMapOf(
             Pair(-1, R.string.error_internal),
             Pair(-2, R.string.error_missing_id),
             Pair(-3, R.string.error_invalid_id),
@@ -60,37 +62,27 @@ object Utils {
      * @return The date instance representing Tomorrow
      */
     fun getTomorrow(resetTimeToMidnight: Boolean): Date {
-        val tomorrowCalendar = Calendar.getInstance()
-        tomorrowCalendar.timeInMillis = System.currentTimeMillis()
-        if (resetTimeToMidnight) {
-            tomorrowCalendar.set(Calendar.HOUR_OF_DAY, 0)
-            tomorrowCalendar.set(Calendar.MINUTE, 0)
-            tomorrowCalendar.set(Calendar.SECOND, 0)
-            tomorrowCalendar.set(Calendar.MILLISECOND, 0)
-        }
-        tomorrowCalendar.add(Calendar.DATE, 1)
-        return Date(tomorrowCalendar.time.time)
-    }
+        try {
+            val localDate = LocalDate.now()
+            if (resetTimeToMidnight) {
+                localDate.atStartOfDay()
+            }
+            localDate.plusDays(1)
+            return DateTimeUtils.toSqlDate(localDate)
+        } catch (e: Throwable) {
+            println("Not using AndroidThreeTen")
 
-    /**
-     * Adds the specified number of days to the given date.
-     * @param date Original date
-     * @param howMany How many days to add to the original date
-     * @param resetTimeToMidnight Set this to `true` to reset the clock to midnight on the original date
-     * @return The modified date
-     */
-    @Suppress("unused")
-    fun addDays(date: Date, howMany: Int, resetTimeToMidnight: Boolean): Date {
-        val resultCalendar = Calendar.getInstance()
-        resultCalendar.timeInMillis = date.time
-        if (resetTimeToMidnight) {
-            resultCalendar.set(Calendar.HOUR_OF_DAY, 0)
-            resultCalendar.set(Calendar.MINUTE, 0)
-            resultCalendar.set(Calendar.SECOND, 0)
-            resultCalendar.set(Calendar.MILLISECOND, 0)
+            val tomorrowCalendar = Calendar.getInstance()
+            tomorrowCalendar.timeInMillis = System.currentTimeMillis()
+            if (resetTimeToMidnight) {
+                tomorrowCalendar.set(Calendar.HOUR_OF_DAY, 0)
+                tomorrowCalendar.set(Calendar.MINUTE, 0)
+                tomorrowCalendar.set(Calendar.SECOND, 0)
+                tomorrowCalendar.set(Calendar.MILLISECOND, 0)
+            }
+            tomorrowCalendar.add(Calendar.DATE, 1)
+            return Date(tomorrowCalendar.time.time)
         }
-        resultCalendar.add(Calendar.DATE, howMany)
-        return Date(resultCalendar.time.time)
     }
 
     /**
