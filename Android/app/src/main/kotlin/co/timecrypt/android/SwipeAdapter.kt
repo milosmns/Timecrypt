@@ -1,24 +1,60 @@
 package co.timecrypt.android
 
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import co.timecrypt.android.pages.*
+import co.timecrypt.android.v2.api.TimecryptMessage
+import kotlin.reflect.primaryConstructor
 
 /**
  * The pager adapter being used in the [MessageActivity].
+ * @param manager The [FragmentManager] being used by the current activity
  */
-class SwipeAdapter(val manager: FragmentManager) : FragmentPagerAdapter(manager) {
+class SwipeAdapter(val manager: FragmentManager, val message: TimecryptMessage) : FragmentPagerAdapter(manager) {
 
-    private fun ensureFragment() {
-        // TODO
+    private companion object {
+        val PAGES = listOf(
+                TextFragment::class,
+                ViewsFragment::class,
+                DestructDateFragment::class,
+                DeliveryFragment::class
+        )
     }
 
-    override fun getItem(position: Int): Fragment {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private val fragmentCache: MutableMap<String, TimecryptFragment> = mutableMapOf()
+
+    /**
+     * Makes sure that a fragment exists at the given [position]. Uses the [fragmentCache] to store them afterwards.
+     * @param position Which position to look at - refer to [PAGES]
+     */
+    private fun ensureFragment(position: Int): TimecryptFragment {
+        val name = PAGES[position].simpleName!!
+        val found = manager.findFragmentByTag(name) ?: fragmentCache[name]
+        if (found == null) {
+            val fragment = PAGES[position].primaryConstructor?.call() ?: throw IllegalStateException()
+            fragment.message = this.message
+            fragmentCache.put(name, fragment)
+            return fragment
+        }
+        return found as TimecryptFragment
+    }
+
+    /**
+     * Clears the internal cache.
+     */
+    fun cleanup() {
+        for ((name, fragment) in fragmentCache) {
+            fragment.message = null
+        }
+        fragmentCache.clear()
+    }
+
+    override fun getItem(position: Int): TimecryptFragment {
+        return ensureFragment(position)
     }
 
     override fun getCount(): Int {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return PAGES.size
     }
 
 }
