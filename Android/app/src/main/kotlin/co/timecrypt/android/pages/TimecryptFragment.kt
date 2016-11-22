@@ -8,6 +8,8 @@ import co.timecrypt.android.v2.api.TimecryptMessage
  */
 open class TimecryptFragment() : Fragment() {
 
+    /* Extension functions */
+
     /**
      * Rounds the double number
      * @return The rounded [Long] value
@@ -27,6 +29,10 @@ open class TimecryptFragment() : Fragment() {
      */
     fun Double.format(digits: Int) = String.format("%.${digits}f", this)
 
+    /* Class implementation */
+
+    var message: TimecryptMessage? = null
+
     /**
      * Converts the input from the slider to the `[0, 1)` range.
      * @param input The input from the slider
@@ -42,7 +48,5 @@ open class TimecryptFragment() : Fragment() {
     protected fun convertPercentToPosition(percent: Double): Double {
         return 1f - ((1f / 4f + percent) % 1)
     }
-
-    var message: TimecryptMessage? = null
 
 }

@@ -2,11 +2,11 @@ package co.timecrypt.android.pages
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.timecrypt.android.R
+import co.timecrypt.android.TextWatcherAdapter
 import kotlinx.android.synthetic.main.fragment_delivery.*
 
 /**
@@ -38,39 +38,21 @@ class DeliveryFragment() : TimecryptFragment() {
         deliveryPassword.removeTextChangedListener(passwordWatcher)
     }
 
-    private val emailToWatcher = object : TextWatcher {
+    private val emailToWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
             message?.emailTo = text.toString()
         }
-
-        override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-        }
     }
 
-    private val emailFromWatcher = object : TextWatcher {
+    private val emailFromWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
             message?.emailFrom = text.toString()
         }
-
-        override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-        }
     }
 
-    private val passwordWatcher = object : TextWatcher {
+    private val passwordWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
             message?.password = text.toString()
-        }
-
-        override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
         }
     }
 

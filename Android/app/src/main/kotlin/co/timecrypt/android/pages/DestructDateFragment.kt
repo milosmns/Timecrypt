@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.fragment_destruct_date.*
 import me.angrybyte.circularslider.CircularSlider
 import org.threeten.bp.DateTimeUtils
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import java.util.*
 
 /**
@@ -16,7 +17,7 @@ import java.util.*
  */
 class DestructDateFragment : TimecryptFragment(), CircularSlider.OnSliderMovedListener {
 
-    companion object {
+    private companion object {
         val DATES = listOf(
                 1 to R.plurals.plural_day,
                 2 to R.plurals.plural_day,
@@ -64,23 +65,15 @@ class DestructDateFragment : TimecryptFragment(), CircularSlider.OnSliderMovedLi
     }
 
     private fun convertToDate(mapPick: Pair<Int, Int>): Date {
-        val localDate: LocalDate?
+        val localTime: LocalDateTime
         when (mapPick.second) {
-            R.plurals.plural_day -> {
-                localDate = LocalDate.now().atStartOfDay().plusDays(mapPick.first.toLong()).toLocalDate()
-            }
-            R.plurals.plural_week -> {
-                localDate = LocalDate.now().atStartOfDay().plusWeeks(mapPick.first.toLong()).toLocalDate()
-            }
-            R.plurals.plural_month -> {
-                localDate = LocalDate.now().atStartOfDay().plusMonths(mapPick.first.toLong()).toLocalDate()
-            }
-            R.plurals.plural_year -> {
-                localDate = LocalDate.now().atStartOfDay().plusYears(mapPick.first.toLong()).toLocalDate()
-            }
+            R.plurals.plural_day -> localTime = LocalDate.now().atStartOfDay().plusDays(mapPick.first.toLong())
+            R.plurals.plural_week -> localTime = LocalDate.now().atStartOfDay().plusWeeks(mapPick.first.toLong())
+            R.plurals.plural_month -> localTime = LocalDate.now().atStartOfDay().plusMonths(mapPick.first.toLong())
+            R.plurals.plural_year -> localTime = LocalDate.now().atStartOfDay().plusYears(mapPick.first.toLong())
             else -> throw IllegalStateException("What's this case? $mapPick")
         }
-        return DateTimeUtils.toSqlDate(localDate)
+        return DateTimeUtils.toSqlDate(localTime.toLocalDate())
     }
 
     override fun onSliderMoved(pos: Double) {

@@ -3,13 +3,13 @@ package co.timecrypt.android.pages
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.text.Editable
-import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import co.timecrypt.android.R
+import co.timecrypt.android.TextWatcherAdapter
 import kotlinx.android.synthetic.main.fragment_text.*
 
 /**
@@ -42,18 +42,10 @@ class TextFragment : TimecryptFragment() {
         }
     }
 
-    private val messageTextWatcher = object : TextWatcher {
-
+    private val messageTextWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
             messageInputField.shiftGravity(text)
         }
-
-        override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-        }
-
     }
 
 }
