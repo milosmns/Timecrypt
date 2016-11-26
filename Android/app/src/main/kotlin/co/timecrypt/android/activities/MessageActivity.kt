@@ -1,6 +1,8 @@
 package co.timecrypt.android.activities
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -17,10 +19,15 @@ import co.timecrypt.android.pages.SwipeAdapter
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlinx.android.synthetic.main.activity_message.*
 
+
 /**
  * The activity responsible for creating Timecrypt messages.
  */
 class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChangedListener {
+
+    private companion object {
+        val TIMECRYPT_URL = "https://github.com/milosmns/Timecrypt"
+    }
 
     // val TAG: String = MainActivity::class.java.simpleName
     //
@@ -59,6 +66,9 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
         }
 
         titleEdit.addTextChangedListener(titleChangeListener)
+        titleLogo.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(TIMECRYPT_URL)))
+        }
 
         buttonCreate.setOnClickListener(this)
         switchTabSelection(0)
