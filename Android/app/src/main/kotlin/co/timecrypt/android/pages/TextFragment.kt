@@ -12,10 +12,11 @@ import co.timecrypt.android.R
 import co.timecrypt.android.TextWatcherAdapter
 import kotlinx.android.synthetic.main.fragment_text.*
 
+
 /**
  * The fragment containing the message input.
  */
-class TextFragment : TimecryptFragment() {
+class TextFragment : TimecryptFragment(mutableListOf()) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_text, container, false)
@@ -37,8 +38,10 @@ class TextFragment : TimecryptFragment() {
     private fun EditText.shiftGravity(text: Editable) {
         if (text.isEmpty() && gravity != Gravity.CENTER_HORIZONTAL or Gravity.TOP) {
             gravity = Gravity.CENTER_HORIZONTAL or Gravity.TOP
+            notifyListener { it.onTextInvalidated(true) }
         } else if (!text.isEmpty() && gravity != GravityCompat.START or Gravity.TOP) {
             gravity = GravityCompat.START or Gravity.TOP
+            notifyListener { it.onTextInvalidated(false) }
         }
     }
 

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_delivery.*
 /**
  * The fragment containing the destruct date picker.
  */
-class DeliveryFragment() : TimecryptFragment() {
+class DeliveryFragment() : TimecryptFragment(mutableListOf()) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_delivery, container, false)

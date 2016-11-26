@@ -53,11 +53,11 @@
         <item quantity="zero">Years</item>
     </plurals>
 
-    <string name="message_create">Create message</string>
-    <string name="text_hint">Type secret message here\nor click the logo for help…</string>
-    <string name="title_views">Allowed views</string>
-    <string name="title_destruct_date">Self-destruct date</string>
-    <string name="title_delivery">Delivery</string>
+    <string name="message_create">CREATE MESSAGE</string>
+    <string name="text_hint">TYPE SECRET MESSAGE HERE\nOR CLICK THE LOGO FOR HELP…</string>
+    <string name="title_views">ALLOWED VIEWS</string>
+    <string name="title_destruct_date">SELF-DESTRUCT DATE</string>
+    <string name="title_delivery">DELIVERY</string>
 
     <string name="title_edit_hint">MESSAGE TITLE</string>
     <string name="delivery_email_hint">DESTINATION EMAIL</string>

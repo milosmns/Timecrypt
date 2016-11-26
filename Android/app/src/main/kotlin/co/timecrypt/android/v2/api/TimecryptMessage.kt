@@ -34,4 +34,9 @@ class TimecryptMessage(
      */
     constructor(text: String, views: Int = 1) : this(text, views, null, null, null, null, null)
 
+    override fun toString(): String {
+        return "TimecryptMessage(text='$text', views=$views, destructDate=$destructDate, " +
+                "emailTo=$emailTo, emailFrom=$emailFrom, title=$title, password=$password)"
+    }
+
 }

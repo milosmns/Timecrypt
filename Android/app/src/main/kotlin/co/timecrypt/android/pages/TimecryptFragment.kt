@@ -1,12 +1,16 @@
 package co.timecrypt.android.pages
 
 import android.support.v4.app.Fragment
+import co.timecrypt.android.helpers.OnMessageChangedEmitter
+import co.timecrypt.android.helpers.OnMessageChangedListener
 import co.timecrypt.android.v2.api.TimecryptMessage
 
 /**
  * A fragment variant that allows easy storage of the living [TimecryptMessage] instance.
  */
-open class TimecryptFragment() : Fragment() {
+open class TimecryptFragment(
+        override var listeners: MutableList<OnMessageChangedListener>?
+) : Fragment(), OnMessageChangedEmitter {
 
     /* Extension functions */
 
@@ -20,6 +24,7 @@ open class TimecryptFragment() : Fragment() {
      * Rounds the float number
      * @return The rounded [Int] value
      */
+    @Suppress("unused")
     fun Float.round() = Math.round(this)
 
     /**
@@ -27,6 +32,7 @@ open class TimecryptFragment() : Fragment() {
      * @param digits How many digits
      * @return The formatted value
      */
+    @Suppress("unused")
     fun Double.format(digits: Int) = String.format("%.${digits}f", this)
 
     /* Class implementation */

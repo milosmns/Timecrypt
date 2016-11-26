@@ -15,7 +15,7 @@ import java.util.*
 /**
  * The fragment containing the destruct date picker.
  */
-class DestructDateFragment : TimecryptFragment(), CircularSlider.OnSliderMovedListener {
+class DestructDateFragment : TimecryptFragment(mutableListOf()), CircularSlider.OnSliderMovedListener {
 
     private companion object {
         val DATES = listOf(
