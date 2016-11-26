@@ -54,7 +54,7 @@
     </plurals>
 
     <string name="message_create">CREATE MESSAGE</string>
-    <string name="text_hint">TYPE SECRET MESSAGE HERE\nOR CLICK THE LOGO FOR HELP…</string>
+    <string name="text_hint">TYPE SECRET MESSAGE HERE\nOR CLICK THE LOGO FOR HELP</string>
     <string name="title_views">ALLOWED VIEWS</string>
     <string name="title_destruct_date">SELF-DESTRUCT DATE</string>
     <string name="title_delivery">DELIVERY</string>
