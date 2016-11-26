@@ -16,6 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_item_size"
+            android:layout_marginBottom="@dimen/content_vertical_spacing"
+            android:layout_marginTop="@dimen/content_vertical_spacing"
             android:animateLayoutChanges="true"
             android:gravity="center"
             android:orientation="horizontal"
@@ -56,7 +58,6 @@
             android:id="@+id/tabsContainer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_item_size"
-            android:layout_marginTop="@dimen/content_vertical_spacing"
             android:animateLayoutChanges="true"
             android:gravity="center"
             android:orientation="horizontal"
