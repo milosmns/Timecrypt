@@ -37,7 +37,7 @@ open class TimecryptFragment(
 
     /* Class implementation */
 
-    var message: TimecryptMessage? = null
+    var message: TimecryptMessage = TimecryptMessage("") // dummy initializer, this gets overridden immediately after creation
 
     /**
      * Converts the input from the slider to the `[0, 1)` range.

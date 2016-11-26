@@ -25,7 +25,6 @@ class DestructDateFragment : TimecryptFragment(mutableListOf()), CircularSlider.
                 4 to R.plurals.plural_day,
                 5 to R.plurals.plural_day,
                 6 to R.plurals.plural_day,
-                7 to R.plurals.plural_day,
                 1 to R.plurals.plural_week,
                 2 to R.plurals.plural_week,
                 3 to R.plurals.plural_week,
@@ -37,11 +36,16 @@ class DestructDateFragment : TimecryptFragment(mutableListOf()), CircularSlider.
                 5 to R.plurals.plural_month,
                 6 to R.plurals.plural_month,
                 9 to R.plurals.plural_month,
-                12 to R.plurals.plural_month,
+                11 to R.plurals.plural_month,
                 1 to R.plurals.plural_year,
                 2 to R.plurals.plural_year,
                 3 to R.plurals.plural_year
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        message.destructDate = convertToDate(DATES[0])
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,12 +55,10 @@ class DestructDateFragment : TimecryptFragment(mutableListOf()), CircularSlider.
     override fun onStart() {
         super.onStart()
         sliderDestruct.setOnSliderMovedListener(this)
-        message?.let {
-            val pickedRange = DATES[message!!.extra_DestructOptionPicked]
-            sliderCountDestruct.text = pickedRange.first.toString()
-            sliderLabelDestruct.text = resources.getQuantityString(pickedRange.second, pickedRange.first)
-            sliderDestruct.setPosition(convertPercentToPosition(message!!.extra_DestructOptionPicked.toDouble() / DATES.size))
-        }
+        val pickedRange = DATES[message.extra_DestructOptionPicked]
+        sliderCountDestruct.text = pickedRange.first.toString()
+        sliderLabelDestruct.text = resources.getQuantityString(pickedRange.second, pickedRange.first)
+        sliderDestruct.setPosition(convertPercentToPosition(message.extra_DestructOptionPicked.toDouble() / DATES.size))
     }
 
     override fun onStop() {
@@ -81,8 +83,8 @@ class DestructDateFragment : TimecryptFragment(mutableListOf()), CircularSlider.
         val calculatedPick = DATES[pickedIndex]
         sliderCountDestruct.text = calculatedPick.first.toString()
         sliderLabelDestruct.text = resources.getQuantityString(calculatedPick.second, calculatedPick.first)
-        message?.extra_DestructOptionPicked = pickedIndex
-        message?.destructDate = convertToDate(calculatedPick)
+        message.extra_DestructOptionPicked = pickedIndex
+        message.destructDate = convertToDate(calculatedPick)
     }
 
 }

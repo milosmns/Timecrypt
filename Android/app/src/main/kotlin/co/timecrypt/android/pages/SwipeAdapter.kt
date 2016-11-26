@@ -1,10 +1,10 @@
-package co.timecrypt.android
+package co.timecrypt.android.pages
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import co.timecrypt.android.activities.MessageActivity
 import co.timecrypt.android.helpers.OnMessageChangedEmitter
 import co.timecrypt.android.helpers.OnMessageChangedListener
-import co.timecrypt.android.pages.*
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlin.reflect.primaryConstructor
 
@@ -58,7 +58,6 @@ class SwipeAdapter(
     fun cleanup() {
         for ((name, fragment) in fragmentCache) {
             fragment.removeMessageListener(this)
-            fragment.message = null
         }
         fragmentCache.clear()
 

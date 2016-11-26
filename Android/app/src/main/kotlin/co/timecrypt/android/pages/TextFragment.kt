@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import co.timecrypt.android.R
-import co.timecrypt.android.TextWatcherAdapter
+import co.timecrypt.android.helpers.TextWatcherAdapter
 import kotlinx.android.synthetic.main.fragment_text.*
 
 
@@ -25,7 +25,7 @@ class TextFragment : TimecryptFragment(mutableListOf()) {
     override fun onStart() {
         super.onStart()
         messageInputField.addTextChangedListener(messageTextWatcher)
-        messageInputField.setText(message?.text)
+        messageInputField.setText(message.text)
     }
 
     override fun onStop() {
@@ -36,18 +36,18 @@ class TextFragment : TimecryptFragment(mutableListOf()) {
     /* Text Watcher API */
 
     private fun EditText.shiftGravity(text: Editable) {
-        if (text.isEmpty() && gravity != Gravity.CENTER_HORIZONTAL or Gravity.TOP) {
+        if (text.trim().isEmpty() && gravity != Gravity.CENTER_HORIZONTAL or Gravity.TOP) {
             gravity = Gravity.CENTER_HORIZONTAL or Gravity.TOP
-            notifyListener { it.onTextInvalidated(true) }
-        } else if (!text.isEmpty() && gravity != GravityCompat.START or Gravity.TOP) {
+        } else if (!text.trim().isEmpty() && gravity != GravityCompat.START or Gravity.TOP) {
             gravity = GravityCompat.START or Gravity.TOP
-            notifyListener { it.onTextInvalidated(false) }
         }
     }
 
     private val messageTextWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
             messageInputField.shiftGravity(text)
+            message.text = text.toString().trim()
+            notifyListener { it.onTextInvalidated(message.text.isEmpty()) }
         }
     }
 

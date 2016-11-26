@@ -25,11 +25,9 @@ class ViewsFragment : TimecryptFragment(mutableListOf()), CircularSlider.OnSlide
     override fun onStart() {
         super.onStart()
         sliderViews.setOnSliderMovedListener(this)
-        message?.let {
-            sliderViews.setPosition(convertPercentToPosition(message!!.views.toDouble() / MAX_VIEWS))
-            sliderViews.invalidate()
-            sliderCountViews.text = message!!.views.toString()
-        }
+        sliderViews.setPosition(convertPercentToPosition(message.views.toDouble() / MAX_VIEWS))
+        sliderViews.invalidate()
+        sliderCountViews.text = message.views.toString()
     }
 
     override fun onStop() {
@@ -40,7 +38,7 @@ class ViewsFragment : TimecryptFragment(mutableListOf()), CircularSlider.OnSlide
     override fun onSliderMoved(pos: Double) {
         val calculatedViews = ((convertAngleToPercent(pos) * (MAX_VIEWS - MIN_VIEWS)).round() + MIN_VIEWS).toInt()
         sliderCountViews.text = calculatedViews.toString()
-        message?.views = calculatedViews
+        message.views = calculatedViews
     }
 
 }

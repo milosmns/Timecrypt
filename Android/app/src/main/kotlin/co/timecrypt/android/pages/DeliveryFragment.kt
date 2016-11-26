@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.timecrypt.android.R
-import co.timecrypt.android.TextWatcherAdapter
+import co.timecrypt.android.helpers.TextWatcherAdapter
 import kotlinx.android.synthetic.main.fragment_delivery.*
 
 /**
@@ -20,11 +20,9 @@ class DeliveryFragment() : TimecryptFragment(mutableListOf()) {
 
     override fun onStart() {
         super.onStart()
-        message?.let {
-            deliveryEmailTo.setText(message!!.emailTo)
-            deliveryEmailFrom.setText(message!!.emailFrom)
-            deliveryPassword.setText(message!!.password)
-        }
+        deliveryEmailTo.setText(message.emailTo)
+        deliveryEmailFrom.setText(message.emailFrom)
+        deliveryPassword.setText(message.password)
 
         deliveryEmailTo.addTextChangedListener(emailToWatcher)
         deliveryEmailFrom.addTextChangedListener(emailFromWatcher)
@@ -40,19 +38,19 @@ class DeliveryFragment() : TimecryptFragment(mutableListOf()) {
 
     private val emailToWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
-            message?.emailTo = text.toString()
+            message.emailTo = text.toString()
         }
     }
 
     private val emailFromWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
-            message?.emailFrom = text.toString()
+            message.emailFrom = text.toString()
         }
     }
 
     private val passwordWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
-            message?.password = text.toString()
+            message.password = text.toString()
         }
     }
 

@@ -1,4 +1,4 @@
-package co.timecrypt.android
+package co.timecrypt.android.activities
 
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +9,11 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import co.timecrypt.android.R
 import co.timecrypt.android.helpers.OnMessageChangedListener
+import co.timecrypt.android.helpers.PageChangeListenerAdapter
+import co.timecrypt.android.helpers.TextWatcherAdapter
+import co.timecrypt.android.pages.SwipeAdapter
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlinx.android.synthetic.main.activity_message.*
 
@@ -45,6 +49,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
         viewPager.adapter = swipeAdapter
         viewPager.addOnPageChangeListener(pageChangeListener)
         viewPager.offscreenPageLimit = tabs.size - 1
+        viewPager.swipeEnabled = false
 
         tabs.forEachIndexed {
             i, view ->
@@ -102,6 +107,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
         titleEdit.visibility = if (empty) View.GONE else View.VISIBLE
         buttonCreate.visibility = if (empty) View.GONE else View.VISIBLE
         tabsContainer.visibility = if (empty) View.GONE else View.VISIBLE
+        viewPager.swipeEnabled = !empty
     }
 
     override fun onClick(view: View) {

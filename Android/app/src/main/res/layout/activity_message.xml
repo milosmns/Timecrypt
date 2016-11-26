@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="co.timecrypt.android.MessageActivity">
+    tools:context="co.timecrypt.android.activities.MessageActivity">
 
     <LinearLayout
         style="@style/AppTheme.ContentHolder"
@@ -105,7 +105,7 @@
 
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
+        <co.timecrypt.android.pages.TimecryptViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

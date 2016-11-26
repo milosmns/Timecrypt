@@ -1,4 +1,4 @@
-package co.timecrypt.android
+package co.timecrypt.android.helpers
 
 import android.text.Editable
 import android.text.TextWatcher
