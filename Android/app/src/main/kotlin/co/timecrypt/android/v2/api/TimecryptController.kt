@@ -47,8 +47,7 @@ class TimecryptController(serverUrl: String) {
         requests.add(createCall)
 
         createCall.enqueue(object : Callback<CreateResponse> {
-
-            override fun onResponse(call: Call<CreateResponse>?, response: Response<CreateResponse>) {
+            override fun onResponse(call: Call<CreateResponse>, response: Response<CreateResponse>) {
                 if (!response.isSuccessful) {
                     listener.onCreateFailed(resolveErrorText(context, response.message()))
                     return
@@ -56,16 +55,15 @@ class TimecryptController(serverUrl: String) {
 
                 val errorCode = response.body().statusCode
                 if (errorCode == 0) {
-                    listener.onCreateCompleted(response.body()?.id!!)
+                    listener.onCreateCompleted(response.body().id!!)
                 } else {
                     listener.onCreateFailed(resolveErrorText(context, errorCode))
                 }
             }
 
-            override fun onFailure(call: Call<CreateResponse>?, t: Throwable?) {
+            override fun onFailure(call: Call<CreateResponse>, t: Throwable?) {
                 listener.onCreateFailed(resolveErrorText(t))
             }
-
         })
     }
 

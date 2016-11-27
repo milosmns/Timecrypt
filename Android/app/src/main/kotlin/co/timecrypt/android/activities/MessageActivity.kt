@@ -32,6 +32,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
     private companion object {
         val TIMECRYPT_URL = "https://github.com/milosmns/Timecrypt"
         val DEFAULT_API_URL = "https://timecrypt-angrybyte.rhcloud.com/v2/"
+        val DEFAULT_MESSAGE_URL = "http://timecrypt.co/?c=%s"
     }
 
     private var message: TimecryptMessage? = null
@@ -118,8 +119,17 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
 
     private val createOperationListener = object : TimecryptController.CreateCompletedListener {
         override fun onCreateCompleted(id: String) {
-            Toast.makeText(this@MessageActivity, "Success! ID = $id", Toast.LENGTH_SHORT).show()
             progressOverlay.visibility = View.GONE
+            // send info to the link viewer activity
+            val messageInfo = Bundle(3)
+            val fullUrl = String.format(DEFAULT_MESSAGE_URL, id)
+            messageInfo.putString(LinkDisplayActivity.KEY_URL, fullUrl)
+            messageInfo.putString(LinkDisplayActivity.KEY_DATE, message!!.destructDate!!.toString())
+            messageInfo.putInt(LinkDisplayActivity.KEY_VIEWS, message!!.views)
+            val intent = Intent(this@MessageActivity, LinkDisplayActivity::class.java)
+            intent.putExtras(messageInfo)
+            startActivity(intent)
+            finish()
         }
 
         override fun onCreateFailed(message: String) {

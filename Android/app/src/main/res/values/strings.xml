@@ -55,16 +55,33 @@
         <item quantity="zero">Years</item>
     </plurals>
 
+    <plurals name="plural_how_many_times">
+        <item quantity="one">once</item>
+        <item quantity="two">twice</item>
+        <item quantity="few">%d times</item>
+        <item quantity="many">%d times</item>
+        <item quantity="other">%d times</item>
+        <item quantity="zero">never</item>
+    </plurals>
+
     <string name="message_create">CREATE MESSAGE</string>
     <string name="progress_creating">Creating…</string>
     <string name="message_not_created">Message not created</string>
     <string name="message_cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="link_explanation">Your message has been created.\nIt\'s safely stored at this location:</string>
+    <string name="link_more_info">Your message is set to auto-delete on %1$s, or after it\'s been read %2$s.</string>
+    <string name="link_copy_label">Timecrypt Message Link</string>
+    <string name="link_copy_success">Copied. Just paste and you\'re done.</string>
+    <string name="link_share_content_title">Psssst. I have a Timecrypt message for you.</string>
+    <string name="link_share_chooser_title">How do you want to send it?</string>
+    <string name="link_create_new">CREATE ONE MORE</string>
 
-    <string name="text_hint">TYPE SECRET MESSAGE HERE\nOR TAP THE LOGO FOR HELP</string>
     <string name="title_views">ALLOWED VIEWS</string>
     <string name="title_destruct_date">SELF-DESTRUCT DATE</string>
     <string name="title_delivery">DELIVERY</string>
+
     <string name="title_edit_hint">MESSAGE TITLE</string>
+    <string name="text_hint">TYPE SECRET MESSAGE HERE\nOR TAP THE LOGO FOR HELP</string>
     <string name="delivery_email_hint">DESTINATION EMAIL</string>
     <string name="delivery_password_hint">PASSWORD</string>
     <string name="delivery_notification_hint">NOTIFICATION EMAIL</string>
@@ -74,5 +91,7 @@
     <string name="desc_tab_views">Views tab</string>
     <string name="desc_tab_destruct">Destruct tab</string>
     <string name="desc_tab_delivery">Delivery tab</string>
+    <string name="desc_link_share">Share message link</string>
+    <string name="desc_link_copy">Copy message link</string>
 
 </resources>
