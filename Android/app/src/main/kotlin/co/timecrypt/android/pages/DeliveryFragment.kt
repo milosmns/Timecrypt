@@ -44,13 +44,13 @@ class DeliveryFragment() : TimecryptFragment(mutableListOf()) {
 
     private val emailFromWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
-            message?.emailFrom = text.toString()
+            message.emailFrom = text.toString()
         }
     }
 
     private val passwordWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
-            message?.password = text.toString()
+            message.password = text.toString()
         }
     }
 
