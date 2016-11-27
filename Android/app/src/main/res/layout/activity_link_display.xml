@@ -6,7 +6,8 @@
     android:background="@color/colorPrimary"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="co.timecrypt.android.activities.LinkDisplayActivity">
+    tools:context="co.timecrypt.android.activities.LinkDisplayActivity"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:id="@+id/titleLogo"
