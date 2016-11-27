@@ -51,7 +51,7 @@ class TimecryptController(serverUrl: String) {
             override fun onResponse(call: Call<CreateResponse>?, response: Response<CreateResponse>) {
                 if (!response.isSuccessful) {
                     listener.onCreateFailed(resolveErrorText(context, response.message()))
-                    return;
+                    return
                 }
 
                 val errorCode = response.body().statusCode
