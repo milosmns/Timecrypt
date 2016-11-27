@@ -55,7 +55,7 @@ class TimecryptUnitTests() {
         val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
         val message = TimecryptMessage(text)
         val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
-        assertEquals(200, result.code())
+        assertTrue(result.isSuccessful)
         return Pair(message, result.body().id as String)
     }
 
@@ -63,13 +63,13 @@ class TimecryptUnitTests() {
         val text = "$TAG#${(Math.random() * 1000 + 30).toInt()}"
         val message = TimecryptMessage(text, views)
         val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
-        assertEquals(200, result.code())
+        assertTrue(result.isSuccessful)
         return Pair(message, result.body().id as String)
     }
 
     private fun createAllFieldsMessage(message: TimecryptMessage): String {
         val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
-        assertEquals(200, result.code())
+        assertTrue(result.isSuccessful)
         return result.body().id as String
     }
     // </editor-fold>
@@ -130,7 +130,6 @@ class TimecryptUnitTests() {
         // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
-        assertEquals(200, result.code())
 
         // check response body
         val response = result.body()
@@ -151,7 +150,6 @@ class TimecryptUnitTests() {
         // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
-        assertEquals(200, result.code())
 
         // check response body
         val response = result.body()
@@ -173,7 +171,6 @@ class TimecryptUnitTests() {
         // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
-        assertEquals(200, result.code())
 
         // check response body
         val response = result.body()
@@ -194,7 +191,6 @@ class TimecryptUnitTests() {
         // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
-        assertEquals(200, result.code())
 
         // check response body
         val response = result.body()
@@ -215,7 +211,6 @@ class TimecryptUnitTests() {
         // check create HTTP
         val createResult = createCall.execute()
         assertTrue(createResult.isSuccessful)
-        assertEquals(200, createResult.code())
 
         // check create response body
         val createResponse = createResult.body()
@@ -232,7 +227,6 @@ class TimecryptUnitTests() {
         // check is-locked HTTP
         val lockCheckResult = lockCheckCall.execute()
         assertTrue(lockCheckResult.isSuccessful)
-        assertEquals(200, lockCheckResult.code())
 
         // check is-locked response body
         val lockCheckResponse = lockCheckResult.body()
@@ -254,7 +248,6 @@ class TimecryptUnitTests() {
         // check create HTTP
         val createResult = createCall.execute()
         assertTrue(createResult.isSuccessful)
-        assertEquals(200, createResult.code())
 
         // check create response body
         val createResponse = createResult.body()
@@ -271,7 +264,6 @@ class TimecryptUnitTests() {
         // check is-locked HTTP
         val lockCheckResult = lockCheckCall.execute()
         assertTrue(lockCheckResult.isSuccessful)
-        assertEquals(200, lockCheckResult.code())
 
         // check is-locked response body
         val lockCheckResponse = lockCheckResult.body()
@@ -291,7 +283,6 @@ class TimecryptUnitTests() {
         // check HTTP
         val result = call.execute()
         assertTrue(result.isSuccessful)
-        assertEquals(200, result.code())
 
         // check response body
         val response = result.body()
@@ -315,7 +306,6 @@ class TimecryptUnitTests() {
         // check read HTTP
         val readResult = readCall.execute()
         assertTrue(readResult.isSuccessful)
-        assertEquals(200, readResult.code())
 
         // check read response body
         val readResponse = readResult.body()
@@ -341,7 +331,6 @@ class TimecryptUnitTests() {
         // check read HTTP
         val readResult = readCall.execute()
         assertTrue(readResult.isSuccessful)
-        assertEquals(200, readResult.code())
 
         // check read response body
         val readResponse = readResult.body()
@@ -369,7 +358,6 @@ class TimecryptUnitTests() {
         // check read HTTP
         val readResult = readCall.execute()
         assertTrue(readResult.isSuccessful)
-        assertEquals(200, readResult.code())
 
         // check read response body
         val readResponse = readResult.body()
@@ -397,7 +385,6 @@ class TimecryptUnitTests() {
         // check read HTTP
         val readResult = readCall.execute()
         assertTrue(readResult.isSuccessful)
-        assertEquals(200, readResult.code())
 
         // check read response body
         val readResponse = readResult.body()

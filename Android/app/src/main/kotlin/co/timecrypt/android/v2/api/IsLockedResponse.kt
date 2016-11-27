@@ -14,4 +14,4 @@ import com.squareup.moshi.Json
 class IsLockedResponse(
         @Json(name = "locked") val isLocked: Boolean?,
         @Json(name = "status_code") val statusCode: Int
-)
+) : TimecryptResponse

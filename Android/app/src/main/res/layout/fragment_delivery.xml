@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal|top"
@@ -28,7 +29,8 @@
         android:textColor="@color/mainLightShade"
         android:textColorHighlight="@color/mainLightShadeAlpha"
         android:textColorHint="@color/mainLightShade"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/text_size"
+        app:backgroundTint="@color/mainLightShade" />
 
     <EditText
         android:id="@+id/deliveryPassword"

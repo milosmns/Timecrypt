@@ -20,4 +20,4 @@ class ReadResponse(
         val views: Int?,
         @Json(name = "lifetime") val destructDate: String?,
         @Json(name = "status_code") val statusCode: Int
-)
+) : TimecryptResponse

@@ -7,6 +7,7 @@
 
     <color name="mainDarkShade">#002529</color>
     <color name="mainDarkerShade">#001519</color>
+    <color name="mainDarkShadeAlpha">#90001519</color>
     <color name="mainLightShade">#00ADCA</color>
     <color name="mainLighterShade">#00BDDA</color>
     <color name="mainLightShadeAlpha">#3000ADCA</color>

@@ -126,4 +126,44 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/progressOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/overlay_gradient"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressCreating"
+            style="?attr/indeterminateProgressStyle"
+            android:layout_width="@dimen/title_item_size"
+            android:layout_height="@dimen/title_item_size"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/tab_item_padding" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressCreating"
+            android:layout_centerHorizontal="true"
+            android:text="@string/progress_creating"
+            android:textColor="@color/mainLighterShade"
+            android:textSize="@dimen/button_text_size" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_background"
+            android:text="@string/message_cancel"
+            android:textAllCaps="true"
+            android:textColor="@color/color_button_text"
+            android:textSize="@dimen/button_text_size"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
 </FrameLayout>

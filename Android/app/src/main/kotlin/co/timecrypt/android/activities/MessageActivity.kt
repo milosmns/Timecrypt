@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -16,36 +17,35 @@ import co.timecrypt.android.helpers.OnMessageChangedListener
 import co.timecrypt.android.helpers.PageChangeListenerAdapter
 import co.timecrypt.android.helpers.TextWatcherAdapter
 import co.timecrypt.android.pages.SwipeAdapter
+import co.timecrypt.android.v2.api.TimecryptController
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlinx.android.synthetic.main.activity_message.*
 
 
 /**
- * The activity responsible for creating Timecrypt messages.
+ * The activity responsible for letting users create Timecrypt messages.
  */
 class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChangedListener {
 
+    private val TAG = MessageActivity::class.simpleName!!
+
     private companion object {
         val TIMECRYPT_URL = "https://github.com/milosmns/Timecrypt"
+        val DEFAULT_API_URL = "https://timecrypt-angrybyte.rhcloud.com/v2/"
     }
-
-    // val TAG: String = MainActivity::class.java.simpleName
-    //
-    // val mRetrofit: Retrofit = Retrofit.Builder()
-    //         .baseUrl("https://timecrypt-angrybyte.rhcloud.com/v2/")
-    //         .addConverterFactory(MoshiConverterFactory.create())
-    //         .build()
-    // val mTimecryptApi: TimecryptRestApi = mRetrofit.create(TimecryptRestApi::class.java)
 
     private var message: TimecryptMessage? = null
     private var swipeAdapter: SwipeAdapter? = null
     private var lastSelected: Int = 0
     private var tabs: List<ImageView> = emptyList()
     private var titles: List<Int> = emptyList()
+    private var controller: TimecryptController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
+
+        controller = TimecryptController(DEFAULT_API_URL)
 
         tabs = listOf(tabText, tabViews, tabDestructDate, tabDelivery)
         titles = listOf(R.string.title_edit_hint, R.string.title_views, R.string.title_destruct_date, R.string.title_delivery)
@@ -66,11 +66,10 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
         }
 
         titleEdit.addTextChangedListener(titleChangeListener)
-        titleLogo.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(TIMECRYPT_URL)))
-        }
 
+        titleLogo.setOnClickListener(this)
         buttonCreate.setOnClickListener(this)
+        buttonCancel.setOnClickListener(this)
         switchTabSelection(0)
     }
 
@@ -105,6 +104,31 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
         }
     }
 
+    override fun onClick(view: View) {
+        // log? "Message is ${swipeAdapter?.message}"
+        when (view.id) {
+            buttonCreate.id -> {
+                progressOverlay.visibility = View.VISIBLE
+                controller?.create(this, message!!, createOperationListener)
+            }
+            buttonCancel.id -> stopCreating()
+            titleLogo.id -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(TIMECRYPT_URL)))
+        }
+    }
+
+    private val createOperationListener = object : TimecryptController.CreateCompletedListener {
+        override fun onCreateCompleted(id: String) {
+            Toast.makeText(this@MessageActivity, "Success! ID = $id", Toast.LENGTH_SHORT).show()
+            progressOverlay.visibility = View.GONE
+        }
+
+        override fun onCreateFailed(message: String) {
+            Log.e(TAG, message)
+            Toast.makeText(this@MessageActivity, R.string.message_not_created, Toast.LENGTH_LONG).show()
+            progressOverlay.visibility = View.GONE
+        }
+    }
+
     private fun switchTabSelection(current: Int) {
         tabs[lastSelected].setBackgroundResource(R.drawable.icon_background)
         tabs[current].setBackgroundResource(R.drawable.icon_background_active)
@@ -120,14 +144,19 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChan
         viewPager.swipeEnabled = !empty
     }
 
-    override fun onClick(view: View) {
-        when (view.id) {
-            buttonCreate.id -> Toast.makeText(this, "Message is ${swipeAdapter?.message}", Toast.LENGTH_LONG).show()
-        }
+    override fun onStop() {
+        super.onStop()
+        stopCreating()
+    }
+
+    private fun stopCreating() {
+        controller?.stopAll()
+        progressOverlay.visibility = View.GONE
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        controller = null
         titleEdit.removeTextChangedListener(titleChangeListener)
         viewPager.removeOnPageChangeListener(pageChangeListener)
         swipeAdapter?.cleanup()

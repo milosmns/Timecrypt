@@ -106,8 +106,8 @@ object Utils {
      * @see [SERVER_ERRORS]
      */
     fun parseStatusCode(context: Context, code: Int): String? {
-        SERVER_ERRORS[code]?.let {
-            return context.getString(R.string.error_template, it.toString())
+        SERVER_ERRORS[code]?.let { it ->
+            return context.getString(R.string.error_template, context.getString(it))
         }
         return null
     }

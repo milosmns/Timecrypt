@@ -15,7 +15,7 @@
         app:border_thickness="6dp"
         app:start_angle="3.14"
         app:thumb_color="@color/mainLighterShade"
-        app:thumb_size="20dp" />
+        app:thumb_size="16dp" />
 
     <TextView
         android:id="@+id/sliderCountViews"
