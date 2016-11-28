@@ -59,6 +59,17 @@ class SwipeAdapter(
         for ((name, fragment) in fragmentCache) {
             fragment.removeMessageListener(this)
         }
+
+        try {
+            val transaction = manager.beginTransaction()
+            PAGES.forEach {
+                val fragment = manager.findFragmentByTag(it.simpleName)
+                fragment?.let { transaction.remove(it) }
+            }
+            transaction.commitAllowingStateLoss()
+        } catch (ignored: Throwable) {
+        }
+
         fragmentCache.clear()
 
         messageListener?.let { removeMessageListener(it) }

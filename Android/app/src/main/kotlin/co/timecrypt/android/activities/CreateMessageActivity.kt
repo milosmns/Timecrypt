@@ -21,6 +21,7 @@ import co.timecrypt.android.v2.api.TimecryptController
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlinx.android.synthetic.main.activity_create_message.*
 
+
 /**
  * The activity responsible for letting users create Timecrypt messages.
  */
@@ -44,7 +45,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
         tabs = listOf(tabText, tabViews, tabDestructDate, tabDelivery)
         titles = listOf(R.string.title_edit_hint, R.string.title_views, R.string.title_destruct_date, R.string.title_delivery)
 
-        message = TimecryptMessage("")
+        message = createMessage(intent)
         swipeAdapter = SwipeAdapter(this, supportFragmentManager, message!!)
 
         viewPager.adapter = swipeAdapter
@@ -63,6 +64,21 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
 
         listOf(titleLogo, buttonCreate, buttonCancel).forEach { it.setOnClickListener(this) }
         switchTabSelection(0)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        message = createMessage(intent)
+        swipeAdapter?.cleanup()
+        swipeAdapter?.notifyDataSetChanged()
+    }
+
+    private fun createMessage(intent: Intent?): TimecryptMessage {
+        if (Intent.ACTION_SEND == intent?.action && intent?.type?.startsWith("text/", true) == true) {
+            // this was a share action from outside
+            return TimecryptMessage(intent?.getStringExtra(Intent.EXTRA_TEXT) ?: "")
+        }
+        return TimecryptMessage("")
     }
 
     private val pageChangeListener = object : PageChangeListenerAdapter() {
