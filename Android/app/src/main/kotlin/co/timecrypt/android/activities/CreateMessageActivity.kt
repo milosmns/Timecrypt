@@ -21,7 +21,6 @@ import co.timecrypt.android.v2.api.TimecryptController
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlinx.android.synthetic.main.activity_create_message.*
 
-
 /**
  * The activity responsible for letting users create Timecrypt messages.
  */
