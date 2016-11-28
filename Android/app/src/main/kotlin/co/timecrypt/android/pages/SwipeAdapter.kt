@@ -2,14 +2,14 @@ package co.timecrypt.android.pages
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import co.timecrypt.android.activities.MessageActivity
+import co.timecrypt.android.activities.CreateMessageActivity
 import co.timecrypt.android.helpers.OnMessageChangedEmitter
 import co.timecrypt.android.helpers.OnMessageChangedListener
 import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlin.reflect.primaryConstructor
 
 /**
- * The pager adapter being used in the [MessageActivity].
+ * The pager adapter being used in the [CreateMessageActivity].
  * @param manager The [FragmentManager] being used by the current activity
  */
 class SwipeAdapter(

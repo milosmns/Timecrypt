@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="co.timecrypt.android.activities.MessageActivity"
+    tools:context="co.timecrypt.android.activities.CreateMessageActivity"
     tools:ignore="Overdraw">
 
     <LinearLayout
@@ -135,7 +135,7 @@
         android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/progressCreating"
+            android:id="@+id/progressWheel"
             style="?attr/indeterminateProgressStyle"
             android:layout_width="@dimen/title_item_size"
             android:layout_height="@dimen/title_item_size"
@@ -145,7 +145,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/progressCreating"
+            android:layout_below="@id/progressWheel"
             android:layout_centerHorizontal="true"
             android:text="@string/progress_creating"
             android:textColor="@color/mainLighterShade"

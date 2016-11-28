@@ -11,11 +11,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.MessageActivity"
+            android:name=".activities.CreateMessageActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name_short"
             android:launchMode="singleInstance"
@@ -32,6 +31,32 @@
             android:label="@string/app_name_short"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.ReadMessageActivity"
+            android:label="@string/app_name_short"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
+
+            <intent-filter
+                android:autoVerify="false"
+                tools:ignore="UnusedAttribute">
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="timecrypt.co"
+                    android:path="/"
+                    android:scheme="http" />
+                <data
+                    android:host="timecrypt.co"
+                    android:path="/"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
 
     </application>
 

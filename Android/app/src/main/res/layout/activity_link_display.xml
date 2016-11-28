@@ -10,7 +10,6 @@
     tools:ignore="Overdraw">
 
     <ImageView
-        android:id="@+id/titleLogo"
         android:layout_width="@dimen/title_item_size"
         android:layout_height="@dimen/title_item_size"
         android:layout_marginBottom="@dimen/content_vertical_spacing"
@@ -27,12 +26,13 @@
         android:padding="@dimen/text_padding"
         android:text="@string/link_explanation"
         android:textColor="@color/mainLightShade"
-        android:textSize="@dimen/link_display_text_size" />
+        android:textSize="@dimen/display_text_size" />
 
     <TextView
         android:id="@+id/messageUrlDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_padding"
         android:background="@drawable/icon_background_active"
         android:ellipsize="marquee"
         android:fontFamily="sans-serif-light"
@@ -43,7 +43,7 @@
         android:requiresFadingEdge="horizontal"
         android:textColor="@color/mainLighterShade"
         android:textIsSelectable="false"
-        android:textSize="@dimen/link_display_text_size"
+        android:textSize="@dimen/display_text_size"
         android:textStyle="bold"
         tools:text="http://www.timecrypt.co/?c=message" />
 
@@ -81,7 +81,7 @@
         android:maxWidth="@dimen/link_display_content_width"
         android:padding="@dimen/text_padding"
         android:textColor="@color/mainLightShade"
-        android:textSize="@dimen/link_display_text_size"
+        android:textSize="@dimen/display_text_size"
         tools:text="@string/link_more_info" />
 
     <Button

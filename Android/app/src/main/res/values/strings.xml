@@ -64,26 +64,40 @@
         <item quantity="zero">never</item>
     </plurals>
 
-    <string name="message_create">CREATE MESSAGE</string>
+    <plurals name="views_left">
+        <item quantity="one">a single view left</item>
+        <item quantity="two">no more views left</item>
+        <item quantity="few">%d views left</item>
+        <item quantity="many">%d views left</item>
+        <item quantity="other">%d views left</item>
+        <item quantity="zero">no views left</item>
+    </plurals>
+
     <string name="progress_creating">Creating…</string>
+    <string name="progress_unlocking">Unlocking your message…</string>
+    <string name="message_create">CREATE MESSAGE</string>
     <string name="message_not_created">Message not created</string>
     <string name="message_cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="link_explanation">Your message has been created.\nIt\'s safely stored at this location:</string>
-    <string name="link_more_info">Your message is set to auto-delete on %1$s, or after it\'s been read %2$s.</string>
+    <string name="link_more_info">Your message is set to self-destruct on %1$s, or after it\'s been read %2$s.</string>
     <string name="link_copy_label">Timecrypt Message Link</string>
     <string name="link_copy_success">Copied. Just paste and you\'re done.</string>
     <string name="link_share_content_title">Psssst. I have a Timecrypt message for you.</string>
     <string name="link_share_chooser_title">How do you want to send it?</string>
     <string name="link_create_new">CREATE ONE MORE</string>
+    <string name="read_info">Your message is ready. It has %1$s, and it self-destructs on %2$s. Contents are:</string>
+    <string name="read_locked">This message is locked using a password.\nEnter the password to continue.</string>
+    <string name="read_unlock">UNLOCK</string>
+    <string name="read_create_own">CREATE NEW MESSAGE</string>
 
     <string name="title_views">ALLOWED VIEWS</string>
     <string name="title_destruct_date">SELF-DESTRUCT DATE</string>
     <string name="title_delivery">DELIVERY</string>
 
-    <string name="title_edit_hint">MESSAGE TITLE</string>
-    <string name="text_hint">TYPE SECRET MESSAGE HERE\nOR TAP THE LOGO FOR HELP</string>
+    <string name="title_edit_hint">TYPE MESSAGE TITLE</string>
+    <string name="text_hint">TYPE A SECRET MESSAGE HERE\nOR TAP THE LOGO FOR HELP</string>
+    <string name="password_hint">PASSWORD</string>
     <string name="delivery_email_hint">DESTINATION EMAIL</string>
-    <string name="delivery_password_hint">PASSWORD</string>
     <string name="delivery_notification_hint">NOTIFICATION EMAIL</string>
 
     <string name="desc_logo_title">Timecrypt logo</string>

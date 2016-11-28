@@ -15,7 +15,7 @@ import java.util.*
  */
 class TimecryptUnitTests() {
 
-    val TAG: String = TimecryptUnitTests::class.java.simpleName
+    private val TAG: String = TimecryptUnitTests::class.simpleName!!
 
     // <editor-fold desc="JVM Tests">
     @Test

@@ -3,6 +3,7 @@ package co.timecrypt.android.activities
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_link_display.*
 
 class LinkDisplayActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
 
-    val TAG = LinkDisplayActivity::class.simpleName!!
+    private val TAG = LinkDisplayActivity::class.simpleName!!
 
     companion object {
         val KEY_URL = "MESSAGE_URL"
@@ -29,6 +30,7 @@ class LinkDisplayActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         val extras = intent.extras
         if (extras == null) {
             Log.e(TAG, "No bundle provided")
+            finish()
             return
         }
         val url = extras.getString(KEY_URL, null)
@@ -36,6 +38,7 @@ class LinkDisplayActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         val views = extras.getInt(KEY_VIEWS, -1)
         if (url == null || date == null || views < 1) {
             Log.e(TAG, "Missing bundle date")
+            finish()
             return
         }
 
@@ -44,7 +47,7 @@ class LinkDisplayActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         messageUrlDisplay.text = url
         messageUrlInfo.text = prepareMessageInfo(date, views)
 
-        listOf(messageUrlCopy, messageUrlShare, buttonNewMessage).forEach {
+        listOf(messageUrlDisplay, messageUrlCopy, messageUrlShare, buttonNewMessage).forEach {
             it.setOnClickListener(this@LinkDisplayActivity)
             it.setOnLongClickListener(this@LinkDisplayActivity)
         }
@@ -71,7 +74,11 @@ class LinkDisplayActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
                 startActivity(Intent.createChooser(i, getString(R.string.link_share_chooser_title)))
             }
             buttonNewMessage.id -> {
-                startActivity(Intent(this, MessageActivity::class.java))
+                startActivity(Intent(this, CreateMessageActivity::class.java))
+                finish()
+            }
+            messageUrlDisplay.id -> {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(messageUrlDisplay.text.toString())))
                 finish()
             }
         }
