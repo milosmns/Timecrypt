@@ -43,22 +43,22 @@ class DestructDateFragment : TimecryptFragment(), CircularSlider.OnSliderMovedLi
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        message.destructDate = convertToDate(DATES[message.extra_DestructOptionPicked])
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_destruct_date, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_destruct_date, container, false)
+    // this also gets called by super-class on fragment start
+    override fun onMessageUpdated() {
+        message.destructDate = convertToDate(DATES[message.extra_DestructOptionPicked])
+        val pickedRange = DATES[message.extra_DestructOptionPicked]
+        sliderCountDestruct.text = pickedRange.first.toString()
+        sliderLabelDestruct.text = resources.getQuantityString(pickedRange.second, pickedRange.first)
+        sliderDestruct.setPosition(convertPercentToPosition(message.extra_DestructOptionPicked.toDouble() / DATES.size))
     }
 
     override fun onStart() {
         super.onStart()
         sliderDestruct.setOnSliderMovedListener(this)
-        val pickedRange = DATES[message.extra_DestructOptionPicked]
-        sliderCountDestruct.text = pickedRange.first.toString()
-        sliderLabelDestruct.text = resources.getQuantityString(pickedRange.second, pickedRange.first)
-        sliderDestruct.setPosition(convertPercentToPosition(message.extra_DestructOptionPicked.toDouble() / DATES.size))
     }
 
     override fun onStop() {

@@ -13,10 +13,10 @@ import kotlin.reflect.primaryConstructor
  * @param manager The [FragmentManager] being used by the current activity
  */
 class SwipeAdapter(
-        override var listeners: MutableList<OnMessageChangedListener> = mutableListOf(),
-        override var message: TimecryptMessage,
+        listener: OnMessageChangedListener,
+        message: TimecryptMessage,
         val manager: FragmentManager,
-        listener: OnMessageChangedListener
+        override var listeners: MutableList<OnMessageChangedListener> = mutableListOf()
 ) : FragmentPagerAdapter(manager), OnMessageChangedListener, OnMessageChangedEmitter {
 
     companion object {
@@ -31,7 +31,19 @@ class SwipeAdapter(
     private val fragmentCache: MutableMap<String, TimecryptFragment> = mutableMapOf()
     private var messageListener: OnMessageChangedListener?
 
+    var _message: TimecryptMessage = TimecryptMessage("")
+    override var message: TimecryptMessage
+        get() = _message
+        set(value) {
+            _message = value
+            // notify only if listeners are attached (no reason to update otherwise)
+            if (listeners.size > 0) {
+                onMessageUpdated()
+            }
+        }
+
     init {
+        _message = message
         messageListener = listener
         addMessageListener(listener)
     }
@@ -51,6 +63,14 @@ class SwipeAdapter(
             return fragment
         }
         return found as TimecryptFragment
+    }
+
+    override fun getItem(position: Int): TimecryptFragment {
+        return ensureFragment(position)
+    }
+
+    override fun getCount(): Int {
+        return PAGES.size
     }
 
     /**
@@ -76,18 +96,16 @@ class SwipeAdapter(
         messageListener?.let { removeMessageListener(it) }
     }
 
-    override fun getItem(position: Int): TimecryptFragment {
-        return ensureFragment(position)
-    }
-
-    override fun getCount(): Int {
-        return PAGES.size
-    }
-
-    /* Message changed listener */
+    /* Message emitter and listener */
 
     override fun onTextInvalidated(empty: Boolean) {
         notifyListener { it.onTextInvalidated(empty) }
+    }
+
+    override fun onMessageUpdated() {
+        for ((name, fragment) in fragmentCache) {
+            fragment.message = message
+        }
     }
 
 }

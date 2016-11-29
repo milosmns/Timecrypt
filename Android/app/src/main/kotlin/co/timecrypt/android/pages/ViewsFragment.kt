@@ -18,16 +18,19 @@ class ViewsFragment : TimecryptFragment(), CircularSlider.OnSliderMovedListener 
         val MAX_VIEWS = 499
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_views, container, false)
+    }
+
+    // this also gets called by super-class on fragment start
+    override fun onMessageUpdated() {
+        sliderViews.setPosition(convertPercentToPosition(message.views.toDouble() / MAX_VIEWS))
+        sliderCountViews.text = message.views.toString()
     }
 
     override fun onStart() {
         super.onStart()
         sliderViews.setOnSliderMovedListener(this)
-        sliderViews.setPosition(convertPercentToPosition(message.views.toDouble() / MAX_VIEWS))
-        sliderViews.invalidate()
-        sliderCountViews.text = message.views.toString()
     }
 
     override fun onStop() {

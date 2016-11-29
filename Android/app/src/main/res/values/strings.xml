@@ -99,8 +99,8 @@
     <string name="password_hint">PASSWORD</string>
     <string name="delivery_email_hint">DESTINATION EMAIL</string>
     <string name="delivery_notification_hint">NOTIFICATION EMAIL</string>
-    <string name="delivery_destination_email_more_info">We will email the message\nlink to this email</string>
-    <string name="delivery_notification_email_more_info">We will send a notification to this\nemail when the message is read</string>
+    <string name="delivery_destination_email_more_info">We will send the message\nlink to this email address</string>
+    <string name="delivery_notification_email_more_info">We will send a notification to this\nemail address when the message is read</string>
 
     <string name="desc_logo_title">Timecrypt logo</string>
     <string name="desc_tab_text">Message tab</string>

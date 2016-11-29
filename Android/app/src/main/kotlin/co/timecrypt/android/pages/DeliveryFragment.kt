@@ -14,17 +14,19 @@ import kotlinx.android.synthetic.main.fragment_delivery.*
  */
 class DeliveryFragment() : TimecryptFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_delivery, container, false)
+    }
+
+    // this also gets called by super-class on fragment start
+    override fun onMessageUpdated() {
+        deliveryEmailTo.setText(message.emailTo)
+        deliveryEmailFrom.setText(message.emailFrom)
+        deliveryPassword.setText(message.password)
     }
 
     override fun onStart() {
         super.onStart()
-
-        // initialize texts
-        deliveryEmailTo.setText(message.emailTo)
-        deliveryEmailFrom.setText(message.emailFrom)
-        deliveryPassword.setText(message.password)
 
         // assign click listeners
         deliveryEmailTo.addTextChangedListener(emailToWatcher)

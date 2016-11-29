@@ -2,7 +2,6 @@ package co.timecrypt.android.pages
 
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
-import android.text.Editable
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
@@ -13,10 +12,25 @@ import co.timecrypt.android.v2.api.TimecryptMessage
 /**
  * A fragment variant that allows easy storage of the living [TimecryptMessage] instance.
  */
-open class TimecryptFragment(
-        override var listeners: MutableList<OnMessageChangedListener> = mutableListOf(),
-        override var message: TimecryptMessage = TimecryptMessage("")
+abstract class TimecryptFragment(
+        override var listeners: MutableList<OnMessageChangedListener> = mutableListOf()
 ) : Fragment(), OnMessageChangedEmitter {
+
+    var _message: TimecryptMessage = TimecryptMessage("")
+    override var message: TimecryptMessage
+        get() = _message
+        set(value) {
+            _message = value
+            // notify only if listeners are attached (no reason to update otherwise)
+            if (listeners.size > 0) {
+                onMessageUpdated()
+            }
+        }
+
+    override fun onStart() {
+        super.onStart()
+        onMessageUpdated()
+    }
 
     /**
      * Rounds the double number
@@ -54,14 +68,18 @@ open class TimecryptFragment(
     /**
      * Shifts the gravity of an [EditText] depending on the given [text] parameter.
      * Empty text shifts to [Gravity.CENTER], non-empty text shifts to [Gravity.START].
-     * @param text Which [Editable] to analyze
+     * @param text Which string to analyze
+     * @return `True` if gravity was shifted, `false` if not
      */
-    protected fun EditText.shiftGravity(text: Editable) {
-        if (text.trim().isEmpty() && gravity != Gravity.CENTER_HORIZONTAL or Gravity.TOP) {
+    protected fun EditText.shiftGravity(text: String): Boolean {
+        if (text.isEmpty() && gravity != Gravity.CENTER_HORIZONTAL or Gravity.TOP) {
             gravity = Gravity.CENTER_HORIZONTAL or Gravity.TOP
-        } else if (!text.trim().isEmpty() && gravity != GravityCompat.START or Gravity.TOP) {
+            return true
+        } else if (!text.isEmpty() && gravity != GravityCompat.START or Gravity.TOP) {
             gravity = GravityCompat.START or Gravity.TOP
+            return true
         }
+        return false
     }
 
     /**

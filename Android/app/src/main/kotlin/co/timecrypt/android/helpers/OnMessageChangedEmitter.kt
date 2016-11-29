@@ -22,4 +22,6 @@ interface OnMessageChangedEmitter {
         listeners.forEach(event)
     }
 
+    fun onMessageUpdated()
+
 }

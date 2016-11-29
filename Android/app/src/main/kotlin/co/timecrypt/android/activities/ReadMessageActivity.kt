@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.text.util.LinkifyCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.util.Linkify
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -128,6 +130,7 @@ class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
                 finalText = "- $it -\n\n$finalText"
             }
             readMessageText.text = finalText
+            LinkifyCompat.addLinks(readMessageText, Linkify.WEB_URLS)
             readMessageText.visibility = View.VISIBLE
         }
 

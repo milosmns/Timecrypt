@@ -46,7 +46,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
         titles = listOf(R.string.title_edit_hint, R.string.title_views, R.string.title_destruct_date, R.string.title_delivery)
 
         message = createMessage(intent)
-        swipeAdapter = SwipeAdapter(message = this.message, manager = supportFragmentManager, listener = this)
+        swipeAdapter = SwipeAdapter(this, message, supportFragmentManager)
 
         viewPager.adapter = swipeAdapter
         viewPager.addOnPageChangeListener(pageChangeListener)
@@ -69,8 +69,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         message = createMessage(intent)
-        swipeAdapter?.cleanup()
-        swipeAdapter?.notifyDataSetChanged()
+        swipeAdapter?.message = message
     }
 
     private fun createMessage(intent: Intent?): TimecryptMessage {
