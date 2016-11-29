@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_delivery.*
 /**
  * The fragment containing the destruct date picker.
  */
-class DeliveryFragment() : TimecryptFragment(mutableListOf()) {
+class DeliveryFragment() : TimecryptFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_delivery, container, false)
@@ -20,21 +20,32 @@ class DeliveryFragment() : TimecryptFragment(mutableListOf()) {
 
     override fun onStart() {
         super.onStart()
+
+        // initialize texts
         deliveryEmailTo.setText(message.emailTo)
         deliveryEmailFrom.setText(message.emailFrom)
         deliveryPassword.setText(message.password)
 
+        // assign click listeners
         deliveryEmailTo.addTextChangedListener(emailToWatcher)
         deliveryEmailFrom.addTextChangedListener(emailFromWatcher)
         deliveryPassword.addTextChangedListener(passwordWatcher)
+
+        // assign click listeners (first View toggles second's visibility)
+        deliveryInfoDestination.setOnClickListener { deliveryDestinationExplained.toggleVisibility() }
+        deliveryInfoNotification.setOnClickListener { deliveryNotificationExplained.toggleVisibility() }
     }
 
     override fun onStop() {
         super.onStop()
+
+        // stop listening for changes
         deliveryEmailTo.removeTextChangedListener(emailToWatcher)
         deliveryEmailFrom.removeTextChangedListener(emailFromWatcher)
         deliveryPassword.removeTextChangedListener(passwordWatcher)
     }
+
+    /* Message data updates on each text change */
 
     private val emailToWatcher = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {

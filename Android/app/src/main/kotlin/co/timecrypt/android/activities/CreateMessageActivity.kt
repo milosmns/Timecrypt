@@ -29,7 +29,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
 
     private val TAG = CreateMessageActivity::class.simpleName!!
 
-    private var message: TimecryptMessage? = null
+    private var message: TimecryptMessage = TimecryptMessage("")
     private var swipeAdapter: SwipeAdapter? = null
     private var lastSelected: Int = 0
     private var tabs: List<ImageView> = emptyList()
@@ -46,7 +46,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
         titles = listOf(R.string.title_edit_hint, R.string.title_views, R.string.title_destruct_date, R.string.title_delivery)
 
         message = createMessage(intent)
-        swipeAdapter = SwipeAdapter(this, supportFragmentManager, message!!)
+        swipeAdapter = SwipeAdapter(message = this.message, manager = supportFragmentManager, listener = this)
 
         viewPager.adapter = swipeAdapter
         viewPager.addOnPageChangeListener(pageChangeListener)
@@ -88,7 +88,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
                     // update title and hide keyboard
                     if (viewPager.currentItem == 0) {
                         titleEdit.isEnabled = true
-                        titleEdit.setText(message?.title)
+                        titleEdit.setText(message.title)
                         titleEdit.addTextChangedListener(titleChangeListener)
                     } else {
                         currentFocus?.let {
@@ -108,7 +108,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
 
     private val titleChangeListener = object : TextWatcherAdapter() {
         override fun afterTextChanged(text: Editable) {
-            message?.title = text.toString()
+            message.title = text.toString()
         }
     }
 
@@ -117,7 +117,7 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
         when (view.id) {
             buttonCreate.id -> {
                 progressOverlay.visibility = View.VISIBLE
-                controller?.create(this, message!!, createOperationListener)
+                controller?.create(this, message, createOperationListener)
             }
             buttonCancel.id -> stopCreating()
             titleLogo.id -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(TimecryptController.Companion.TIMECRYPT_URL)))
@@ -131,8 +131,8 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
             val messageInfo = Bundle(3)
             val fullUrl = String.format(TimecryptController.Companion.DEFAULT_MESSAGE_URL, id)
             messageInfo.putString(LinkDisplayActivity.KEY_URL, fullUrl)
-            messageInfo.putString(LinkDisplayActivity.KEY_DATE, message!!.destructDate!!.toString())
-            messageInfo.putInt(LinkDisplayActivity.KEY_VIEWS, message!!.views)
+            messageInfo.putString(LinkDisplayActivity.KEY_DATE, message.destructDate!!.toString())
+            messageInfo.putInt(LinkDisplayActivity.KEY_VIEWS, message.views)
             val intent = Intent(this@CreateMessageActivity, LinkDisplayActivity::class.java)
             intent.putExtras(messageInfo)
             startActivity(intent)

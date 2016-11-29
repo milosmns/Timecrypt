@@ -16,6 +16,7 @@
     <dimen name="button_height">56dp</dimen>
     <dimen name="single_edit_box_size">48dp</dimen>
     <dimen name="single_edit_box_icon_padding">4dp</dimen>
+    <dimen name="edit_box_side_icon_padding">8dp</dimen>
     <dimen name="link_display_content_width">300dp</dimen>
 
     <dimen name="text_size">20sp</dimen>

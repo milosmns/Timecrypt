@@ -13,9 +13,10 @@ import kotlin.reflect.primaryConstructor
  * @param manager The [FragmentManager] being used by the current activity
  */
 class SwipeAdapter(
-        override var listeners: MutableList<OnMessageChangedListener>?,
+        override var listeners: MutableList<OnMessageChangedListener> = mutableListOf(),
+        override var message: TimecryptMessage,
         val manager: FragmentManager,
-        val message: TimecryptMessage
+        listener: OnMessageChangedListener
 ) : FragmentPagerAdapter(manager), OnMessageChangedListener, OnMessageChangedEmitter {
 
     companion object {
@@ -28,10 +29,10 @@ class SwipeAdapter(
     }
 
     private val fragmentCache: MutableMap<String, TimecryptFragment> = mutableMapOf()
-    private var messageListener: OnMessageChangedListener? = null
+    private var messageListener: OnMessageChangedListener?
 
-    constructor(listener: OnMessageChangedListener, manager: FragmentManager, message: TimecryptMessage) : this(mutableListOf(), manager, message) {
-        this.messageListener = listener
+    init {
+        messageListener = listener
         addMessageListener(listener)
     }
 

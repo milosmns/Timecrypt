@@ -15,7 +15,7 @@ import java.util.*
 /**
  * The fragment containing the destruct date picker.
  */
-class DestructDateFragment : TimecryptFragment(mutableListOf()), CircularSlider.OnSliderMovedListener {
+class DestructDateFragment : TimecryptFragment(), CircularSlider.OnSliderMovedListener {
 
     private companion object {
         val DATES = listOf(
@@ -45,7 +45,7 @@ class DestructDateFragment : TimecryptFragment(mutableListOf()), CircularSlider.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        message.destructDate = convertToDate(DATES[0])
+        message.destructDate = convertToDate(DATES[message.extra_DestructOptionPicked])
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

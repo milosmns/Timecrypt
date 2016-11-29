@@ -11,7 +11,7 @@ import me.angrybyte.circularslider.CircularSlider
 /**
  * The fragment containing the maximum allowed views picker.
  */
-class ViewsFragment : TimecryptFragment(mutableListOf()), CircularSlider.OnSliderMovedListener {
+class ViewsFragment : TimecryptFragment(), CircularSlider.OnSliderMovedListener {
 
     companion object {
         val MIN_VIEWS = 1

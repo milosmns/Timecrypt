@@ -16,12 +16,8 @@ class TimecryptViewPager : ViewPager {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        return if (swipeEnabled) super.onInterceptTouchEvent(event) else false
-    }
+    override fun onInterceptTouchEvent(event: MotionEvent): Boolean = if (swipeEnabled) super.onInterceptTouchEvent(event) else false
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        return if (swipeEnabled) super.onTouchEvent(event) else false
-    }
+    override fun onTouchEvent(event: MotionEvent): Boolean = if (swipeEnabled) super.onTouchEvent(event) else false
 
 }

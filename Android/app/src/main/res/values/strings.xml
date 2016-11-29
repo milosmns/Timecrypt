@@ -99,12 +99,15 @@
     <string name="password_hint">PASSWORD</string>
     <string name="delivery_email_hint">DESTINATION EMAIL</string>
     <string name="delivery_notification_hint">NOTIFICATION EMAIL</string>
+    <string name="delivery_destination_email_more_info">We will email the message\nlink to this email</string>
+    <string name="delivery_notification_email_more_info">We will send a notification to this\nemail when the message is read</string>
 
     <string name="desc_logo_title">Timecrypt logo</string>
     <string name="desc_tab_text">Message tab</string>
     <string name="desc_tab_views">Views tab</string>
     <string name="desc_tab_destruct">Destruct tab</string>
     <string name="desc_tab_delivery">Delivery tab</string>
+    <string name="desc_delivery_info">More information</string>
     <string name="desc_link_share">Share message link</string>
     <string name="desc_link_copy">Copy message link</string>
 
