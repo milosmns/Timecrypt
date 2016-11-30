@@ -61,7 +61,7 @@ class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
             val query = url.query ?: return null
             query.split("&").forEach {
                 val param = it.split("=")
-                if (param[0].trim() == "c") {
+                if (param[0].trim() == "c" || param[0].trim() == "id") {
                     return param[1].trim()
                 }
             }
