@@ -29,6 +29,10 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
 
     private val TAG = CreateMessageActivity::class.simpleName!!
 
+    private companion object {
+        val KEY_MESSAGE = "TIMECRYPT_MESSAGE"
+    }
+
     private var message: TimecryptMessage = TimecryptMessage("")
     private var swipeAdapter: SwipeAdapter? = null
     private var lastSelected: Int = 0
@@ -78,6 +82,19 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
             return TimecryptMessage(intent?.getStringExtra(Intent.EXTRA_TEXT) ?: "")
         }
         return TimecryptMessage("")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putParcelable(KEY_MESSAGE, message)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val readMessage = savedInstanceState?.getParcelable<TimecryptMessage>(KEY_MESSAGE)
+        Log.i(TAG, "Restoring [$readMessage] from instance state")
+        message = readMessage ?: createMessage(intent)
+        swipeAdapter?.message = message
     }
 
     private val pageChangeListener = object : PageChangeListenerAdapter() {

@@ -31,7 +31,7 @@ class SwipeAdapter(
     private val fragmentCache: MutableMap<String, TimecryptFragment> = mutableMapOf()
     private var messageListener: OnMessageChangedListener?
 
-    var _message: TimecryptMessage = TimecryptMessage("")
+    private var _message: TimecryptMessage = TimecryptMessage("")
     override var message: TimecryptMessage
         get() = _message
         set(value) {

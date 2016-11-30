@@ -16,7 +16,7 @@ abstract class TimecryptFragment(
         override var listeners: MutableList<OnMessageChangedListener> = mutableListOf()
 ) : Fragment(), OnMessageChangedEmitter {
 
-    var _message: TimecryptMessage = TimecryptMessage("")
+    private var _message: TimecryptMessage = TimecryptMessage("")
     override var message: TimecryptMessage
         get() = _message
         set(value) {
