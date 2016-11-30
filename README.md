@@ -183,8 +183,7 @@ git pull -s subtree openshift-server master
 git pull -s subtree web-client master
 ```
 
-Any help on building an Android or an iOS app is appreciated. Also any Slack enthusiasts wanting Timecrypt integration
-are welcome to join :)
+Any help on building an iOS app is appreciated. Also any Slack enthusiasts wanting Timecrypt integration are welcome to join :)
 
 
 
