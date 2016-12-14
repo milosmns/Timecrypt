@@ -13,6 +13,7 @@ interface TimecryptRestApi {
 
     /**
      * Stores a new Timecrypt message on the server.
+     *
      * @param values Which values to send (use [Utils] to convert a [TimecryptMessage] to a map)
      * @return A [Call] interface allowing you to execute the request asynchronously or synchronously
      */
@@ -21,6 +22,7 @@ interface TimecryptRestApi {
 
     /**
      * Checks the server to see if message is locked with a password or not.
+     *
      * @param id Timecrypt message ID, usually obtained using the [create] API call
      * @return A [Call] interface allowing you to execute the request asynchronously or synchronously
      */
@@ -29,6 +31,7 @@ interface TimecryptRestApi {
 
     /**
      * Fetches and reads the Timecrypt message from the server.
+     *
      * @param id Timecrypt message ID, usually obtained using the [create] API call
      * @param password An optional parameter, used to decrypt the message if it [isLocked]. Pass `null` to ignore
      * @return A [Call] interface allowing you to execute the request asynchronously or synchronously

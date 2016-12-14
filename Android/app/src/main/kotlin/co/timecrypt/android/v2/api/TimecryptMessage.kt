@@ -26,6 +26,10 @@ class TimecryptMessage(
         var password: String? = null
 ) : Parcelable {
 
+    /**
+     * A helper property to track which option was picked in the destruct-date.
+     * Using this property avoids converting dates, and thus speeds up fragment loading time.
+     */
     var extra_DestructOptionPicked = 0
 
     override fun toString(): String {

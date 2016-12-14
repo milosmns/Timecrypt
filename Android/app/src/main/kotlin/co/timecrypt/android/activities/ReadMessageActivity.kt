@@ -15,6 +15,9 @@ import co.timecrypt.android.R
 import co.timecrypt.android.v2.api.TimecryptController
 import kotlinx.android.synthetic.main.activity_read_message.*
 
+/**
+ * An activity that handles displaying (and unlocking) for one Timecrypt message.
+ */
 class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
 
     private val TAG = ReadMessageActivity::class.simpleName!!
@@ -29,7 +32,7 @@ class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // check preconditions
+        // check preconditions, must find a message ID
         val extras = intent.extras
         val uri = intent.data
         if (extras == null && uri == null) {
@@ -46,15 +49,22 @@ class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
 
         setContentView(R.layout.activity_read_message)
 
+        // activity is ready, create business logic components
         controller = TimecryptController(TimecryptController.Companion.DEFAULT_API_URL)
         controller?.lockCheck(this, messageId!!, lockCheckListener)
-        progressOverlay.visibility = View.VISIBLE
 
+        // setup initial Views
+        progressOverlay.visibility = View.VISIBLE
         listOf(buttonCancel, buttonCreateNew, buttonUnlock).forEach {
             it.setOnClickListener(this)
         }
     }
 
+    /**
+     * Tries to find the message ID by parsing the given [Uri].
+     *
+     * @param url An Intent [Uri] that represents the message link
+     */
     private fun parseMessageUrl(url: Uri?): String? {
         try {
             if (url == null) return null
@@ -96,6 +106,9 @@ class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * Used to listen for changes from the [TimecryptController.lockCheck] operation.
+     */
     private val lockCheckListener = object : TimecryptController.LockCheckListener {
         override fun onLockCheckCompleted(locked: Boolean) {
             if (locked) {
@@ -116,6 +129,9 @@ class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * Used to listen for changes from the [TimecryptController.read] operation.
+     */
     private val readCompleteListener = object : TimecryptController.ReadCompleteListener {
         override fun onReadComplete(text: String, title: String?, destructDate: String, views: Int) {
             progressOverlay.visibility = View.GONE

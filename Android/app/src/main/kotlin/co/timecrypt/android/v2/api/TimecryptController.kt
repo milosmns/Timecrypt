@@ -28,16 +28,26 @@ class TimecryptController(serverUrl: String) {
         val DEFAULT_MESSAGE_URL = "http://timecrypt.co/?c=%s"
     }
 
+    /**
+     * Used as a utility interface inside the [create] method to notify the listener of _created_ and _create failed_ remote events.
+     */
     interface CreateCompletedListener {
         fun onCreateCompleted(id: String)
         fun onCreateFailed(message: String)
     }
 
+    /**
+     * Used as a utility interface inside the [lockCheck] method to notify the listener of _lock checked_ and _lock check failed_
+     * remote events.
+     */
     interface LockCheckListener {
         fun onLockCheckCompleted(locked: Boolean)
         fun onLockCheckFailed(message: String)
     }
 
+    /**
+     * Used as a utility interface inside the [read] method to notify the listener of _read successful_ and _read failed_ remote events.
+     */
     interface ReadCompleteListener {
         fun onReadComplete(text: String, title: String?, destructDate: String, views: Int)
         fun onReadFailed(message: String)
@@ -69,6 +79,15 @@ class TimecryptController(serverUrl: String) {
         return context.getString(R.string.error_server, message ?: "unknown")
     }
 
+    /* Business logic, Controller API */
+
+    /**
+     * Creates a new Timecrypt message using the remote API.
+     *
+     * @param context Which context to use to read error strings from resources
+     * @param message Which message to create
+     * @param listener A callback to call when this operation completes
+     */
     fun create(context: Context, message: TimecryptMessage, listener: CreateCompletedListener) {
         val createCall = api.create(Utils.convertToQueryMap(message))
         requests.add(createCall)
@@ -94,8 +113,14 @@ class TimecryptController(serverUrl: String) {
         })
     }
 
-    /* Controller API */
-
+    /**
+     * Using the remote API, checks whether the given ID is associated with a Timecrypt message
+     * and whether that message is locked using a password or not.
+     *
+     * @param context Which context to use to read error strings from resources
+     * @param id The message identifier, unique
+     * @param listener A callback to call when this operation completes
+     */
     fun lockCheck(context: Context, id: String, listener: LockCheckListener) {
         val lockedCall = api.isLocked(id)
         requests.add(lockedCall)
@@ -121,6 +146,15 @@ class TimecryptController(serverUrl: String) {
         })
     }
 
+    /**
+     * Tries tho fetch the Timecrypt message content for the given ID using the remote API. Using a wrong password will not
+     * fail this operation, but will return garbled content of this message and reduce the remaining view count by one.
+     *
+     * @param context Which context to use to read error strings from resources
+     * @param id The message identifier, unique
+     * @param password A password to unlock the message, or `null` to unlock using the default password
+     * @param listener A callback to call when this operation completes
+     */
     fun read(context: Context, id: String, password: String? = null, listener: ReadCompleteListener) {
         val readCall = api.read(id, password)
         requests.add(readCall)
@@ -145,6 +179,9 @@ class TimecryptController(serverUrl: String) {
         })
     }
 
+    /**
+     * Stops all active and pending operations that this controller is using.
+     */
     fun stopAll() {
         requests.forEach { if (!it.isCanceled) it.cancel() }
     }

@@ -9,8 +9,7 @@ import co.timecrypt.android.v2.api.TimecryptMessage
 import kotlin.reflect.primaryConstructor
 
 /**
- * The pager adapter being used in the [CreateMessageActivity].
- * @param manager The [FragmentManager] being used by the current activity
+ * The pager adapter being used in the [CreateMessageActivity]. Does caching internally but also uses the cache from [FragmentManager].
  */
 class SwipeAdapter(
         listener: OnMessageChangedListener,

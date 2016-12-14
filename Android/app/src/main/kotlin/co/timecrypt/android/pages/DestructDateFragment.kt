@@ -18,6 +18,9 @@ import java.util.*
 class DestructDateFragment : TimecryptFragment(), CircularSlider.OnSliderMovedListener {
 
     private companion object {
+        /**
+         * All available date variants, listed from the smallest to the biggest date range.
+         */
         val DATES = listOf(
                 1 to R.plurals.plural_day,
                 2 to R.plurals.plural_day,

@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_create_message.*
 
 
 /**
- * The activity responsible for letting users create Timecrypt messages.
+ * An activity that handles creation of new Timecrypt messages.
  */
 class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessageChangedListener {
 
@@ -44,19 +44,22 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_message)
 
-        controller = TimecryptController(TimecryptController.Companion.DEFAULT_API_URL)
-
+        // initialize tab view collections
         tabs = listOf(tabText, tabViews, tabDestructDate, tabDelivery)
         titles = listOf(R.string.title_edit_hint, R.string.title_views, R.string.title_destruct_date, R.string.title_delivery)
 
+        // set up the controller instance and prepare the message
+        controller = TimecryptController(TimecryptController.Companion.DEFAULT_API_URL)
         message = createMessage(intent)
-        swipeAdapter = SwipeAdapter(this, message, supportFragmentManager)
 
+        // set up the swipe pager
+        swipeAdapter = SwipeAdapter(this, message, supportFragmentManager)
         viewPager.adapter = swipeAdapter
         viewPager.addOnPageChangeListener(pageChangeListener)
         viewPager.offscreenPageLimit = tabs.size - 1
         viewPager.swipeEnabled = false
 
+        // set up tab click listeners
         tabs.forEachIndexed {
             i, view ->
             view.setOnClickListener {
@@ -64,8 +67,8 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
             }
         }
 
+        // all is done, prepare the initial state of UI
         titleEdit.addTextChangedListener(titleChangeListener)
-
         listOf(titleLogo, buttonCreate, buttonCancel).forEach { it.setOnClickListener(this) }
         switchTabSelection(0)
     }
@@ -81,6 +84,8 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
             // this was a share action from outside
             return TimecryptMessage(intent?.getStringExtra(Intent.EXTRA_TEXT) ?: "")
         }
+
+        // regular startup, just load a new empty message
         return TimecryptMessage("")
     }
 
@@ -129,7 +134,6 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
     }
 
     override fun onClick(view: View) {
-        // log? "Message is ${swipeAdapter?.message}"
         when (view.id) {
             buttonCreate.id -> {
                 progressOverlay.visibility = View.VISIBLE
@@ -140,6 +144,9 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
         }
     }
 
+    /**
+     * Used to listen for changes from the [TimecryptController.create] operation.
+     */
     private val createOperationListener = object : TimecryptController.CreateCompletedListener {
         override fun onCreateCompleted(id: String) {
             progressOverlay.visibility = View.GONE
@@ -162,6 +169,9 @@ class CreateMessageActivity : AppCompatActivity(), View.OnClickListener, OnMessa
         }
     }
 
+    /**
+     * Switches selection highlight for tabs on top.
+     */
     private fun switchTabSelection(current: Int) {
         tabs[lastSelected].setBackgroundResource(R.drawable.icon_background)
         tabs[current].setBackgroundResource(R.drawable.icon_background_active)
