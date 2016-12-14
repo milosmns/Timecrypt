@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Timecrypt for Android</string>
+    <string name="delivery_destination_email_more_info">Poslaćemo link do poruke na ovu email adresu</string>
+    <string name="delivery_email_hint">EMAIL ODREDIŠTE</string>
+    <string name="delivery_notification_email_more_info">Poslaćemo obaveštenje o čitanju poruke na ovu adresu</string>
+    <string name="delivery_notification_hint">EMAIL ZA OBAVEŠTENJA</string>
+    <string name="desc_delivery_info">Više informacija</string>
+    <string name="desc_link_copy">Kopiraj link do poruke</string>
+    <string name="desc_link_share">Podeli link do poruke</string>
+    <string name="desc_logo_title">Timecrypt logo</string>
+    <string name="desc_tab_delivery">Kartica za dostavu</string>
+    <string name="desc_tab_destruct">Kartica za uništenje</string>
+    <string name="desc_tab_text">Kartica za poruku</string>
+    <string name="desc_tab_views">Kartica za preglede</string>
+    <string name="error_destruct_date_bounds">Nemoguće je koristiti odabrani datum za uništenje</string>
+    <string name="error_email_from_invalid">Email za obaveštenja nije validan</string>
+    <string name="error_email_to_invalid">Email odredište nije validan</string>
+    <string name="error_internal">Unutrašnja greška</string>
+    <string name="error_invalid_id">Identifikator poruke nije validan</string>
+    <string name="error_missing_id">Nedostaje identifikator poruke</string>
+    <string name="error_missing_text">Nedostaje tekst poruke</string>
+    <string name="error_password_unusable">Nemoguće je koristiti tu lozinku</string>
+    <string name="error_server">Serverska greška se dogodila: \"%s\". Molimo prijavite problem klikom na Timecrypt logo.</string>
+    <string name="error_template">Greška se dogodila: \"%s\". Proverite vaše podatke u poruci i pokušajte ponovo.</string>
+    <string name="error_text_bounds">Dužina teksta je van dozvoljenih granica</string>
+    <string name="error_title_bounds">Dužina naslova je van dozvoljenih granica</string>
+    <string name="error_unknown">Nepoznata greška se dogodila. Molimo prijavite problem klikom na Timecrypt logo.</string>
+    <string name="error_views_bounds">Broj pregleda je van dozvoljenih granica.</string>
+    <string name="link_copy_label">Link do Timecrypt poruke</string>
+    <string name="link_copy_success">Kopirano. Samo nalepite i pošaljite.</string>
+    <string name="link_create_new">NAPRAVI JOŠ</string>
+    <string name="link_explanation">Vaša poruka je kreirana. Bezbedno je sačuvana na ovoj lokaciji:</string>
+    <string name="link_more_info">Vaša poruka je podešena da se automatski uništi na datum %1$s, ili nakon što je pročitana %2$s.</string>
+    <string name="link_share_chooser_title">Kako želite da pošaljete poruku?</string>
+    <string name="link_share_content_title">Psssst. Imam Timecrypt poruku za tebe.</string>
+    <string name="message_cancel">OTKAŽI</string>
+    <string name="message_create">KREIRAJ PORUKU</string>
+    <string name="message_not_created">Poruka nije kreirana</string>
+    <string name="password_hint">LOZINKA</string>
+    <string name="progress_creating">Kreira se…</string>
+    <string name="progress_unlocking">Otključavamo poruku…</string>
+    <string name="read_create_own">KREIRAJ NOVU PORUKU</string>
+    <string name="read_info">Vaša poruka je spremna. %1$s, i podešena je da se automatski uništi na datum %2$s. Sadržaj poruke je:</string>
+    <string name="read_locked">Ova poruka je zaključana lozinkom. Unesite lozinku da biste nastavili.</string>
+    <string name="read_unlock">OTKLJUČAJ</string>
+    <string name="text_hint">UNESI TAJNU PORUKU OVDE ILI KLIKNI LOGO ZA POMOĆ</string>
+    <string name="title_delivery">DOSTAVA</string>
+    <string name="title_destruct_date">DATUM SAMO-UNIŠTENJA</string>
+    <string name="title_edit_hint">UNESITE NASLOV PORUKE</string>
+    <string name="title_views">DOZVOLJENO ČITANJA</string>
+
+    <plurals name="plural_day" tools:ignore="UnusedQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Dan</item>
+        <item quantity="two">Dana</item>
+        <item quantity="few">Dana</item>
+        <item quantity="many">Dana</item>
+        <item quantity="other">Dana</item>
+        <item quantity="zero">Dana</item>
+    </plurals>
+
+    <plurals name="plural_week" tools:ignore="UnusedQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Nedelja</item>
+        <item quantity="two">Nedelje</item>
+        <item quantity="few">Nedelja</item>
+        <item quantity="many">Nedelja</item>
+        <item quantity="other">Nedelja</item>
+        <item quantity="zero">Nedelja</item>
+    </plurals>
+
+    <plurals name="plural_month" tools:ignore="UnusedQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Mesec</item>
+        <item quantity="two">Meseca</item>
+        <item quantity="few">Meseca</item>
+        <item quantity="many">Meseci</item>
+        <item quantity="other">Meseci</item>
+        <item quantity="zero">Meseci</item>
+    </plurals>
+
+    <plurals name="plural_year" tools:ignore="UnusedQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Godina</item>
+        <item quantity="two">Godine</item>
+        <item quantity="few">Godina</item>
+        <item quantity="many">Godina</item>
+        <item quantity="other">Godina</item>
+        <item quantity="zero">Godina</item>
+    </plurals>
+
+    <plurals name="plural_how_many_times" tools:ignore="UnusedQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">jednom</item>
+        <item quantity="two">dva puta</item>
+        <item quantity="few">%d puta</item>
+        <item quantity="many">%d puta</item>
+        <item quantity="other">%d puta</item>
+        <item quantity="zero">nikad</item>
+    </plurals>
+
+    <plurals name="views_left" tools:ignore="UnusedQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Ima još jedno preostalo čitanje</item>
+        <item quantity="two">Ima još dva preostalih čitanja</item>
+        <item quantity="few">Ima još %d preostalih čitanja</item>
+        <item quantity="many">Ima još %d preostalih čitanja</item>
+        <item quantity="other">Ima još %d preostalih čitanja</item>
+        <item quantity="zero">Nema preostalih čitanja</item>
+    </plurals>
+</resources>
