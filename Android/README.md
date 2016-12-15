@@ -6,6 +6,8 @@ General information
 This directory contains the code used in the Timecrypt Android App (yep, it's Kotlin).
 You can use the public keystore if you want to test or just reach for the latest tagged release.
 
+When released, the latest app versions will be located here: https://play.google.com/store/apps/details?id=co.timecrypt.android
+
 License and improvements
 ------------------------
 
