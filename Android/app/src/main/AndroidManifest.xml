@@ -8,18 +8,20 @@
     <application
         android:name=".TimecryptApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_full"
         android:label="@string/app_name"
         android:resizeableActivity="false"
+        android:roundIcon="@mipmap/ic_launcher_full_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
 
         <activity
             android:name=".activities.CreateMessageActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/ic_launcher_full"
             android:label="@string/app_name_short"
             android:launchMode="singleInstance"
+            android:roundIcon="@mipmap/ic_launcher_full_round"
             android:screenOrientation="portrait">
 
             <intent-filter>
