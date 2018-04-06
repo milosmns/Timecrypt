@@ -3,6 +3,8 @@ package co.timecrypt.android
 import co.timecrypt.android.v2.api.TimecryptMessage
 import co.timecrypt.android.v2.api.TimecryptRestApi
 import co.timecrypt.android.v2.api.Utils
+import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.squareup.moshi.Moshi
 import org.junit.Assert.*
 import org.junit.Test
 import retrofit2.Retrofit
@@ -13,8 +15,9 @@ import java.util.*
 /**
  * These tests will execute on the development machine (host).
  */
-class TimecryptUnitTests() {
+class TimecryptUnitTests {
 
+    @Suppress("PrivatePropertyName")
     private val TAG: String = TimecryptUnitTests::class.simpleName!!
 
     // <editor-fold desc="JVM Tests">
@@ -40,10 +43,14 @@ class TimecryptUnitTests() {
     // </editor-fold>
 
     // <editor-fold desc="Helpers">
+    private fun makeMoshi(): Moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
     private fun makeRetrofit(): Retrofit {
         return Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create())
-                .baseUrl("https://timecrypt-angrybyte.rhcloud.com/v2/")
+                .addConverterFactory(MoshiConverterFactory.create(makeMoshi()))
+                .baseUrl("https://timecrypt.co/api/v2/")
                 .build()
     }
 
@@ -56,7 +63,7 @@ class TimecryptUnitTests() {
         val message = TimecryptMessage(text)
         val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
         assertTrue(result.isSuccessful)
-        return Pair(message, result.body().id as String)
+        return Pair(message, result.body()?.id as String)
     }
 
     private fun createTextAndViewsMessage(views: Int): Pair<TimecryptMessage, String> {
@@ -64,13 +71,13 @@ class TimecryptUnitTests() {
         val message = TimecryptMessage(text, views)
         val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
         assertTrue(result.isSuccessful)
-        return Pair(message, result.body().id as String)
+        return Pair(message, result.body()?.id as String)
     }
 
     private fun createAllFieldsMessage(message: TimecryptMessage): String {
         val result = makeTimecryptApi().create(Utils.convertToQueryMap(message)).execute()
         assertTrue(result.isSuccessful)
-        return result.body().id as String
+        return result.body()?.id as String
     }
     // </editor-fold>
 
@@ -134,9 +141,9 @@ class TimecryptUnitTests() {
         // check response body
         val response = result.body()
         assertNotNull(response)
-        assertEquals(0, response.statusCode)
-        assertNotNull(response.id)
-        val length = response.id?.length as Int
+        assertEquals(0, response?.statusCode)
+        assertNotNull(response?.id)
+        val length = response?.id?.length as Int
         assertTrue(length > 0)
     }
 
@@ -154,9 +161,9 @@ class TimecryptUnitTests() {
         // check response body
         val response = result.body()
         assertNotNull(response)
-        assertEquals(0, response.statusCode)
-        assertNotNull(response.id)
-        val length = response.id?.length as Int
+        assertEquals(0, response?.statusCode)
+        assertNotNull(response?.id)
+        val length = response?.id?.length as Int
         assertTrue(length > 0)
     }
 
@@ -175,9 +182,9 @@ class TimecryptUnitTests() {
         // check response body
         val response = result.body()
         assertNotNull(response)
-        assertEquals(0, response.statusCode)
-        assertNotNull(response.id)
-        val length = response.id?.length as Int
+        assertEquals(0, response?.statusCode)
+        assertNotNull(response?.id)
+        val length = response?.id?.length as Int
         assertTrue(length > 0)
     }
     // </editor-fold>
@@ -195,8 +202,8 @@ class TimecryptUnitTests() {
         // check response body
         val response = result.body()
         assertNotNull(response)
-        assertEquals(-3, response.statusCode)
-        assertNull(response.isLocked)
+        assertEquals(-3, response?.statusCode)
+        assertNull(response?.isLocked)
     }
 
     @Test
@@ -215,9 +222,9 @@ class TimecryptUnitTests() {
         // check create response body
         val createResponse = createResult.body()
         assertNotNull(createResponse)
-        assertEquals(0, createResponse.statusCode)
-        assertNotNull(createResponse.id)
-        val length = createResponse.id?.length as Int
+        assertEquals(0, createResponse?.statusCode)
+        assertNotNull(createResponse?.id)
+        val length = createResponse?.id?.length as Int
         assertTrue(length > 0)
 
         // now to check if created message is locked...
@@ -231,9 +238,9 @@ class TimecryptUnitTests() {
         // check is-locked response body
         val lockCheckResponse = lockCheckResult.body()
         assertNotNull(lockCheckResponse)
-        assertEquals(0, lockCheckResponse.statusCode)
-        assertNotNull(lockCheckResponse.isLocked)
-        assertTrue(lockCheckResponse.isLocked!!)
+        assertEquals(0, lockCheckResponse?.statusCode)
+        assertNotNull(lockCheckResponse?.isLocked)
+        assertTrue(lockCheckResponse?.isLocked!!)
     }
 
     @Test
@@ -252,9 +259,9 @@ class TimecryptUnitTests() {
         // check create response body
         val createResponse = createResult.body()
         assertNotNull(createResponse)
-        assertEquals(0, createResponse.statusCode)
-        assertNotNull(createResponse.id)
-        val length = createResponse.id?.length as Int
+        assertEquals(0, createResponse?.statusCode)
+        assertNotNull(createResponse?.id)
+        val length = createResponse?.id?.length as Int
         assertTrue(length > 0)
 
         // now to check if created message is locked...
@@ -268,9 +275,9 @@ class TimecryptUnitTests() {
         // check is-locked response body
         val lockCheckResponse = lockCheckResult.body()
         assertNotNull(lockCheckResponse)
-        assertEquals(0, lockCheckResponse.statusCode)
-        assertNotNull(lockCheckResponse.isLocked)
-        assertFalse(lockCheckResponse.isLocked!!)
+        assertEquals(0, lockCheckResponse?.statusCode)
+        assertNotNull(lockCheckResponse?.isLocked)
+        assertFalse(lockCheckResponse?.isLocked!!)
     }
     // </editor-fold>
 
@@ -287,11 +294,11 @@ class TimecryptUnitTests() {
         // check response body
         val response = result.body()
         assertNotNull(response)
-        assertEquals(-3, response.statusCode)
-        assertNull(response.text)
-        assertNull(response.title)
-        assertNull(response.views)
-        assertNull(Utils.parseDate(response.destructDate))
+        assertEquals(-3, response?.statusCode)
+        assertNull(response?.text)
+        assertNull(response?.title)
+        assertNull(response?.views)
+        assertNull(Utils.parseDate(response?.destructDate))
     }
 
     @Test
@@ -310,12 +317,12 @@ class TimecryptUnitTests() {
         // check read response body
         val readResponse = readResult.body()
         assertNotNull(readResponse)
-        assertEquals(0, readResponse.statusCode)
+        assertEquals(0, readResponse?.statusCode)
 
-        assertEquals(0, readResponse.views)
-        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
-        assertEquals(created.first.text, readResponse.text)
-        assertNull(readResponse.title)
+        assertEquals(0, readResponse?.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse?.destructDate))
+        assertEquals(created.first.text, readResponse?.text)
+        assertNull(readResponse?.title)
     }
 
     @Test
@@ -335,12 +342,12 @@ class TimecryptUnitTests() {
         // check read response body
         val readResponse = readResult.body()
         assertNotNull(readResponse)
-        assertEquals(0, readResponse.statusCode)
+        assertEquals(0, readResponse?.statusCode)
 
-        assertEquals(views - 1, readResponse.views)
-        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
-        assertEquals(created.first.text, readResponse.text)
-        assertNull(readResponse.title)
+        assertEquals(views - 1, readResponse?.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse?.destructDate))
+        assertEquals(created.first.text, readResponse?.text)
+        assertNull(readResponse?.title)
     }
 
     @Test
@@ -362,12 +369,12 @@ class TimecryptUnitTests() {
         // check read response body
         val readResponse = readResult.body()
         assertNotNull(readResponse)
-        assertEquals(0, readResponse.statusCode)
+        assertEquals(0, readResponse?.statusCode)
 
-        assertEquals(views - 1, readResponse.views)
-        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
-        assertEquals(message.text, readResponse.text)
-        assertEquals(message.title, readResponse.title)
+        assertEquals(views - 1, readResponse?.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse?.destructDate))
+        assertEquals(message.text, readResponse?.text)
+        assertEquals(message.title, readResponse?.title)
     }
 
     @Test
@@ -389,12 +396,12 @@ class TimecryptUnitTests() {
         // check read response body
         val readResponse = readResult.body()
         assertNotNull(readResponse)
-        assertEquals(0, readResponse.statusCode)
+        assertEquals(0, readResponse?.statusCode)
 
-        assertEquals(views - 1, readResponse.views)
-        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse.destructDate))
-        assertEquals(message.text, readResponse.text)
-        assertEquals(message.title, readResponse.title)
+        assertEquals(views - 1, readResponse?.views)
+        assertEquals(Utils.getTomorrow(true), Utils.parseDate(readResponse?.destructDate))
+        assertEquals(message.text, readResponse?.text)
+        assertEquals(message.title, readResponse?.title)
     }
     // </editor-fold>
 
