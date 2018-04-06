@@ -13,13 +13,13 @@
 
     <script type="text/javascript">
         <!-- Configuration -->
-        const API_URL = "https://www.timecrypt.co/api/";
-        const APP_URL = "https://www.timecrypt.co/";
+        const API_URL = "https://timecrypt.co/api/";
+        const APP_URL = "https://timecrypt.co/";
         const SRC_URL = "https://www.github.com/milosmns/Timecrypt";
     </script>
 
     <!--[if lte IE 8]>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
     <![endif]-->
 
     <!--[if lte IE 5]>
@@ -30,7 +30,7 @@
     <![endif]-->
 
     <!-- <script type="text/javascript" src="assets/js/jquery-1.9.js"></script> fallback -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="assets/js/timecrypt/helpers.js"></script>
     <script type="text/javascript" src="assets/js/libs/modernizr.js"></script>
     <script type="text/javascript" src="assets/js/libs/soloslider.js"></script>
@@ -47,7 +47,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/desktop.css" media="only screen and (min-device-width: 1281px) and (min-width: 600px) and (max-width: 1024px)" />
     <link rel="stylesheet" type="text/css" href="assets/css/desktop-wide.css" media="only screen and (min-device-width: 1281px) and (min-width: 1025px)" />
 
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
@@ -57,12 +57,12 @@
             // Google code, don't touch
             // noinspection PointlessArithmeticExpressionJS, CommaExpressionJS
             i[r] = i[r] || function () {
-                        (i[r].q = i[r].q || []).push(arguments)
-                    }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
             // Google code, don't touch
             // noinspection CommaExpressionJS
             a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
+                m = s.getElementsByTagName(o)[0];
             a.async = 1;
             a.src = g;
             m.parentNode.insertBefore(a, m)
@@ -238,12 +238,12 @@ OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
     function onTimecryptDecrypted(jsonData) {
         if (jsonData != null && jsonData.status_code != 0) {
             $("#message-text")
-                    .val("YOUR MESSAGE HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT MESSAGE")
-                    .attr("readonly", "readonly")
-                    .css("cursor", "pointer")
-                    .click(function () {
-                        window.location.href = APP_URL;
-                    });
+                .val("YOUR MESSAGE HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT MESSAGE")
+                .attr("readonly", "readonly")
+                .css("cursor", "pointer")
+                .click(function () {
+                    window.location.href = APP_URL;
+                });
         } else if (jsonData != null && jsonData.status_code == 0) {
             ACTIVE = true;
             console.log(jsonData);
@@ -267,21 +267,21 @@ OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
             }
 
             $("#message-text")
-                    .val(displayText)
-                    .attr("readonly", "readonly")
-                    .attr("placeholder", "START TYPING\nOR CLICK THE LOGO FOR MORE INFO")
-                    .css("cursor", "default");
+                .val(displayText)
+                .attr("readonly", "readonly")
+                .attr("placeholder", "START TYPING\nOR CLICK THE LOGO FOR MORE INFO")
+                .css("cursor", "default");
 
             $("#message-title").val(title);
 
             // ignore warnings for now
             // noinspection JSUnusedLocalSymbols
             $("button")
-                    .slideDown(300)
-                    .html("CREATE NEW MESSAGE")
-                    .click(function (data) {
-                        window.location.href = APP_URL;
-                    });
+                .slideDown(300)
+                .html("CREATE NEW MESSAGE")
+                .click(function (data) {
+                    window.location.href = APP_URL;
+                });
         }
     }
 
@@ -328,9 +328,9 @@ OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
             $(".logo-container > img").addClass("withLeftMargin");
             $("button").slideDown(300);
             $("textarea")
-                    .removeClass("centerAligned")
-                    .addClass("leftAligned")
-                    .val($.trim(decodeURIComponent(timecryptUrlText)));
+                .removeClass("centerAligned")
+                .addClass("leftAligned")
+                .val($.trim(decodeURIComponent(timecryptUrlText)));
         }
     } else {
         ACTIVE = false;
@@ -338,29 +338,29 @@ OR CLICK THE LOGO FOR MORE INFO"></textarea></div>
         timecryptId = $.trim(decodeURIComponent(timecryptId));
         console.log("Loading Timecrypt [" + timecryptId + "]...");
         $.post(API_URL + "v2/is-locked", {"id": encodeURIComponent(timecryptId)})
-                .done(function (jsonData) {
-                    if (jsonData != null && jsonData.status_code == 0 && jsonData.locked == true) {
-                        // has password
-                        $("#message-text").attr("placeholder", "ENTER PASSWORD");
-                        $("button").text("UNLOCK");
-                    } else if (jsonData != null && jsonData.status_code == 0 && jsonData.locked == false) {
-                        $("#message-text")
-                                .val("UNLOCKING YOUR MESSAGE, PLEASE WAIT..")
-                                .attr("readonly", "readonly")
-                                .css("cursor", "pointer");
+            .done(function (jsonData) {
+                if (jsonData != null && jsonData.status_code == 0 && jsonData.locked == true) {
+                    // has password
+                    $("#message-text").attr("placeholder", "ENTER PASSWORD");
+                    $("button").text("UNLOCK");
+                } else if (jsonData != null && jsonData.status_code == 0 && jsonData.locked == false) {
+                    $("#message-text")
+                        .val("UNLOCKING YOUR MESSAGE, PLEASE WAIT..")
+                        .attr("readonly", "readonly")
+                        .css("cursor", "pointer");
 
-                        $.post(API_URL + "v2/read", {"id": encodeURIComponent(timecryptId)})
-                                .done(onTimecryptDecrypted);
-                    } else {
-                        $("#message-text")
-                                .val("YOUR MESSAGE HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT MESSAGE")
-                                .attr("readonly", "readonly")
-                                .css("cursor", "pointer")
-                                .click(function () {
-                                    window.location.href = APP_URL;
-                                });
-                    }
-                });
+                    $.post(API_URL + "v2/read", {"id": encodeURIComponent(timecryptId)})
+                        .done(onTimecryptDecrypted);
+                } else {
+                    $("#message-text")
+                        .val("YOUR MESSAGE HAS EXPIRED OR YOU HAVE AN INVALID LINK.\nCLICK HERE TO CREATE A NEW TIMECRYPT MESSAGE")
+                        .attr("readonly", "readonly")
+                        .css("cursor", "pointer")
+                        .click(function () {
+                            window.location.href = APP_URL;
+                        });
+                }
+            });
     }
 
     $(document).ready(function () {
