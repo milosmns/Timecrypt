@@ -17,12 +17,13 @@ import kotlinx.android.synthetic.main.activity_link_display.*
  */
 class LinkDisplayActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
 
+    @Suppress("PrivatePropertyName")
     private val TAG = LinkDisplayActivity::class.simpleName!!
 
     companion object {
-        val KEY_URL = "MESSAGE_URL"
-        val KEY_DATE = "MESSAGE_DESTRUCT_DATE"
-        val KEY_VIEWS = "MESSAGE_ALLOWED_VIEWS"
+        const val KEY_URL = "MESSAGE_URL"
+        const val KEY_DATE = "MESSAGE_DESTRUCT_DATE"
+        const val KEY_VIEWS = "MESSAGE_ALLOWED_VIEWS"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,15 +87,13 @@ class LinkDisplayActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         }
     }
 
-    override fun onLongClick(view: View): Boolean {
-        // show hints only for copy and share actions
-        when (view.id) {
-            messageUrlCopy.id, messageUrlShare.id -> {
-                Toast.makeText(this@LinkDisplayActivity, view.contentDescription, Toast.LENGTH_SHORT).show()
-                return true
-            }
-            else -> return false
+    // show hints only for copy and share actions
+    override fun onLongClick(view: View): Boolean = when (view.id) {
+        messageUrlCopy.id, messageUrlShare.id -> {
+            Toast.makeText(this@LinkDisplayActivity, view.contentDescription, Toast.LENGTH_SHORT).show()
+            true
         }
+        else -> false
     }
 
 }

@@ -20,10 +20,11 @@ import kotlinx.android.synthetic.main.activity_read_message.*
  */
 class ReadMessageActivity : AppCompatActivity(), View.OnClickListener {
 
+    @Suppress("PrivatePropertyName")
     private val TAG = ReadMessageActivity::class.simpleName!!
 
     companion object {
-        val KEY_MESSAGE_ID = "MESSAGE_ID"
+        const val KEY_MESSAGE_ID = "MESSAGE_ID"
     }
 
     private var controller: TimecryptController? = null

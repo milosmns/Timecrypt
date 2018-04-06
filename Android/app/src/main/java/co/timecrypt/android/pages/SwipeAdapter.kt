@@ -6,7 +6,7 @@ import co.timecrypt.android.activities.CreateMessageActivity
 import co.timecrypt.android.helpers.OnMessageChangedEmitter
 import co.timecrypt.android.helpers.OnMessageChangedListener
 import co.timecrypt.android.v2.api.TimecryptMessage
-import kotlin.reflect.primaryConstructor
+import kotlin.reflect.full.primaryConstructor
 
 /**
  * The pager adapter being used in the [CreateMessageActivity]. Does caching internally but also uses the cache from [FragmentManager].
@@ -14,7 +14,7 @@ import kotlin.reflect.primaryConstructor
 class SwipeAdapter(
         listener: OnMessageChangedListener,
         message: TimecryptMessage,
-        val manager: FragmentManager,
+        private val manager: FragmentManager,
         override var listeners: MutableList<OnMessageChangedListener> = mutableListOf()
 ) : FragmentPagerAdapter(manager), OnMessageChangedListener, OnMessageChangedEmitter {
 
@@ -57,7 +57,7 @@ class SwipeAdapter(
         if (found == null) {
             val fragment = PAGES[position].primaryConstructor?.call() ?: throw IllegalStateException()
             fragment.message = this.message
-            fragmentCache.put(name, fragment)
+            fragmentCache[name] = fragment
             fragment.addMessageListener(this)
             return fragment
         }
@@ -76,7 +76,7 @@ class SwipeAdapter(
      * Clears the internal cache.
      */
     fun cleanup() {
-        for ((name, fragment) in fragmentCache) {
+        for ((_, fragment) in fragmentCache) {
             fragment.removeMessageListener(this)
         }
 
@@ -102,7 +102,7 @@ class SwipeAdapter(
     }
 
     override fun onMessageUpdated() {
-        for ((name, fragment) in fragmentCache) {
+        for ((_, fragment) in fragmentCache) {
             fragment.message = message
         }
     }
