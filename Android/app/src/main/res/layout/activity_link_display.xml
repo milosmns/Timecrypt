@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="co.timecrypt.android.activities.LinkDisplayActivity"
+    tools:context="com.appifyhub.timecrypt.activities.LinkDisplayActivity"
     tools:ignore="Overdraw">
 
     <ImageView
@@ -38,14 +38,15 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
-        android:maxLines="1"
         android:padding="@dimen/text_padding"
         android:requiresFadingEdge="horizontal"
+        android:singleLine="true"
         android:textColor="@color/mainLighterShade"
         android:textIsSelectable="false"
         android:textSize="@dimen/display_text_size"
         android:textStyle="bold"
-        tools:text="http://www.timecrypt.co/?c=message" />
+        tools:text="https://timecrypt.appifyhub.com/?c=message"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

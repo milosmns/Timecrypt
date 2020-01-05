@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="co.timecrypt.android.activities.ReadMessageActivity"
+    tools:context="com.appifyhub.timecrypt.activities.ReadMessageActivity"
     tools:ignore="Overdraw">
 
     <ScrollView

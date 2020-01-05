@@ -3,14 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId 'co.timecrypt.android'
+        applicationId 'com.appifyhub.timecrypt'
         minSdkVersion 17
-        targetSdkVersion 27
-        versionCode 4
-        versionName "1.4"
+        targetSdkVersion 29
+        versionCode 5
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     testOptions {
@@ -33,6 +33,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.squareup.moshi:moshi-kotlin:1.5.0'
     implementation 'com.squareup.moshi:moshi:1.5.0'
